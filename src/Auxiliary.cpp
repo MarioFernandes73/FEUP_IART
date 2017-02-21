@@ -30,14 +30,29 @@ short int readUnsignedShortInt(unsigned short int first, unsigned short int last
 	{
 		if(!isdigit(temp[i]))
 		{
-			return 0;
+			return -1;
 		}
 	}
 
 	ss << temp;
 	ss >> input;
 
+	if(first <= input && input <= last)
 	return input;
 
+	return -2;
 }
 
+
+bool confirm()
+{
+	string temp;
+	cout << "Insert Y to confirm your action: ";
+	getline(cin,temp);
+	if (temp=="Y" || temp == "y")
+	{
+		return true;
+	}
+	else
+		return false;
+}

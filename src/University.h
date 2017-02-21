@@ -18,6 +18,9 @@ public:
 	University(){}
 	virtual ~University(){}
 	std::vector<Student *> getStudents();
+	Student * findStudent(Student * tempStudent);
+	void addStudent(Student * newStudent);
+	void removeStudent(Student * oldStudent);
 };
 
 #endif /* UNIVERSITY_H_ */

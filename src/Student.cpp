@@ -5,14 +5,37 @@
  *      Author: Mário
  */
 
+#include <string>
+
 #include "Student.h"
 
-Student::Student() {
-	// TODO Auto-generated constructor stub
+using namespace std;
 
+int Student::currentId = 1;
+
+Student::Student(std::string name)
+{
+	this->id = currentId;
+	this->name = name;
+	currentId++;
 }
 
-Student::~Student() {
-	// TODO Auto-generated destructor stub
+string Student::getName()const
+{
+	return this->name;
 }
 
+void Student::setName(string name)
+{
+	this->name = name;
+}
+
+bool operator==(const Student &s1, const Student &s2)
+{
+	return s1.getName() == s2.getName();
+}
+
+bool Student::operator ==(const Student &s1)
+		{
+	return this->getName() == s1.getName();
+		}

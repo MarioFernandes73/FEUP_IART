@@ -11,7 +11,10 @@
 #include "University.h"
 
 void initialOptions(University & university);
-unsigned short int initialMenu();
+short int initialMenu();
+
+void studentsOptions(University & universtiy);
+short int studentsMenu();
 
 
 

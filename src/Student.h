@@ -14,12 +14,18 @@
 
 class Student {
 private:
+	static int currentId;
 	int id;
-	std::string nome;
+	std::string name;
 	std::vector<Course *> courses;
 public:
-	Student();
-	virtual ~Student();
+	Student(){}
+	Student(std::string name);
+	virtual ~Student(){}
+	std::string getName()const;
+	void setName(std::string name);
+	friend bool operator==(const Student &s1, const Student &s2);
+	bool operator==(const Student &s1);
 };
 
 #endif /* STUDENT_H_ */
