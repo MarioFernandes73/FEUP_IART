@@ -6,3 +6,6 @@
 \.cproject
 
 \.settings/ch\.hsr\.ifs\.cute\.elevenator\.prefs
+/Debug/
+
+\.settings/org\.eclipse\.cdt\.managedbuilder\.core\.prefs
