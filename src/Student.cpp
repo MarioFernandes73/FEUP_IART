@@ -30,12 +30,7 @@ void Student::setName(string name)
 	this->name = name;
 }
 
-bool operator==(const Student &s1, const Student &s2)
+bool Student::operator ==(const Student * s1)const
 {
-	return s1.getName() == s2.getName();
+	return this->getName() == (*s1).getName();
 }
-
-bool Student::operator ==(const Student &s1)
-		{
-	return this->getName() == s1.getName();
-		}

@@ -24,8 +24,7 @@ public:
 	virtual ~Student(){}
 	std::string getName()const;
 	void setName(std::string name);
-	friend bool operator==(const Student &s1, const Student &s2);
-	bool operator==(const Student &s1);
+	bool operator==(const Student * s1)const;
 };
 
 #endif /* STUDENT_H_ */

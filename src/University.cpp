@@ -24,7 +24,7 @@ Student * University::findStudent(Student * tempStudent)
 
 	for(vector<Student *>::iterator it = this->students.begin(); it != this->students.end(); it++)
 	{    
-		if((**it) == *tempStudent)
+		if((**it) == tempStudent)
 		{
 			return (*it);
 		}
@@ -45,7 +45,7 @@ void University::removeStudent(Student * oldStudent)
 {
 	for(vector<Student *>::iterator it = this->students.begin(); it != this->students.end(); it++)
 	{
-		if((*it) == oldStudent)
+		if((**it) == oldStudent)
 		{
 				this->students.erase(it);
 				return;
