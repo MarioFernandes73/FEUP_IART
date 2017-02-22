@@ -50,5 +50,6 @@ void printStudents(vector<Student *> students)
 	{
 		cout << (*it)->getInfo();
 	}
+
 }
 
