@@ -14,6 +14,11 @@
 
 using namespace std;
 
+University::University(vector<Student *> students)
+{
+	this->students=students;
+}
+
 vector<Student *> University::getStudents()
 {
 	return this->students;

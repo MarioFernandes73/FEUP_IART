@@ -68,13 +68,14 @@ short int studentsMenu()
 	cout << TAB << "1 - Create new student" << endl;
 	cout << TAB << "2 - Edit existing student" << endl;
 	cout << TAB << "3 - Delete student" << endl;
+	cout << TAB << "4 - View students" << endl;
 	cout << TAB << "0 - Return to initial menu" << endl;
 	cout << endl;
 	cout << "Please write your option here: ";
 
 	while(true)
 	{
-		option = readUnsignedShortInt(0,3);
+		option = readUnsignedShortInt(0,4);
 		if(option < 0)
 			cout << "Error, please choose your option: ";
 		else
@@ -101,6 +102,9 @@ void studentsOptions(University & university)
 		break;
 	case 3:
 		university.removeStudent(createStudent());
+		break;
+	case 4:
+		printStudents(university.getStudents());
 		break;
 	}
 		}

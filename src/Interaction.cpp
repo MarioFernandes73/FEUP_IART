@@ -44,3 +44,11 @@ bool confirmDeleteStudent(Student * student)
 	return confirm();
 }
 
+void printStudents(vector<Student *> students)
+{
+	for(vector<Student *>::iterator it=students.begin(); it<students.end(); it++)
+	{
+		cout << (*it)->getInfo();
+	}
+}
+

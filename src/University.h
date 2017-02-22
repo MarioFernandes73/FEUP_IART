@@ -15,12 +15,14 @@ private:
 	std::string name;
 	std::vector<Student *> students;
 public:
-	University(){}
+	University(std::vector<Student *> students);
 	virtual ~University(){}
+
 	std::vector<Student *> getStudents();
 	Student * findStudent(Student * tempStudent);
 	void addStudent(Student * newStudent);
 	void removeStudent(Student * oldStudent);
+
 };
 
 #endif /* UNIVERSITY_H_ */

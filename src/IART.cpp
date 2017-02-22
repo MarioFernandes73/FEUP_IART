@@ -7,33 +7,47 @@
 //============================================================================
 
 #include <iostream>
+#include <sstream>
 
-#include "sqlite3.h"
+#include "Database.h"
 #include "University.h"
 #include "Menu.h"
 using namespace std;
 
+
 int main() {
 
-	//declare variables
-	sqlite3 *db;
-	char *zErrMsg = 0;
-	int rc = sqlite3_open("iart.db", &db);
+	// database variables
+	Database *db;
+	vector<vector<string>> studentsInfo;
+	vector<Student *> students;
+	char * filename = (char*)"iart.db";
+	char * selectStudentQuery = (char*)"SELECT * FROM Student";
 
-	//initialize University
-	University university;
+	// database operations
+	db = new Database(filename);
+	db->open();
+	studentsInfo = db->query(selectStudentQuery);
 
-	// load .db
-	if(rc)
+	for(vector<vector<string> >::iterator it = studentsInfo.begin(); it < studentsInfo.end(); ++it)
 	{
-		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-		return 0;
-	}
-	else
-	{
-		fprintf(stderr, "Opened database successfully\n");
+		vector<string> row = *it;
+		int student_id;
+		string name;
+		stringstream ss;
+		for(vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++)
+		{
+			ss << (*it2);
+		}
+		ss >> student_id >> name;
+		students.push_back(new Student(student_id, name));
 	}
 
+	db->close();
+
+
+	// university initialization
+	University university(students);
 
 	//interface
 	initialOptions(university);
@@ -41,6 +55,6 @@ int main() {
 	//save .db
 
 
-	sqlite3_close(db);
+
 	return 0;
 }

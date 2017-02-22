@@ -19,6 +19,17 @@ Student::Student(std::string name)
 	this->name = name;
 	currentId++;
 }
+Student::Student(int id, std::string name)
+{
+	this->id=id;
+	this->name = name;
+	currentId++;
+}
+
+int Student::getId()const
+{
+	return this->id;
+}
 
 string Student::getName()const
 {
@@ -33,4 +44,10 @@ void Student::setName(string name)
 bool Student::operator ==(const Student * s1)const
 {
 	return this->getName() == (*s1).getName();
+}
+
+string Student::getInfo()
+{
+	string info = (to_string(this->id) + " - " + this->name + "\n");
+	return info;
 }
