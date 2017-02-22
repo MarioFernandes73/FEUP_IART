@@ -23,9 +23,8 @@ Student * University::findStudent(Student * tempStudent)
 {
 
 	for(vector<Student *>::iterator it = this->students.begin(); it != this->students.end(); it++)
-	{
-		//if((*it)->getName() == tempStudent->getName())
-		if((*it) == tempStudent)
+	{    
+		if((**it) == *tempStudent)
 		{
 			return (*it);
 		}
