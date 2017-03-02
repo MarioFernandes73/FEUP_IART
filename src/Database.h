@@ -2,7 +2,7 @@
  * Database.h
  *
  *  Created on: 22 Feb 2017
- *      Author: Mário
+ *
  */
 
 #ifndef DATABASE_H_

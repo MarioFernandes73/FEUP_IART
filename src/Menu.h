@@ -2,7 +2,7 @@
  * Menu.h
  *
  *  Created on: 21 Feb 2017
- *      Author: Mário
+ *
  */
 
 #ifndef MENU_H_

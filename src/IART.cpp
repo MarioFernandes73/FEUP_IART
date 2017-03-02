@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : IART.cpp
-// Author      : Catarina Ramos, Inês Gomes and Mário Fernandes
+// Author      : Catarina Ramos, Ines Gomes and Mario Fernandes
 // Version     :
 // Copyright   : 
 // Description :

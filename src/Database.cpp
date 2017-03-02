@@ -2,7 +2,7 @@
  * Database.cpp
  *
  *  Created on: 22 Feb 2017
- *      Author: Mário
+ *
  */
 
 #include "Database.h"

@@ -2,7 +2,7 @@
  * Exam.h
  *
  *  Created on: 21 Feb 2017
- *      Author: Mário
+ *
  */
 
 #ifndef EXAM_H_
