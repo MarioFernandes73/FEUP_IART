@@ -1,0 +1,28 @@
+Especificações obrigatórias (o programa aborta se não se verificarem):
+	* não pode haver exames sobrepostos  			--> garantido pelo vetor do cromossoma
+	* os alunos não devem ter exames no mesmo dia
+	* os alunos não devem ter exames em dias consecutivos (so em epoca normal?)
+	
+Restantes
+	* primazia a estudantes sem unidades curriculares em atraso (exames do mesmo ano devem ser mais espaçados que exames de anos diferentes)
+	* maximizar a distância entre exames sempre que haja estudantes em comum
+	*
+	
+Programa ótimo: maior distancia entre exames para todos os alunos
+
+Fitness function do schedule (quanto maior melhor):
+	* soma das fitness functions de cada exame
+	
+Fitness function do exame:
+	'exam_fitness' = 0
+	'all_exams' = todos os exames que existem
+	'cromossoma' = vetor com os slots dos exames
+	'curr_exam' = exame que estamos a calcular o fitness
+	
+	for each 'exam' from 'all_Exams'
+		if 'curr_exam'	tem estudantes em comum com 'exam' && os exames nao sao no mesmo dia && os exames nao sao em dias consecutivos
+			'multiplicador' = 5 - modulo('curr_exam'.ano - 'exam'.ano)
+			'cromossoma['pos1']' = 'curr_exam'
+			'cromossoma['pos2']' = 'exam'
+			'distancia' = modulo('pos1' - 'pos2')
+			'exam_fitness' += 'distancia' * 'multiplicador' 
