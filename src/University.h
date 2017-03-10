@@ -9,9 +9,11 @@
 #define UNIVERSITY_H_
 
 #include "Student.h"
+#include "Schedule.h"
 
 class University {
 private:
+    Schedule globalSchedule;
 	std::string name;
 	std::vector<Student *> students;
 public:

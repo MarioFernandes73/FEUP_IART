@@ -8,16 +8,19 @@
 #ifndef STUDENT_H_
 #define STUDENT_H_
 
-#include "Course.h"
 #include <string>
 #include <vector>
+#include "Exam.h"
+#include "Schedule.h"
 
 class Student {
 private:
 	static int currentId;
 	int id;
 	std::string name;
-	std::vector<Course *> courses;
+	std::vector<Exam *> exams;
+	Schedule ownSchedule;
+    //int ano;
 public:
 	Student(){}
 	Student(std::string name);

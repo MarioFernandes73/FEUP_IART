@@ -8,12 +8,16 @@
 #ifndef EXAM_H_
 #define EXAM_H_
 
-#include "Course.h"
-#include "Schedule.h"
+#include <string>
 
 class Exam {
 private:
-	Schedule schedule;
+    time_t startingTime;    //data e hora?
+    int duration;
+    int schoolYear;
+    std::string className;
+    int fitness;
+    //epoca Normal/Recurso
 public:
 	Exam();
 	virtual ~Exam();

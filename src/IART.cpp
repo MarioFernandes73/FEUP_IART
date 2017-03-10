@@ -21,8 +21,8 @@ int main() {
 	Database *db;
 	vector<vector<string>> studentsInfo;
 	vector<Student *> students;
-	//char * filename = (char*)"../proj/iart.db";
-	char * filename = (char*)"iart.db";
+	char * filename = (char*)"../proj/iart.db";
+	//char * filename = (char*)"iart.db";
 	char * selectStudentQuery = (char*)"SELECT * FROM Student";
 
 	// database operations

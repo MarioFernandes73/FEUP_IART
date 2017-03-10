@@ -9,15 +9,17 @@
 #define SCHEDULE_H_
 
 #include "time.h"
+#include "Exam.h"
 #include <string>
+#include <vector>
 
 const static std::string weekDay[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 
 class Schedule {
 private:
-	time_t startingTime;
-	time_t endingTime;
+	std::vector<Exam *> schedule;
+    int fitness;
 public:
 	Schedule();
 	virtual ~Schedule();
