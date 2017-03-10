@@ -16,6 +16,8 @@ short int initialMenu();
 void studentsOptions(University & universtiy);
 short int studentsMenu();
 
+void examsOptions(University & universtiy);
+short int examsMenu();
 
 
 #endif /* MENU_H_ */

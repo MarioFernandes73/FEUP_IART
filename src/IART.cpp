@@ -46,7 +46,6 @@ int main() {
 
 	db->close();
 
-
 	// university initialization
 	University university(students);
 

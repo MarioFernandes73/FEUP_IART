@@ -13,12 +13,12 @@
 #include "University.h"
 
 Student * createStudent();
-
 void editStudent(Student * student);
-
 bool confirmDeleteStudent(Student * student);
-
 void printStudents(std::vector<Student *> students);
 
+Exam * createExam();
+void editExam(Exam *exam);
+void printExams(std::vector<Exam *> exams);
 
 #endif /* INTERACTION_H_ */

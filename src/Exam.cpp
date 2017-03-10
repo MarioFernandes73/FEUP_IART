@@ -6,13 +6,39 @@
  */
 
 #include "Exam.h"
+#include <iostream>
+using namespace std;
 
-Exam::Exam() {
-	// TODO Auto-generated constructor stub
+int Exam::currentId = 1;
 
+Exam::Exam(string name) {
+    this->id = currentId;
+    this->className = name;
+    currentId++;
 }
 
 Exam::~Exam() {
 	// TODO Auto-generated destructor stub
+}
+
+string Exam::getClassName()const
+{
+    return this->className;
+}
+
+void Exam::setClassName(string className)
+{
+    this->className = className;
+}
+
+string Exam::getInfo()
+{
+    string info = (to_string(this->id) + " - " + this->className + "\n");
+    return info;
+}
+
+bool Exam::operator ==(const Exam * e1)const
+{
+    return this->getClassName() == (*e1).getClassName();
 }
 

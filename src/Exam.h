@@ -12,15 +12,23 @@
 
 class Exam {
 private:
+    static int currentId;
+    int id;
+
     time_t startingTime;    //data e hora?
     int duration;
     int schoolYear;
     std::string className;
+
     int fitness;
     //epoca Normal/Recurso
 public:
-	Exam();
-	virtual ~Exam();
+    Exam(std::string className);
+    virtual ~Exam();
+    std::string getClassName()const;
+    void setClassName(std::string className);
+    std::string getInfo();
+    bool operator==(const Exam * e1)const;
 };
 
 #endif /* EXAM_H_ */
