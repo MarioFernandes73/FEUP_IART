@@ -14,8 +14,9 @@
 
 using namespace std;
 
-University::University(vector<Student *> students) {
+University::University(vector<Student *> students, vector<Exam *> exams) {
     this->students = students;
+    this->exams = exams;
 }
 
 vector<Student *> University::getStudents() {

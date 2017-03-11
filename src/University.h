@@ -18,7 +18,7 @@ private:
     std::vector<Student *> students;
     std::vector<Exam *> exams;
 public:
-    University(std::vector<Student *> students);
+    University(std::vector<Student *> students,std::vector<Exam *> exams);
     virtual ~University() {}
 
     std::vector<Student *> getStudents();

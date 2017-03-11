@@ -17,6 +17,13 @@ Exam::Exam(string name) {
     currentId++;
 }
 
+Exam::Exam(int id, std::string name)
+{
+    this->id=id;
+    this->className = name;
+    currentId++;
+}
+
 Exam::~Exam() {
 	// TODO Auto-generated destructor stub
 }

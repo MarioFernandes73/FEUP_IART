@@ -24,6 +24,7 @@ private:
     //epoca Normal/Recurso
 public:
     Exam(std::string className);
+    Exam(int id,std::string className);
     virtual ~Exam();
     std::string getClassName()const;
     void setClassName(std::string className);
