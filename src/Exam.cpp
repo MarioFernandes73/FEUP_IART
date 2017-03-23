@@ -56,3 +56,7 @@ void Exam::setClassName(std::string className) {
 long Exam::getYear() {
     return this->myClass.getYear();
 }
+
+void Exam::setFitness(int i) {
+    this->fitness = i;
+}

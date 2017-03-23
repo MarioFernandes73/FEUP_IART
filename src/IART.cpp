@@ -27,8 +27,8 @@ int main() {
     vector<vector<string>> examsInfo;
     vector<Student *> students;
     vector<Exam *> exams;
-    char *filename = (char *) "../proj/iart.db";
-    //char * filename = (char*)"iart.db";
+    //char *filename = (char *) "../proj/iart.db";
+    char * filename = (char*)"iart.db";
     char *selectStudentQuery = (char *) "SELECT * FROM Student";
     char *selectExamQuery = (char *) "SELECT * FROM Exam";
 
@@ -60,8 +60,16 @@ int main() {
         for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++) {
             ss << (*it2);
         }
-        ss >> exam_id >> className >> year;
-        exams.push_back(new Exam(exam_id, Class(className,1)));
+        stringstream ss2;
+        ss2 << ss.str().at(ss.str().length()-1);
+        ss2 >> year;
+        ss2.clear();
+        ss2.str("");
+        string temp = ss.str();
+        temp.erase(temp.length()-1);
+        ss2 << temp;
+        ss2 >> exam_id >> className;
+        exams.push_back(new Exam(exam_id, Class(className,year)));
     }
 
     db->close();

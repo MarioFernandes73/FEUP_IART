@@ -66,8 +66,9 @@ void Schedule::calculateFitness()
                     fitness += distance*multiplier;
                 }
             }
-            cout <<endl;
         }
+        this->fitness += fitness;       //fitness schedule
+        currExam->setFitness(fitness);   //fitness exam
         cout << currExam->getClassName() << " " << fitness<<endl;
     }
 }

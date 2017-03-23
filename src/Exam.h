@@ -35,6 +35,8 @@ public:
     void setClassName(std::string className);
 
     long getYear();
+
+    void setFitness(int i);
 };
 
 #endif /* EXAM_H_ */
