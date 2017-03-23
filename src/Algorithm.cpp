@@ -3,8 +3,7 @@
 //
 
 #include "Algorithm.h"
-#include <iostream>
-#include <unordered_map>
+#include "Utils.h"
 
 using namespace std;
 
@@ -97,6 +96,7 @@ void Algorithm::run()
         //cruzamento
         //mutacao
         rep--;
+        cout << endl << "fim da iteracao " << endl;
     }
 }
 

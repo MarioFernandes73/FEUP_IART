@@ -10,12 +10,12 @@
 
 #include "time.h"
 #include "Exam.h"
+#include "Utils.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
 
 const static std::string weekDay[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-
 
 class Schedule {
 private:
@@ -31,7 +31,7 @@ public:
 
     void calculateFitness();
     bool inCommonStudents(Exam * currExam, Exam * exam);
-    bool consecutiveDaysExams(Exam * currExam, Exam * exam);
+    bool consecutiveDaysExams(int currExam, int exam);
 };
 
 #endif /* SCHEDULE_H_ */

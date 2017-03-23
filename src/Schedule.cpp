@@ -57,15 +57,18 @@ void Schedule::calculateFitness()
             Exam * exam = y.first;
             if(!(currExam == exam)) //nao se esta a comparar consigo proprio
             {
+                //TODO : mais tarde, introduzir o numero de alunos em comum como fator para o calculo do fitness
                 //exams have student in common and aren't at the same day or at consecutive days
-                if(inCommonStudents(currExam, exam) && !consecutiveDaysExams(currExam, exam))
+                if(inCommonStudents(currExam, exam) && !consecutiveDaysExams(x.second, y.second))
                 {
                     multiplier = 5 - abs(currExam->getYear() - exam->getYear());
                     distance = abs(x.second - y.second);
                     fitness += distance*multiplier;
                 }
             }
+            cout <<endl;
         }
+        cout << currExam->getClassName() << " " << fitness<<endl;
     }
 }
 
@@ -73,6 +76,9 @@ bool Schedule::inCommonStudents(Exam *currExam, Exam *exam) {
     return true;
 }
 
-bool Schedule::consecutiveDaysExams(Exam *currExam, Exam *exam) {
-    return false;
+bool Schedule::consecutiveDaysExams(int currExam, int exam)
+{
+    int day1 = currExam / HOURS_PER_DAY;
+    int day2 = exam / HOURS_PER_DAY;
+    return (abs(day1-day2) < 2);
 }

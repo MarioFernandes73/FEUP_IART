@@ -8,9 +8,6 @@
 #include "Schedule.h"
 #include "University.h"
 
-#define HOURS_PER_DAY 8;
-#define REPETITIONS 10;
-
 class Algorithm {
 private:
     std::vector<Schedule *> population;

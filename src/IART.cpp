@@ -11,9 +11,7 @@
 
 #include "Database.h"
 #include "University.h"
-#include "Menu.h"
 #include "Algorithm.h"
-#include "Epoch.h"
 
 using namespace std;
 
@@ -63,13 +61,13 @@ int main() {
             ss << (*it2);
         }
         ss >> exam_id >> className >> year;
-        exams.push_back(new Exam(exam_id, Class(className,year)));
+        exams.push_back(new Exam(exam_id, Class(className,1)));
     }
 
     db->close();
 
     //criacao das epocas (nome + numero de dias)
-    Epoch * e = new Epoch("Normal",5);
+    Epoch * e = new Epoch("Normal",8);
 
     // university initialization
     University university(students,exams);
