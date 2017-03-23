@@ -9,27 +9,32 @@
 #define EXAM_H_
 
 #include <string>
+#include "Class.h"
 
 class Exam {
 private:
     static int currentId;
     int id;
 
+    Class myClass;
+
     time_t startingTime;    //data e hora?
     int duration;
-    int schoolYear;
-    std::string className;
 
     int fitness;
     //epoca Normal/Recurso
 public:
-    Exam(std::string className);
-    Exam(int id,std::string className);
+    Exam(string name);
+    Exam(int id, Class myClass);
     virtual ~Exam();
+    std::string getInfo();
+    int getDuration();
+    bool operator==(const Exam * e1)const;
+
     std::string getClassName()const;
     void setClassName(std::string className);
-    std::string getInfo();
-    bool operator==(const Exam * e1)const;
+
+    long getYear();
 };
 
 #endif /* EXAM_H_ */

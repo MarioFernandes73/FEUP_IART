@@ -9,6 +9,7 @@
 
 #include "University.h"
 #include "MyExceptions.h"
+#include "Epoch.h"
 
 #include <iostream>
 
@@ -81,4 +82,17 @@ void University::removeExam(Exam *oldExam) {
         }
     }
     throw elementNotInVectorException<Exam *>(oldExam);
+}
+
+void University::addEpoch(Epoch * e) {
+    epochs.push_back(e);
+}
+
+Epoch * University::getEpochByName(string name)
+{
+    for (int i = 0; i < epochs.size(); ++i) {
+      if(name == epochs.at(i)->getName())
+          return epochs.at(i);
+    }
+    return NULL;
 }

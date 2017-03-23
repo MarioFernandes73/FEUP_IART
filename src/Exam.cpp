@@ -13,39 +13,46 @@ int Exam::currentId = 1;
 
 Exam::Exam(string name) {
     this->id = currentId;
-    this->className = name;
+    this->myClass = Class(name,0);
     currentId++;
 }
 
-Exam::Exam(int id, std::string name)
-{
+Exam::Exam(int id, Class myClass) {
     this->id=id;
-    this->className = name;
     currentId++;
+
+    this->myClass = myClass;
+
+    this->fitness = 0;
+    this->duration = 2; //TODO receber este valor como parametro
 }
 
 Exam::~Exam() {
 	// TODO Auto-generated destructor stub
 }
 
-string Exam::getClassName()const
-{
-    return this->className;
-}
-
-void Exam::setClassName(string className)
-{
-    this->className = className;
-}
-
 string Exam::getInfo()
 {
-    string info = (to_string(this->id) + " - " + this->className + "\n");
-    return info;
+    return (to_string(this->id) + " - " + this->myClass.getName() + ", " + to_string(this->myClass.getYear()) + "\n");
 }
 
 bool Exam::operator ==(const Exam * e1)const
 {
-    return this->getClassName() == (*e1).getClassName();
+    return this->myClass.getName() == (*e1).myClass.getName();
 }
 
+int Exam::getDuration() {
+    return this->duration;
+}
+
+std::string Exam::getClassName() const {
+    return this->myClass.getName();
+}
+
+void Exam::setClassName(std::string className) {
+    this->myClass.setName(className);
+}
+
+long Exam::getYear() {
+    return this->myClass.getYear();
+}

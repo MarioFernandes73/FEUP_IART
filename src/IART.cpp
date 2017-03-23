@@ -12,11 +12,16 @@
 #include "Database.h"
 #include "University.h"
 #include "Menu.h"
+#include "Algorithm.h"
+#include "Epoch.h"
 
 using namespace std;
 
 
 int main() {
+
+    //random numbers
+    srand ((unsigned int) time(NULL));
 
     // database variables
     Database *db;
@@ -51,23 +56,29 @@ int main() {
     //read exams
     for (vector<vector<string> >::iterator it = examsInfo.begin(); it < examsInfo.end(); ++it) {
         vector<string> row = *it;
-        int exam_id;
+        int exam_id, year;
         string className;
         stringstream ss;
         for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++) {
             ss << (*it2);
         }
-        ss >> exam_id >> className;
-        exams.push_back(new Exam(exam_id, className));
+        ss >> exam_id >> className >> year;
+        exams.push_back(new Exam(exam_id, Class(className,year)));
     }
 
     db->close();
 
+    //criacao das epocas (nome + numero de dias)
+    Epoch * e = new Epoch("Normal",5);
+
     // university initialization
     University university(students,exams);
+    university.addEpoch(e);
 
     //interface
-    initialOptions(university);
+    //initialOptions(university);
+
+    Algorithm algorithm(university,1);
 
     //save .db
 

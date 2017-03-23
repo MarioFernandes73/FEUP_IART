@@ -10,6 +10,8 @@
 
 #include "Student.h"
 #include "Schedule.h"
+#include "Epoch.h"
+#include <string>
 
 class University {
 private:
@@ -17,9 +19,12 @@ private:
     std::string name;
     std::vector<Student *> students;
     std::vector<Exam *> exams;
+    std::vector<Epoch *> epochs;
 public:
     University(std::vector<Student *> students,std::vector<Exam *> exams);
     virtual ~University() {}
+
+    void addEpoch(Epoch * e);
 
     std::vector<Student *> getStudents();
     Student *findStudent(Student *tempStudent);
@@ -31,6 +36,7 @@ public:
     void addExam(Exam *newExam);
     void removeExam(Exam *oldExam);
 
+    Epoch * getEpochByName(std::string name);
 };
 
 #endif /* UNIVERSITY_H_ */
