@@ -26,3 +26,11 @@ Fitness function do exame:
 			'cromossoma['pos2']' = 'exam'
 			'distancia' = modulo('pos1' - 'pos2')
 			'exam_fitness' += 'distancia' * 'multiplicador' 
+			
+TODO LIST:
+	* Schedule (calculatefitnessfunction) : introduzir o numero de alunos em comum como fator para o calculo do fitness
+	* Algorithm : 	
+		* selecao
+		* emparelhamento
+		* cruzamento
+		* mutação

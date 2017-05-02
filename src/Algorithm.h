@@ -19,7 +19,13 @@ public:
 
     void run();
 
-    void calculateFitness();
+    int calculateFitness();
+    void selectNextPopulation(int popFitness);
+    vector<Schedule *> selectElitistPopulation();
+
+    void fitnessProbabilities(int populationFitness);
+
+    void selectRemainingPopulation(double pDouble[], vector<Schedule *> vector);
 };
 
 

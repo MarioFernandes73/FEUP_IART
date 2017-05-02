@@ -10,8 +10,13 @@
 
 using namespace std;
 
-Schedule::Schedule() {
+int Schedule::currentId = 1;
 
+Schedule::Schedule() {
+    this->id = currentId;
+    currentId++;
+
+    cout << "Create schedule "<< id << endl;
 }
 
 Schedule::~Schedule() {
@@ -23,12 +28,13 @@ void Schedule::addExams(std::vector<Exam *> vector, std::unordered_map<Exam *, i
     this->schedule = vector;
     this->examSlot = examSlot;
     this->fitness = 0;
+    this->maxRouletteProb = 0;
 }
 
 void Schedule::printExams()
 {
 
-    cout << "Schedule " << endl;
+    cout << "Schedule " << id << endl;
     for (int i = 0; i < schedule.size(); ++i)
     {
         if(schedule.at(i) == NULL)
@@ -42,7 +48,7 @@ void Schedule::printExams()
 
 }
 
-void Schedule::calculateFitness()
+int Schedule::calculateFitness()
 {
     for (pair<Exam *const, int> & x: examSlot)
     {
@@ -71,6 +77,8 @@ void Schedule::calculateFitness()
         currExam->setFitness(fitness);   //fitness exam
         cout << currExam->getClassName() << " " << fitness<<endl;
     }
+
+    return fitness;
 }
 
 bool Schedule::inCommonStudents(Exam *currExam, Exam *exam) {
@@ -82,4 +90,28 @@ bool Schedule::consecutiveDaysExams(int currExam, int exam)
     int day1 = currExam / HOURS_PER_DAY;
     int day2 = exam / HOURS_PER_DAY;
     return (abs(day1-day2) < 2);
+}
+
+double Schedule::calculateMaxRouletteProb(double minRouletteProb, double total) {
+    this->maxRouletteProb = (double) this->fitness / total + minRouletteProb;
+    return  this->maxRouletteProb;
+}
+
+int Schedule::getID() const {
+    return this->id;
+}
+
+int Schedule::getFitness() const {
+    return fitness;
+}
+
+void Schedule::setFitness(int f) {
+    this->fitness = f;
+}
+
+double Schedule::getmaxRouletteProb() const{
+    return this->maxRouletteProb;
+}
+void Schedule::setmaxRouletteProb(double mrp){
+    this->maxRouletteProb = mrp;
 }

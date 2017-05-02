@@ -19,19 +19,28 @@ const static std::string weekDay[7] = {"Sunday", "Monday", "Tuesday", "Wednesday
 
 class Schedule {
 private:
+    static int currentId;
+    int id;
 	std::vector<Exam *> schedule;
     std::unordered_map<Exam *, int> examSlot;
     int fitness;
+    double maxRouletteProb;
 public:
 	Schedule();
 	virtual ~Schedule();
+    int getFitness() const;
+    void setFitness(int f);
+    double getmaxRouletteProb() const;
+    void setmaxRouletteProb(double mrp);
+    int getID() const;
 
 	void addExams(std::vector<Exam *> vector, std::unordered_map<Exam *, int> examSlot);
 	void printExams();
 
-    void calculateFitness();
+    int calculateFitness();
     bool inCommonStudents(Exam * currExam, Exam * exam);
     bool consecutiveDaysExams(int currExam, int exam);
+    double calculateMaxRouletteProb(double minRouletteProb, double total);
 };
 
 #endif /* SCHEDULE_H_ */

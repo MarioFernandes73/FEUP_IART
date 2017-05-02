@@ -19,14 +19,14 @@ private:
 	int id;
 	std::string name;
 	std::vector<Exam *> exams;
-	Schedule ownSchedule;
+	//Schedule ownSchedule;
     //int ano;
 public:
 	Student(){}
 	Student(std::string name);
 	Student(int id, std::string name);
 	virtual ~Student(){}
-	int getId()const;
+	int getId() const;
 	std::string getName()const;
 	void setName(std::string name);
 	std::string getInfo();

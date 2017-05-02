@@ -10,8 +10,6 @@ Epoch::Epoch(std::string name, int numDays)
     this->numDays = numDays;
 }
 
-
-
 int Epoch::getNumdays() {
     return this->numDays;
 }

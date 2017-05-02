@@ -27,8 +27,8 @@ int main() {
     vector<vector<string>> examsInfo;
     vector<Student *> students;
     vector<Exam *> exams;
-    //char *filename = (char *) "../proj/iart.db";
-    char * filename = (char*)"iart.db";
+    char *filename = (char *) "../proj/iart.db";
+    //char * filename = (char*)"iart.db";
     char *selectStudentQuery = (char *) "SELECT * FROM Student";
     char *selectExamQuery = (char *) "SELECT * FROM Exam";
 
@@ -84,7 +84,7 @@ int main() {
     //interface
     //initialOptions(university);
 
-    Algorithm algorithm(university,1);
+    Algorithm algorithm(university,12);
 
     //save .db
 

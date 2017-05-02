@@ -21,7 +21,7 @@ Student::Student(std::string name)
 }
 Student::Student(int id, std::string name)
 {
-	this->id=id;
+	this->id = id;
 	this->name = name;
 	currentId++;
 }

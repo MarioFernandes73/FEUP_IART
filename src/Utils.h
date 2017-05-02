@@ -7,5 +7,7 @@
 
 #define HOURS_PER_DAY 8;
 #define REPETITIONS 10;
+#define NUM_ELITISTS 6;
+#define CROSSING_PROB 40;
 
 #endif //EXAMSCHEDULER_UTILS_H
