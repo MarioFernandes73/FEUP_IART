@@ -30,7 +30,6 @@ Fitness function do exame:
 TODO LIST:
 	* Schedule (calculatefitnessfunction) : introduzir o numero de alunos em comum como fator para o calculo do fitness
 	* Algorithm : 	
-		* selecao
 		* emparelhamento
 		* cruzamento
 		* mutação

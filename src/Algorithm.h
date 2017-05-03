@@ -12,20 +12,28 @@ class Algorithm {
 private:
     std::vector<Schedule *> population;
     int populationLength;
+    int maxSlots;
 public:
     Algorithm(University u, int populationLength);
-    void populate(std::vector<Exam *> exams, int maxSlots);
-    Schedule * createRandomSchedule(std::vector<Exam *> exams, int slots);
+    void populate(std::vector<Exam *> exams);
+    Schedule * createRandomSchedule(std::vector<Exam *> exams);
 
     void run();
 
-    int calculateFitness();
-    void selectNextPopulation(int popFitness);
+    void calculateFitness();
+    int getPopulationFitness();
+    int getBestSchedule(vector<Schedule *> schedules);
+    void createRandomProbs(double * randomProbs,int i);
+
+    void selectNextPopulation();
     vector<Schedule *> selectElitistPopulation();
-
     void fitnessProbabilities(int populationFitness);
-
     void selectRemainingPopulation(double pDouble[], vector<Schedule *> vector);
+
+    void crossover();
+    vector<Schedule *> selectCrossoverPopulation();
+    void executeCrossover(vector<Schedule *> vector);
+    vector<pair<Exam *, int>> createMap(vector<pair<Exam *, int>> map1, vector<pair<Exam *, int>> map2, int pos);
 };
 
 

@@ -23,7 +23,34 @@ Schedule::~Schedule() {
 	// TODO Auto-generated destructor stub
 }
 
-void Schedule::addExams(std::vector<Exam *> vector, std::unordered_map<Exam *, int> examSlot)
+int Schedule::getID() const {
+    return this->id;
+}
+
+int Schedule::getFitness() const {
+    return fitness;
+}
+
+void Schedule::setFitness(int f) {
+    this->fitness = f;
+}
+
+double Schedule::getmaxRouletteProb() const{
+    return this->maxRouletteProb;
+}
+void Schedule::setmaxRouletteProb(double mrp){
+    this->maxRouletteProb = mrp;
+}
+
+int Schedule::getNumExams() const {
+    return this->examSlot.size();
+}
+
+std::vector<pair<Exam *, int>> Schedule::getExamSlot() const {
+    return this->examSlot;
+}
+
+void Schedule::addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int>> examSlot)
 {
     this->schedule = vector;
     this->examSlot = examSlot;
@@ -31,36 +58,26 @@ void Schedule::addExams(std::vector<Exam *> vector, std::unordered_map<Exam *, i
     this->maxRouletteProb = 0;
 }
 
-void Schedule::printExams()
-{
-
-    cout << "Schedule " << id << endl;
-    for (int i = 0; i < schedule.size(); ++i)
-    {
-        if(schedule.at(i) == NULL)
-            cout << "   " << endl;
-        else
-            cout << "   " << i << " : " << schedule.at(i)->getInfo();
-    }
-    cout << "  slots " << endl;
-    for (pair<Exam *const, int> & x: examSlot)
-        cout << "   " << x.first->getClassName() << " : " << x.second << endl;
-
-}
-
 int Schedule::calculateFitness()
 {
-    for (pair<Exam *const, int> & x: examSlot)
+    //reinit this values every time
+    this->fitness = 0;
+    this->maxRouletteProb = 0;
+
+    for (int i = 0; i < examSlot.size(); ++i)
     {
+        pair<Exam *,int> x = (pair<Exam *, int> &&) examSlot.at(i);
         int fitness = 0;
         int multiplier = 0;
         int distance = 0;
         Exam * currExam = x.first;
 
         //compares current exam with all the other exams
-        for (pair<Exam *const, int> & y: examSlot)
+        for (int j = 0; j < examSlot.size(); ++j)
         {
+            pair<Exam *,int> y = (pair<Exam *, int> &&) examSlot.at(j);
             Exam * exam = y.first;
+
             if(!(currExam == exam)) //nao se esta a comparar consigo proprio
             {
                 //TODO : mais tarde, introduzir o numero de alunos em comum como fator para o calculo do fitness
@@ -97,21 +114,46 @@ double Schedule::calculateMaxRouletteProb(double minRouletteProb, double total) 
     return  this->maxRouletteProb;
 }
 
-int Schedule::getID() const {
-    return this->id;
+void Schedule::updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSlots)
+{
+    //exam slot
+    this->examSlot = examSlot;
+
+    //schedule
+    vector<Exam *> newschedule;
+    for (int i = 0; i < maxSlots; ++i)
+        newschedule.push_back(NULL);
+
+    for(auto &it: examSlot)
+    {
+        Exam * e = it.first;
+        for (int i = 0; i < e->getDuration(); ++i) {
+            newschedule.at(it.second+i) = e;
+        }
+    }
+
+    //fitness
+    this->fitness = 0;
+
+    //maxRouletteProb
+    this->maxRouletteProb = 0;
 }
 
-int Schedule::getFitness() const {
-    return fitness;
-}
+void Schedule::printExams()
+{
+    cout << "Schedule " << id << endl;
+    for (int i = 0; i < schedule.size(); ++i)
+    {
+        if(schedule.at(i) == NULL)
+            cout << "   " << endl;
+        else
+            cout << "   " << i << " : " << schedule.at(i)->getInfo();
+    }
+    cout << "  slots " << endl;
+    for (int j = 0; j < examSlot.size(); ++j)
+    {
+        pair<Exam *,int> x = (pair<Exam *, int> &&) examSlot.at(j);
+        cout << "   " << x.first->getClassName() << " : " << x.second << endl;
+    }
 
-void Schedule::setFitness(int f) {
-    this->fitness = f;
-}
-
-double Schedule::getmaxRouletteProb() const{
-    return this->maxRouletteProb;
-}
-void Schedule::setmaxRouletteProb(double mrp){
-    this->maxRouletteProb = mrp;
 }

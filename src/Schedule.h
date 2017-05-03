@@ -13,7 +13,6 @@
 #include "Utils.h"
 #include <string>
 #include <vector>
-#include <unordered_map>
 
 const static std::string weekDay[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
@@ -22,7 +21,7 @@ private:
     static int currentId;
     int id;
 	std::vector<Exam *> schedule;
-    std::unordered_map<Exam *, int> examSlot;
+    std::vector<pair<Exam *, int>> examSlot;
     int fitness;
     double maxRouletteProb;
 public:
@@ -33,14 +32,18 @@ public:
     double getmaxRouletteProb() const;
     void setmaxRouletteProb(double mrp);
     int getID() const;
+    int getNumExams() const;
+    std::vector<pair<Exam *, int>> getExamSlot() const;
 
-	void addExams(std::vector<Exam *> vector, std::unordered_map<Exam *, int> examSlot);
+	void addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int>> examSlot);
 	void printExams();
 
     int calculateFitness();
     bool inCommonStudents(Exam * currExam, Exam * exam);
     bool consecutiveDaysExams(int currExam, int exam);
     double calculateMaxRouletteProb(double minRouletteProb, double total);
+
+    void updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSlots);
 };
 
 #endif /* SCHEDULE_H_ */
