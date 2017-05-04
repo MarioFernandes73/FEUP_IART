@@ -64,6 +64,9 @@ int Schedule::calculateFitness()
     this->fitness = 0;
     this->maxRouletteProb = 0;
 
+    if(malformedSchedule())
+        return -1;
+
     for (int i = 0; i < examSlot.size(); ++i)
     {
         pair<Exam *,int> x = (pair<Exam *, int> &&) examSlot.at(i);
@@ -97,6 +100,31 @@ int Schedule::calculateFitness()
     return fitness;
 }
 
+bool Schedule::malformedSchedule()
+{
+    std::vector<bool> boolSchedule;
+    for (int k = 0; k < schedule.size(); ++k) {
+        boolSchedule.push_back(false);
+    }
+
+    for (int i = 0; i < examSlot.size(); ++i)
+    {
+        pair<Exam *,int> x = (pair<Exam *, int> &&) examSlot.at(i);
+
+        if(x.second+x.first->getDuration() > schedule.size()){
+            return true;
+        }
+
+        for (int j = 0; j < x.first->getDuration(); ++j) {
+            if(boolSchedule.at(x.second+j)) {
+                return true;
+            }
+            boolSchedule.at(x.second+j) = true;
+        }
+    }
+    return false;
+}
+
 bool Schedule::inCommonStudents(Exam *currExam, Exam *exam) {
     return true;
 }
@@ -119,17 +147,17 @@ void Schedule::updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSl
     this->examSlot = examSlot;
 
     //schedule
-    vector<Exam *> newschedule;
     for (int i = 0; i < maxSlots; ++i)
-        newschedule.push_back(NULL);
+        schedule.push_back(NULL);
 
     for(auto &it: examSlot)
     {
         Exam * e = it.first;
         for (int i = 0; i < e->getDuration(); ++i) {
-            newschedule.at(it.second+i) = e;
+            schedule.at(it.second+i) = e;
         }
     }
+    printExams();
 
     //fitness
     this->fitness = 0;

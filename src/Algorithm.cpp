@@ -112,10 +112,11 @@ void Algorithm::calculateFitness()
     //calculate schedule fitness
     for (int i = 0; i < population.size(); ++i)
     {
-        population.at(i)->calculateFitness();
+        if(population.at(i)->calculateFitness() == -1)
+            cout << "Invalid Schedule!" << endl;
 
         //DEBUG
-        //cout << * population.at(i) << "Fitness : " << population.at(i)->getFitness() << endl << endl;
+        cout << * population.at(i) << "Fitness : " << population.at(i)->getFitness() << endl << endl;
         //population.at(i)->printExams();
     }
 }

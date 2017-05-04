@@ -15,7 +15,6 @@
 
 using namespace std;
 
-
 int main() {
 
     //random numbers

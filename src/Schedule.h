@@ -39,6 +39,7 @@ public:
 	void printExams();
 
     int calculateFitness();
+    bool malformedSchedule();
     bool inCommonStudents(Exam * currExam, Exam * exam);
     bool consecutiveDaysExams(int currExam, int exam);
     double calculateMaxRouletteProb(double minRouletteProb, double total);
