@@ -92,7 +92,6 @@ int Schedule::calculateFitness()
         }
         this->fitness += fitness;       //fitness schedule
         currExam->setFitness(fitness);   //fitness exam
-        cout << currExam->getClassName() << " " << fitness<<endl;
     }
 
     return fitness;
@@ -156,4 +155,19 @@ void Schedule::printExams()
         cout << "   " << x.first->getClassName() << " : " << x.second << endl;
     }
 
+}
+
+void Schedule::mutate(int slot)
+{
+    int random = rand() % schedule.size();
+    this->examSlot.at(slot).second = random;
+}
+
+ostream& operator<<(ostream& out, const Schedule& s)
+{
+    out << "Schedule " << s.getID() << " : " << endl;
+    for (int i = 0; i < s.getExamSlot().size(); ++i) {
+        out << "   " << s.getExamSlot().at(i).first->getClassName() << " - " << s.getExamSlot().at(i).second << endl;
+    }
+    return out;
 }

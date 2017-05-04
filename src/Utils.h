@@ -9,5 +9,6 @@
 #define REPETITIONS 10;
 #define NUM_ELITISTS 6;
 #define CROSSING_PROB 30;
+#define MUTATION_PROB 8;
 
 #endif //EXAMSCHEDULER_UTILS_H

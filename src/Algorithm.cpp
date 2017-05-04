@@ -10,6 +10,7 @@ using namespace std;
 Algorithm::Algorithm(University u, int populationLength)
 {
     this->populationLength = populationLength;
+    this->numExams = u.getExams().size();
     this->maxSlots = u.getEpochByName("Normal")->getNumdays() * HOURS_PER_DAY;
 
     populate(u.getExams());
@@ -42,7 +43,7 @@ Schedule * Algorithm::createRandomSchedule(std::vector<Exam *> exams)
     }
 
     int j = 0;
-    while(j < exams.size())
+    while(j < numExams)
     {
         Exam * chosen = exams.at(j);
 
@@ -89,16 +90,19 @@ void Algorithm::run()
 
     while(rep > 0)
     {
+        //DEBUG
+        cout << endl << "-- New repetition : --" << endl;
+
         calculateFitness();
         selectNextPopulation();
         crossover();
-        //mutacao
+        mutation();
 
         rep--;
-        cout << endl;
     }
 
     calculateFitness();
+    //DEBUG
     int best = getBestSchedule(population);
     cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
 }
@@ -108,8 +112,11 @@ void Algorithm::calculateFitness()
     //calculate schedule fitness
     for (int i = 0; i < population.size(); ++i)
     {
-        cout << "Schedule : " << population.at(i)->getID() << endl;
         population.at(i)->calculateFitness();
+
+        //DEBUG
+        //cout << * population.at(i) << "Fitness : " << population.at(i)->getFitness() << endl << endl;
+        //population.at(i)->printExams();
     }
 }
 
@@ -177,21 +184,27 @@ vector<Schedule *> Algorithm::selectElitistPopulation()
 
 void Algorithm::fitnessProbabilities(int populationFitness)
 {
+    //DEBUG
     cout << "Roulette : "<< populationFitness<< endl;
+
     double minRouletteProb = 0, currRouletteProb = 0;
     for(int k = 0; k < population.size(); k++)
     {
         currRouletteProb = population.at(k)->calculateMaxRouletteProb(minRouletteProb,populationFitness);
+        //DEBUG
         cout << "( " << minRouletteProb << " , " << currRouletteProb << " ) " << endl;
+
         minRouletteProb = currRouletteProb;
     }
 }
 
 void Algorithm::createRandomProbs(double * randomProbs, int size) {
+    //DEBUG
     cout << "Random Probs : " << endl;
     for(int k = 0; k < size; ++k)
     {
         randomProbs[k] = (double) (rand() % 100) / 100;
+        //DEBUG
         cout << randomProbs[k] << " , ";
     }
 }
@@ -214,7 +227,7 @@ void Algorithm::selectRemainingPopulation(double *randomProbs, vector<Schedule *
 
     population = nextPopulation;
 
-    //my next population
+    //DEBUG
     cout << endl << "My new Population : " << endl;
     for(int i = 0; i < population.size(); i++)
         cout << population.at(i)->getID() << " , ";
@@ -222,7 +235,9 @@ void Algorithm::selectRemainingPopulation(double *randomProbs, vector<Schedule *
 
 void Algorithm::crossover()
 {
+    //DEBUG
     cout <<endl << endl << "Cross over" << endl;
+
     vector<Schedule *> pop = selectCrossoverPopulation();
     executeCrossover(pop);
 }
@@ -237,15 +252,16 @@ vector<Schedule *> Algorithm::selectCrossoverPopulation()
     double randomProbs[population.size()];
     createRandomProbs(randomProbs,population.size());
 
+    //DEBUG
     cout << endl << "Selected population :" << endl;
     //if probability <= 40% the schedule will be chosen to "crossover"
     for (int i = 0; i < population.size(); ++i) {
         if(randomProbs[i] <= crossoverProb)
         {
-            selectedPopulation.push_back((Schedule *&&) population.at(i));
-
+            //DEBUG
             cout << population.at(i)->getID() << " , ";
 
+            selectedPopulation.push_back((Schedule *&&) population.at(i));
             population.erase(population.begin()+i);
         }
     }
@@ -255,6 +271,9 @@ vector<Schedule *> Algorithm::selectCrossoverPopulation()
 
 void Algorithm::executeCrossover(vector<Schedule *> pop)
 {
+    //DEBUG
+    cout<< endl << "Execute crossover : " << endl;
+
     int size = pop.size();
     if(pop.size() % 2 != 0)
     {
@@ -262,14 +281,13 @@ void Algorithm::executeCrossover(vector<Schedule *> pop)
         population.push_back((Schedule *&&) pop.at(size));
     }
 
-    cout<< endl << "Execute crossover : " << endl;
-
     int i = 0;
     while (i < size)
     {
         //chose random crossover point
-        int position = rand() % pop.at(i)->getNumExams();
+        int position = rand() % numExams;
 
+        //debug
         cout << pop.at(i)->getID() << " + " << pop.at(i+1)->getID() << " at "<< position << endl;
 
         //create the 2 new schedules
@@ -301,4 +319,21 @@ vector<pair<Exam *, int>> Algorithm::createMap(vector<pair<Exam *, int>> map1, v
     }
 
     return newMap;
+}
+
+void Algorithm::mutation()
+{
+    double mut = MUTATION_PROB;
+
+    double mutNum = (mut / 100) * population.size() * numExams;
+
+    double scheduleNum = mutNum / numExams;
+    int examNum = mutNum - (int)scheduleNum*numExams;
+
+    population.at((int)scheduleNum)->mutate(examNum);
+
+    //DEBUG
+    cout << "Mutation on schedule "<< population.at((int)scheduleNum)->getID()
+         << " at " << population.at((int)scheduleNum)->getExamSlot().at(examNum).first->getClassName()
+         << " exam ( " << (int)scheduleNum << " , " << examNum << " )"<< endl;
 }

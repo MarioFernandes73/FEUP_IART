@@ -44,6 +44,9 @@ public:
     double calculateMaxRouletteProb(double minRouletteProb, double total);
 
     void updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSlots);
+    void mutate(int slot);
+
+    friend ostream& operator<<(ostream& os, const Schedule& s);
 };
 
 #endif /* SCHEDULE_H_ */

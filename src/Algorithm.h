@@ -13,6 +13,7 @@ private:
     std::vector<Schedule *> population;
     int populationLength;
     int maxSlots;
+    int numExams;
 public:
     Algorithm(University u, int populationLength);
     void populate(std::vector<Exam *> exams);
@@ -34,6 +35,8 @@ public:
     vector<Schedule *> selectCrossoverPopulation();
     void executeCrossover(vector<Schedule *> vector);
     vector<pair<Exam *, int>> createMap(vector<pair<Exam *, int>> map1, vector<pair<Exam *, int>> map2, int pos);
+
+    void mutation();
 };
 
 
