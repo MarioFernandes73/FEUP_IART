@@ -5,25 +5,26 @@
 #ifndef EXAMSCHEDULER_ALGORITHM_H
 #define EXAMSCHEDULER_ALGORITHM_H
 
-#include "Schedule.h"
-#include "University.h"
+#include "Epoch.h"
+
+using namespace std;
 
 class Algorithm {
 private:
-    std::vector<Schedule *> population;
+    Epoch *epoch;
+    vector<Schedule *> population;
     int populationLength;
     int maxSlots;
-    int numExams;
 public:
-    Algorithm(University u, int populationLength);
-    void populate(std::vector<Exam *> exams);
-    Schedule * createRandomSchedule(std::vector<Exam *> exams);
+    Algorithm(Epoch *epoch, int populationLength);
+    void populate(vector<Exam *> exams);
+    Schedule * createRandomSchedule(vector<Exam *> exams);
+    vector<Exam *> randomExams(vector<Exam *> exams);
 
     void run();
 
     void calculateFitness();
     int getPopulationFitness();
-    int getBestSchedule(vector<Schedule *> schedules);
     void createRandomProbs(double * randomProbs,int i);
 
     void selectNextPopulation();
@@ -33,11 +34,16 @@ public:
 
     void crossover();
     vector<Schedule *> selectCrossoverPopulation();
-    void executeCrossover(vector<Schedule *> vector);
-    vector<pair<Exam *, int>> createMap(vector<pair<Exam *, int>> map1, vector<pair<Exam *, int>> map2, int pos);
 
     void mutation();
-};
 
+    int getBestSchedule(vector<Schedule *> schedules);
+
+    void executeCrossover(vector<Schedule *> vector);
+
+
+    vector<pair<Exam *, int>> createMap(vector<pair<Exam *, int>> map1, vector<pair<Exam *, int>> map2, int pos);
+
+};
 
 #endif //EXAMSCHEDULER_ALGORITHM_H

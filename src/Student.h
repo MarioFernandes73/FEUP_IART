@@ -10,17 +10,13 @@
 
 #include <string>
 #include <vector>
-#include "Exam.h"
-#include "Schedule.h"
+
 
 class Student {
 private:
 	static int currentId;
 	int id;
 	std::string name;
-	std::vector<Exam *> exams;
-	//Schedule ownSchedule;
-    //int ano;
 public:
 	Student(){}
 	Student(std::string name);

@@ -7,86 +7,60 @@
 
 using namespace std;
 
-Algorithm::Algorithm(University u, int populationLength)
+Algorithm::Algorithm(Epoch *e, int populationLength)
 {
+    this->epoch = e;
     this->populationLength = populationLength;
-    this->numExams = u.getExams().size();
-    this->maxSlots = u.getEpochByName("Normal")->getNumdays() * HOURS_PER_DAY;
+    this->maxSlots = e->getNumdays() * HOURS_PER_DAY;
 
-    populate(u.getExams());
-    run();
+    populate(e->getExams());
 }
 
-void Algorithm::populate(std::vector<Exam *> exams)
+void Algorithm::populate(vector<Exam *> exams)
 {
+    vector<Exam *> exams2 = randomExams(exams);
+
     for (int i = 0; i < this->populationLength; ++i)
     {
-        Schedule * s = createRandomSchedule(exams);
+        Schedule * s = createRandomSchedule(exams2);
         s->printExams();
-
         this->population.push_back(s);
     }
 }
 
-Schedule * Algorithm::createRandomSchedule(std::vector<Exam *> exams)
+Schedule * Algorithm::createRandomSchedule(vector<Exam *> exams)
 {
-    //schedule
     Schedule *s = new Schedule();
-    std::vector<Exam *> schedule;
-    std::vector<bool> boolSchedule;
-    std::vector<pair<Exam *, int>> examSlot;
+    s->setSubscriptions(this->epoch->getSubscriptions());
 
-    //initialize all booleans = false and exams to NULL
-    for (int i = 0; i < this->maxSlots; ++i) {
-        boolSchedule.push_back(false);
-        schedule.push_back(NULL);
-    }
-
-    int j = 0;
-    while(j < numExams)
-    {
-        Exam * chosen = exams.at(j);
-
-        //random position
-        int random = rand() % this->maxSlots;
-        int duration = chosen->getDuration();
-
-        //possible position
-        if((duration + random) <= this->maxSlots)
-        {
-            //free slots
-            bool free = true;
-            for (int i = random; i < random+duration; ++i)
-            {
-                if(boolSchedule.at(i))
-                {
-                    free = false;
-                    break;
-                }
-            }
-
-            //occupy slots
-            if(free)
-            {
-                examSlot.push_back(std::make_pair<Exam *,int>((Exam *&&) chosen, (int &&) random));
-                for (int i = 0; i < duration; ++i)
-                {
-                    boolSchedule.at(random+i) = true;
-                    schedule.at(random+i) = chosen;
-                }
-                j++;
-            }
-        }
-    }
-
-    s->addExams(schedule,examSlot);
+    bool valid = true;
+    do{
+        valid = s->createRandomSchedule(exams, this->maxSlots);
+        cout << endl << valid << endl<< endl;
+    }while(!valid);
 
     return s;
 }
 
+vector<Exam *> Algorithm::randomExams(std::vector<Exam *> vector)
+{
+    std::vector<Exam *> exams1 = vector;
+    std::vector<Exam *> exams2;
+
+    int i = 0;
+    while(i < exams1.size())
+    {
+        int random = rand() % exams1.size();
+        exams2.push_back((Exam *&&) exams1.at(random));
+        exams1.erase(exams1.begin()+random);
+    }
+
+    return exams2;
+}
+
 void Algorithm::run()
 {
-    int rep = 2;//REPETITIONS;
+    int rep = REPETITIONS;
 
     while(rep > 0)
     {
@@ -105,6 +79,7 @@ void Algorithm::run()
     //DEBUG
     int best = getBestSchedule(population);
     cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
+    //this->epoch->setSchedule(population.at(best));
 }
 
 void Algorithm::calculateFitness()
@@ -130,7 +105,7 @@ int Algorithm::getPopulationFitness() {
     return populationFitness;
 }
 
-int Algorithm::getBestSchedule(vector<Schedule *> schedules)
+int Algorithm::getBestSchedule(std::vector<Schedule *> schedules)
 {
     int mybest = 0;
     for(int j = 0; j < schedules.size() ; ++j)
@@ -250,29 +225,37 @@ vector<Schedule *> Algorithm::selectCrossoverPopulation()
     crossoverProb /= 100;
 
     //create random probabilities
-    double randomProbs[population.size()];
-    createRandomProbs(randomProbs,population.size());
+    int size = population.size();
+    double randomProbs[size];
+    createRandomProbs(randomProbs,size);
 
     //DEBUG
-    cout << endl << "Selected population :" << endl;
-    //if probability <= 40% the schedule will be chosen to "crossover"
-    for (int i = 0; i < population.size(); ++i) {
+    cout << endl << " Selected population :" << endl;
+    //if probability <= 90% the schedule will be chosen to "crossover"
+    for (int i = 0; i < size; ++i) {
         if(randomProbs[i] <= crossoverProb)
         {
             //DEBUG
             cout << population.at(i)->getID() << " , ";
 
             selectedPopulation.push_back((Schedule *&&) population.at(i));
-            population.erase(population.begin()+i);
         }
     }
+
+    //delete selected population from "population" arrray
+    for (int j = 0; j < selectedPopulation.size(); ++j)
+        for (int i = 0; i < population.size(); ++i)
+            if(selectedPopulation.at(j)->getID() == population.at(i)->getID()){
+                population.erase(population.begin()+i);
+                break;
+            }
 
     return selectedPopulation;
 }
 
-void Algorithm::executeCrossover(vector<Schedule *> pop)
+void Algorithm::executeCrossover(std::vector<Schedule *> pop)
 {
-    //DEBUG
+//DEBUG
     cout<< endl << "Execute crossover : " << endl;
 
     int size = pop.size();
@@ -285,22 +268,24 @@ void Algorithm::executeCrossover(vector<Schedule *> pop)
     int i = 0;
     while (i < size)
     {
-        //chose random crossover point
-        int position = rand() % numExams;
+//chose random crossover point
+        int position = rand() % (epoch->getExams().size()-1) +1;
 
-        //debug
+//debug
         cout << pop.at(i)->getID() << " + " << pop.at(i+1)->getID() << " at "<< position << endl;
 
-        //create the 2 new schedules
+//create the 2 new schedules
         vector<pair<Exam *, int>> new1 = createMap(pop.at(i)->getExamSlot(),pop.at(i+1)->getExamSlot(), position);
         vector<pair<Exam *, int>> new2 = createMap(pop.at(i+1)->getExamSlot(),pop.at(i)->getExamSlot(), position);
 
-        //update the schedule object
+//update the schedule object
         Schedule *s1 = new Schedule();
+        s1->setSubscriptions(epoch->getSubscriptions());
         s1->updateSchedule(new1,this->maxSlots);
         population.push_back(s1);
 
         Schedule *s2 = new Schedule();
+        s2->setSubscriptions(epoch->getSubscriptions());
         s2->updateSchedule(new2,this->maxSlots);
         population.push_back(s2);
 
@@ -308,7 +293,7 @@ void Algorithm::executeCrossover(vector<Schedule *> pop)
     }
 }
 
-vector<pair<Exam *, int>> Algorithm::createMap(vector<pair<Exam *, int>> map1, vector<pair<Exam *, int>> map2, int pos) {
+vector<pair<Exam *, int>> Algorithm::createMap(std::vector<pair<Exam *, int>> map1, std::vector<pair<Exam *, int>> map2, int pos) {
     vector<pair<Exam *, int>> newMap;
 
     for (int i = 0; i < pos; ++i) {
@@ -325,16 +310,17 @@ vector<pair<Exam *, int>> Algorithm::createMap(vector<pair<Exam *, int>> map1, v
 void Algorithm::mutation()
 {
     double mut = MUTATION_PROB;
+    int numExams = epoch->getExams().size();
 
     double mutNum = (mut / 100) * population.size() * numExams;
 
     double scheduleNum = mutNum / numExams;
     int examNum = mutNum - (int)scheduleNum*numExams;
 
-    population.at((int)scheduleNum)->mutate(examNum);
-
     //DEBUG
     cout << "Mutation on schedule "<< population.at((int)scheduleNum)->getID()
          << " at " << population.at((int)scheduleNum)->getExamSlot().at(examNum).first->getClassName()
          << " exam ( " << (int)scheduleNum << " , " << examNum << " )"<< endl;
+
+    population.at((int)scheduleNum)->mutate(examNum);
 }

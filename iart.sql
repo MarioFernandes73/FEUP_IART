@@ -1,9 +1,8 @@
 PRAGMA foreign_keys = ON;
 
-
 drop table if exists Student;
 drop table if exists Exam;
-drop table if exists Subscribe;
+drop table if exists Subscription;
 
 CREATE TABLE Student (
 id_student INTEGER PRIMARY KEY,
@@ -16,7 +15,8 @@ name VARCHAR NOT NULL,
 year INTEGER NOT NULL
 );
 
-CREATE TABLE Subscribe (
+CREATE TABLE Subscription (
+id_epoch INTEGER,
 id_exam INTEGER,
 id_student INTEGER
 );
@@ -41,31 +41,30 @@ INSERT INTO Exam VALUES(9,'IART',3);
 INSERT INTO Exam VALUES(10,'SDIS',3);
 INSERT INTO Exam VALUES(11,'IOPE',4);
 
-INSERT INTO Subscribe VALUES(1,7);
-INSERT INTO Subscribe VALUES(1,1);
-INSERT INTO Subscribe VALUES(2,7);
-INSERT INTO Subscribe VALUES(2,2);
-INSERT INTO Subscribe VALUES(3,7);
-INSERT INTO Subscribe VALUES(3,5);
-INSERT INTO Subscribe VALUES(4,7);
-INSERT INTO Subscribe VALUES(4,3);
-INSERT INTO Subscribe VALUES(5,6);
-INSERT INTO Subscribe VALUES(5,2);
-INSERT INTO Subscribe VALUES(6,6);
-INSERT INTO Subscribe VALUES(6,5);
-INSERT INTO Subscribe VALUES(7,6);
-INSERT INTO Subscribe VALUES(7,3);
-INSERT INTO Subscribe VALUES(8,6);
-INSERT INTO Subscribe VALUES(8,5);
-INSERT INTO Subscribe VALUES(8,4);
-INSERT INTO Subscribe VALUES(9,1);
-INSERT INTO Subscribe VALUES(9,2);
-INSERT INTO Subscribe VALUES(9,3);
-INSERT INTO Subscribe VALUES(9,4);
-INSERT INTO Subscribe VALUES(9,5);
-INSERT INTO Subscribe VALUES(10,1);
-INSERT INTO Subscribe VALUES(10,2);
-INSERT INTO Subscribe VALUES(10,3);
-INSERT INTO Subscribe VALUES(10,5);
-INSERT INTO Subscribe VALUES(11,4);
-
+INSERT INTO Subscription VALUES(1,1,7);
+INSERT INTO Subscription VALUES(1,1,1);
+INSERT INTO Subscription VALUES(1,2,7);
+INSERT INTO Subscription VALUES(1,2,2);
+INSERT INTO Subscription VALUES(1,3,7);
+INSERT INTO Subscription VALUES(1,3,5);
+INSERT INTO Subscription VALUES(1,4,7);
+INSERT INTO Subscription VALUES(1,4,3);
+INSERT INTO Subscription VALUES(1,5,6);
+INSERT INTO Subscription VALUES(1,5,2);
+INSERT INTO Subscription VALUES(1,6,6);
+INSERT INTO Subscription VALUES(1,6,5);
+INSERT INTO Subscription VALUES(1,7,6);
+INSERT INTO Subscription VALUES(1,7,3);
+INSERT INTO Subscription VALUES(1,8,6);
+INSERT INTO Subscription VALUES(1,8,5);
+INSERT INTO Subscription VALUES(1,8,4);
+INSERT INTO Subscription VALUES(1,9,1);
+INSERT INTO Subscription VALUES(1,9,2);
+INSERT INTO Subscription VALUES(1,9,3);
+INSERT INTO Subscription VALUES(1,9,4);
+INSERT INTO Subscription VALUES(1,9,5);
+INSERT INTO Subscription VALUES(1,10,1);
+INSERT INTO Subscription VALUES(1,10,2);
+INSERT INTO Subscription VALUES(1,10,3);
+INSERT INTO Subscription VALUES(1,10,5);
+INSERT INTO Subscription VALUES(1,11,4);

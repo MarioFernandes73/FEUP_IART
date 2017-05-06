@@ -13,6 +13,8 @@
 #include "University.h"
 #include "Algorithm.h"
 
+void subscribe(int id, int student_id);
+
 using namespace std;
 
 int main() {
@@ -24,18 +26,21 @@ int main() {
     Database *db;
     vector<vector<string>> studentsInfo;
     vector<vector<string>> examsInfo;
+    vector<vector<string>> subscribeInfo;
     vector<Student *> students;
     vector<Exam *> exams;
     char *filename = (char *) "../proj/iart.db";
     //char * filename = (char*)"iart.db";
     char *selectStudentQuery = (char *) "SELECT * FROM Student";
     char *selectExamQuery = (char *) "SELECT * FROM Exam";
+    char *selectSubscribeQuery = (char *) "SELECT * FROM Subscription";
 
     // database operations
     db = new Database(filename);
     db->open();
     studentsInfo = db->query(selectStudentQuery);
     examsInfo = db->query(selectExamQuery);
+    subscribeInfo = db->query(selectSubscribeQuery);
 
     //read students
     for (vector<vector<string> >::iterator it = studentsInfo.begin(); it < studentsInfo.end(); ++it) {
@@ -71,19 +76,32 @@ int main() {
         exams.push_back(new Exam(exam_id, Class(className,year)));
     }
 
-    db->close();
-
-    //criacao das epocas (nome + numero de dias)
-    Epoch * e = new Epoch("Normal",8);
-
     // university initialization
     University university(students,exams);
+    //criacao das epocas (nome + numero de dias)
+    Epoch * e = new Epoch("Normal",15);
     university.addEpoch(e);
+
+    //read subscribes
+    for (vector<vector<string> >::iterator it = subscribeInfo.begin(); it < subscribeInfo.end(); ++it) {
+        vector<string> row = *it;
+        int exam_id = 0, student_id = 0, epoch_id = 0;
+        char c;
+        stringstream ss;
+        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++) {
+            ss << (*it2) << ",";
+        }
+        ss >> epoch_id >> c >> exam_id >> c >> student_id;
+        university.addSubscription(epoch_id,exam_id,student_id);
+    }
+
+    db->close();
 
     //interface
     //initialOptions(university);
 
-    Algorithm algorithm(university,12);
+    Algorithm algorithm(e,20);
+    algorithm.run();
 
     //save .db
 

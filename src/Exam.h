@@ -24,16 +24,15 @@ public:
     Exam(string name);
     Exam(int id, Class myClass);
     virtual ~Exam();
-    std::string getInfo();
-    int getDuration();
-    bool operator==(const Exam * e1)const;
-
+    std::string getInfo() const;
+    int getDuration() const;
+    int getId() const;
+    long getYear() const;
     std::string getClassName()const;
     void setClassName(std::string className);
-
-    long getYear();
-
     void setFitness(int i);
+
+    bool operator==(const Exam * e1)const;
 };
 
 #endif /* EXAM_H_ */

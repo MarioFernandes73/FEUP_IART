@@ -96,3 +96,21 @@ Epoch * University::getEpochByName(string name)
     }
     return NULL;
 }
+
+void University::addSubscription(int epochId, int examId, int studentId)
+{
+    Exam *e = findById(exams,examId);
+    Student *s = findById(students,studentId);
+    Epoch *epoch = findById(epochs,epochId);
+
+    epoch->addSubscription(new Subscription(s,e));
+}
+
+template<typename T>
+T* University::findById(vector<T*> vec, int id)
+{
+    for (int i = 0; i < vec.size(); ++i)
+        if(vec.at(i)->getId() == id)
+            return vec.at(i);
+    return nullptr;
+}

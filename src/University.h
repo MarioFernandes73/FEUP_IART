@@ -8,17 +8,14 @@
 #ifndef UNIVERSITY_H_
 #define UNIVERSITY_H_
 
-#include "Student.h"
-#include "Schedule.h"
-#include "Epoch.h"
 #include <string>
+#include "Epoch.h"
 
 class University {
 private:
-    Schedule globalSchedule;
     std::string name;
-    std::vector<Student *> students;
     std::vector<Exam *> exams;
+    std::vector<Student *> students;
     std::vector<Epoch *> epochs;
 public:
     University(std::vector<Student *> students,std::vector<Exam *> exams);
@@ -37,6 +34,10 @@ public:
     void removeExam(Exam *oldExam);
 
     Epoch * getEpochByName(std::string name);
+
+    template<typename T>
+    T* findById(vector<T*> vec, int id);
+    void addSubscription(int epochId, int examId, int studentId);
 };
 
 #endif /* UNIVERSITY_H_ */
