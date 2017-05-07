@@ -39,7 +39,16 @@ SOURCES +=\
     Subscription.cpp \
     University.cpp \
     sqlite3.c \
-    mainmenu.cpp
+    mainmenu.cpp \
+    dialogcreatestudent.cpp \
+    dialogliststudents.cpp \
+    dialogcreatecourse.cpp \
+    dialoglistcourses.cpp \
+    dialoglistenrollments.cpp \
+    dialogcurrentschedule.cpp \
+    dialogeditexams.cpp \
+    dialoggenerateschedule.cpp \
+    dialogliststatistics.cpp
 
 HEADERS  += mainwindow.h \
     Algorithm.h \
@@ -57,7 +66,25 @@ HEADERS  += mainwindow.h \
     Subscription.h \
     University.h \
     Utils.h \
-    mainmenu.h
+    mainmenu.h \
+    dialogcreatestudent.h \
+    dialogliststudents.h \
+    dialogcreatecourse.h \
+    dialoglistcourses.h \
+    dialoglistenrollments.h \
+    dialogcurrentschedule.h \
+    dialogeditexams.h \
+    dialoggenerateschedule.h \
+    dialogliststatistics.h
 
 FORMS    += mainwindow.ui \
-    mainmenu.ui
+    mainmenu.ui \
+    dialogcreatestudent.ui \
+    dialogliststudents.ui \
+    dialogcreatecourse.ui \
+    dialoglistcourses.ui \
+    dialoglistenrollments.ui \
+    dialogcurrentschedule.ui \
+    dialogeditexams.ui \
+    dialoggenerateschedule.ui \
+    dialogliststatistics.ui
