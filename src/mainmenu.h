@@ -2,6 +2,7 @@
 #define MAINMENU_H
 
 #include <QDialog>
+#include "University.h"
 
 namespace Ui {
 class MainMenu;
@@ -11,9 +12,6 @@ class MainMenu : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit MainMenu(QWidget *parent = 0);
-    ~MainMenu();
 
 private slots:
 
@@ -37,6 +35,12 @@ private slots:
 
 private:
     Ui::MainMenu *ui;
+    University * university;
+
+public:
+    explicit MainMenu(QWidget *parent = 0);
+    void setUniversity(University * university){this->university = university;}
+    ~MainMenu();
 };
 
 #endif // MAINMENU_H
