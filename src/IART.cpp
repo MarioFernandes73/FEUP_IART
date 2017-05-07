@@ -17,8 +17,20 @@ void subscribe(int id, int student_id);
 
 using namespace std;
 
-int main() {
+#include "mainwindow.h"
+#include <QApplication>
 
+int main(int argc, char* argv[]) {
+
+    //Qt setup
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
+    return a.exec();
+
+
+    /*
     //random numbers
     srand ((unsigned int) time(NULL));
 
@@ -106,5 +118,5 @@ int main() {
 
     //save .db
 
-    return 0;
+    return 0;*/
 }
