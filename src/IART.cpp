@@ -29,7 +29,8 @@ int main() {
     vector<vector<string>> subscribeInfo;
     vector<Student *> students;
     vector<Exam *> exams;
-    char *filename = (char *) "../proj/iart.db";
+    char *filename = (char *) "../iart.db";         // QT
+    //char *filename = (char *) "../proj/iart.db";
     //char * filename = (char*)"iart.db";
     char *selectStudentQuery = (char *) "SELECT * FROM Student";
     char *selectExamQuery = (char *) "SELECT * FROM Exam";

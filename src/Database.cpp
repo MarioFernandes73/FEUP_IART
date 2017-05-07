@@ -18,8 +18,9 @@ Database::Database(char * filename)
 
 bool Database::open()
 {
-	if(sqlite3_open(filename, &database) == SQLITE_OK)
+    if(sqlite3_open(filename, &database) == SQLITE_OK)
 		return true;
+    cout << "CANT OPEN DATABASE" << endl;
 	return false;
 }
 
