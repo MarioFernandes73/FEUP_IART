@@ -38,7 +38,8 @@ SOURCES +=\
     Student.cpp \
     Subscription.cpp \
     University.cpp \
-    sqlite3.c
+    sqlite3.c \
+    mainmenu.cpp
 
 HEADERS  += mainwindow.h \
     Algorithm.h \
@@ -55,6 +56,8 @@ HEADERS  += mainwindow.h \
     Student.h \
     Subscription.h \
     University.h \
-    Utils.h
+    Utils.h \
+    mainmenu.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    mainmenu.ui
