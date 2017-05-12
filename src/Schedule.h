@@ -16,6 +16,7 @@
 const static std::string weekDay[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 class Schedule {
+
 private:
     static int currentId;
     int id;
@@ -32,6 +33,7 @@ public:
     void setFitness(int f);
     double getmaxRouletteProb() const;
     void setmaxRouletteProb(double mrp);
+    void setID(int id);
     int getID() const;
     int getNumExams() const;
     std::vector<pair<Exam *, int>> getExamSlot() const;

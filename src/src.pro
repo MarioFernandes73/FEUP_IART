@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-05-07T13:53:29
+# Project created by QtCreator 2017-05-10T15:52:09
 #
 #-------------------------------------------------
 
@@ -48,7 +48,8 @@ SOURCES +=\
     dialogcurrentschedule.cpp \
     dialogeditexams.cpp \
     dialoggenerateschedule.cpp \
-    dialogliststatistics.cpp
+    dialogliststatistics.cpp \
+    SimulatedAnnealing.cpp
 
 HEADERS  += mainwindow.h \
     Algorithm.h \
@@ -75,7 +76,8 @@ HEADERS  += mainwindow.h \
     dialogcurrentschedule.h \
     dialogeditexams.h \
     dialoggenerateschedule.h \
-    dialogliststatistics.h
+    dialogliststatistics.h \
+    SimulatedAnnealing.h
 
 FORMS    += mainwindow.ui \
     mainmenu.ui \

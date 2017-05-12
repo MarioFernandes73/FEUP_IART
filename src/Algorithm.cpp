@@ -126,7 +126,7 @@ void Algorithm::selectNextPopulation()
     fitnessProbabilities(populationFitness);
 
     //create random probabilities
-    double randomProbs[population.size()-numElitists];
+    double *randomProbs = new double[population.size()-numElitists];
     createRandomProbs(randomProbs,population.size()-numElitists);
 
     //select new population considering random probs
@@ -226,7 +226,7 @@ vector<Schedule *> Algorithm::selectCrossoverPopulation()
 
     //create random probabilities
     int size = population.size();
-    double randomProbs[size];
+    double *randomProbs = new double[size];
     createRandomProbs(randomProbs,size);
 
     //DEBUG

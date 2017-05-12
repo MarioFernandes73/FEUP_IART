@@ -17,11 +17,15 @@ Schedule::Schedule() {
     this->id = currentId;
     currentId++;
 
-    cout << "Create schedule "<< id << endl;
+    //cout << "Create schedule "<< id << endl;
 }
 
 Schedule::~Schedule() {
     // TODO Auto-generated destructor stub
+}
+
+void Schedule::setID(int id){
+    this->id = id;
 }
 
 int Schedule::getID() const {
@@ -65,7 +69,7 @@ void Schedule::addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int
 
 bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)
 {
-    cout << "Filling schedule " << this->id<< endl;
+    //cout << "Filling schedule " << this->id<< endl;
     std::vector<bool> boolSchedule;
     int hours = HOURS_PER_DAY;
 
@@ -107,7 +111,7 @@ bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)
 
 void Schedule::optimize()
 {
-    cout << "Optimizing...\n";
+    //cout << "Optimizing...\n";
 
     for (int i = 0; i < examSlot.size(); ++i)
     {
@@ -116,15 +120,15 @@ void Schedule::optimize()
         {
             Exam *e2 = examSlot.at(j).first;
 
-            //cout << "Comparing " << e1->getClassName() << " with " << e2->getClassName() << endl;
+            ////cout << "Comparing " << e1->getClassName() << " with " << e2->getClassName() << endl;
 
             //not the same exam
             if(!(e1 == e2))
             {
                 if(consecutiveDaysExams(examSlot.at(i).second,examSlot.at(j).second)){
-                    //cout << "  concecutive!\n";
+                    ////cout << "  concecutive!\n";
                     if(commonStudents(e1,e2)){
-                        //cout << "  common students!\n";
+                        ////cout << "  common students!\n";
                         updateExamPosition(examSlot.at(j));
                     }
                 }
@@ -141,7 +145,7 @@ void Schedule::updateExamPosition(pair<Exam *,int> exam)
     if (possiblePos.size() > 0) {
         int random = rand() % possiblePos.size();
 
-        //cout << "  New pos : " << possiblePos.at(random) << endl;
+        ////cout << "  New pos : " << possiblePos.at(random) << endl;
 
         //retiro o exame da sua posicao atual no schedule
         //colocar na sua nova posicao
@@ -156,8 +160,8 @@ void Schedule::updateExamPosition(pair<Exam *,int> exam)
                 examSlot.at(l).second = possiblePos.at(random);
         }
     }
-    else
-        cout << "Problem with " << exam.first->getClassName() << endl;
+    //else
+        //cout << "Problem with " << exam.first->getClassName() << endl;
 }
 
 vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
@@ -226,11 +230,11 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
             l++;
     }
 
-    cout << "  Possible positions : ";
+    //cout << "  Possible positions : ";
     for (int k = 0; k < pos.size(); ++k) {
-        cout << pos.at(k) << " , ";
+        //cout << pos.at(k) << " , ";
     }
-    cout << endl;
+    //cout << endl;
 
     return pos;
 }
@@ -308,7 +312,7 @@ int Schedule::calculateFitness()
                 }
             }
         }
-        cout << x.first->getClassName() << " "<< fitness << endl;
+        //cout << x.first->getClassName() << " "<< fitness << endl;
         this->fitness += fitness;       //fitness schedule
         currExam->setFitness(fitness);   //fitness exam
     }
@@ -330,7 +334,7 @@ double Schedule::calculateMaxRouletteProb(double minRouletteProb, double total) 
 
 void Schedule::updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSlots)
 {
-    cout << "updating schedule...\n";
+    //cout << "updating schedule...\n";
     std::vector<pair<Exam *, int>> malformedExams;
 
     //fitness
@@ -354,7 +358,7 @@ void Schedule::updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSl
             if(schedule.at(it.second+i) == NULL)
                 schedule.at(it.second+i) = e;
             else{
-                cout << " - " << it.first->getClassName() << endl;
+                //cout << " - " << it.first->getClassName() << endl;
                 malformedExams.push_back(it);
                 if(i != 0)
                     for (int j = i-1; j >= 0; j--)
@@ -372,19 +376,19 @@ void Schedule::updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSl
 
 void Schedule::printExams()
 {
-    cout << "Print exams from Schedule " << id << endl;
+    //cout << "Print exams from Schedule " << id << endl;
     for (int i = 0; i < schedule.size(); ++i)
     {
-        if(schedule.at(i) == NULL)
-            cout << "   " << endl;
-        else
-            cout << "   " << i << " : " << schedule.at(i)->getInfo();
+        //if(schedule.at(i) == NULL)
+            //cout << "   " << endl;
+       // else
+            //cout << "   " << i << " : " << schedule.at(i)->getInfo();
     }
-    cout << "  slots " << endl;
+    //cout << "  slots " << endl;
     for (int j = 0; j < examSlot.size(); ++j)
     {
         pair<Exam *,int> x = (pair<Exam *, int> &&) examSlot.at(j);
-        cout << "   " << x.first->getClassName() << " : " << x.second << endl;
+        //cout << "   " << x.first->getClassName() << " : " << x.second << endl;
     }
 
 }

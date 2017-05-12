@@ -11,3 +11,7 @@
 \.settings/org\.eclipse\.cdt\.managedbuilder\.core\.prefs
 
 build-src-Desktop_Qt_5_8_0_MinGW_32bit-Debug/
+
+build-src-Desktop_Qt_5_8_0_MSVC2015_64bit-Debug/
+
+src/src\.pro\.user

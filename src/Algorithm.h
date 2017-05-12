@@ -19,7 +19,7 @@ public:
     Algorithm(Epoch *epoch, int populationLength);
     void populate(vector<Exam *> exams);
     Schedule * createRandomSchedule(vector<Exam *> exams);
-    vector<Exam *> randomExams(vector<Exam *> exams);
+    static vector<Exam *> randomExams(vector<Exam *> exams);
 
     void run();
 
