@@ -20,8 +20,10 @@ private:
     struct tm endDate;
     int numDays;
     std::vector<Subscription *> subs;
+    Schedule *global;
 public:
     Epoch(std::string name, int day1, int month1, int year1, int day2, int month2, int year2);
+
     int getNumdays() const;
     std::string getName() const;
     int getId() const ;
@@ -29,14 +31,12 @@ public:
     std::vector<Subscription *> getSubscriptions() const;
     int getWeekDay(int d, int m, int y);
     int getInitWeekDay();
-
+    vector<Student *> getStudents(Exam *pExam) const;
+    void setSchedule(Schedule *pSchedule);
     void addSubscription(Subscription *s);
     template<typename T>
     bool notFound(vector<T *> vector, T *temp) const;
-
     bool commonStudents(Exam *pExam, Exam *pExam1);
-
-    vector<Student *> getStudents(Exam *pExam) const ;
 };
 
 

@@ -45,11 +45,9 @@ void Epoch::addSubscription(Subscription *s) {
     subs.push_back(s);
 }
 
-/*
 void Epoch::setSchedule(Schedule *pSchedule) {
     this->global = pSchedule;
 }
- */
 
 std::vector<Subscription *> Epoch::getSubscriptions() const {
     return this->subs;

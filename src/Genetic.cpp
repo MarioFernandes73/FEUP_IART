@@ -43,7 +43,7 @@ void Genetic::run()
 
     if(debug) cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
 
-    //this->epoch->setSchedule(population.at(best));
+    this->epoch->setSchedule(population.at(best));
 }
 
 void Genetic::calculateFitness()

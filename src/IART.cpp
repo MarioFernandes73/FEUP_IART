@@ -62,12 +62,15 @@ int main(int argc, char* argv[]) {
     //TESTE
 
    //genetic algorithm
+
     Genetic algorithm1(e,false,40);
     algorithm1.run();
+/*
 
-   /* //Simulated Annealing
+    //Simulated Annealing
     SimulatedAnnealing algorithm2(e,false,20,30);
-    algorithm2.run();*/
+    algorithm2.run();
+    */
 
     //save .db
 
@@ -108,25 +111,23 @@ vector<Exam *> loadExams(vector<vector<string>> examsInfo)
     vector<Exam *> exams;
 
     for (vector<vector<string> >::iterator it = examsInfo.begin(); it < examsInfo.end(); ++it)
-    {
-        int exam_id, year;
+    {   
+        int exam_id, year, duration;
         string className;
+        char c;
         stringstream ss;
 
-        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++)
-            ss << (*it2);
+        int i = 0;
+        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++){
+            if(i == 1)
+               className = (*it2);
+            else
+                ss << (*it2) << "x";
+            i++;
+        }
+        ss >> exam_id >> c >> year >> c >> duration;
 
-        stringstream ss2;
-        ss2 << ss.str().at(ss.str().length()-1);
-        ss2 >> year;
-        ss2.clear();
-        ss2.str("");
-        string temp = ss.str();
-        temp.erase(temp.length()-1);
-        ss2 << temp;
-        ss2 >> exam_id >> className;
-
-        exams.push_back(new Exam(exam_id, Class(className,year)));
+        exams.push_back(new Exam(exam_id, Class(className,year),duration));
     }
 
     return exams;

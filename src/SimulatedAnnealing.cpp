@@ -67,10 +67,14 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         if(solution->getFitness() > currentSolution->getFitness())
         {
             if(debug)   cout << "Bigger Solutions" << endl;
+
+            this->epoch->setSchedule(solution);
             return solution;
         }
-        else if(chooseWorstSolution(solution,temperature))
+        else if(chooseWorstSolution(solution,temperature)){
+            this->epoch->setSchedule(solution);
             return solution;
+        }
     }
 }
 

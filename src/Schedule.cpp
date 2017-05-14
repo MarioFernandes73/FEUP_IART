@@ -181,6 +181,19 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
              pos.push_back(i);
     }
 
+    //retirar aqueles cuja duracao excede o dia
+    int l = 0;
+    while(l < pos.size())
+    {
+        int day1 = pos.at(l) / hours;
+        int day2 = (pos.at(l) + exam.first->getDuration()-1) / hours;
+
+        if (day1 != day2)
+            pos = removeFromVector(pos,pos.at(l),pos.at(l)+exam.first->getDuration()-1);
+        else
+            l++;
+    }
+
     for (int j = 0; j < examSlot.size(); ++j)
     {
         if(!(examSlot.at(j).first == exam.first))
@@ -205,19 +218,6 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
         }
     }
 
-    //retirar aqueles cuja duracao excede o dia
-    int l = 0;
-    while(l < pos.size())
-    {
-        int day1 = pos.at(l) / hours;
-        int day2 = (pos.at(l) + exam.first->getDuration()-1) / hours;
-
-        if (day1 != day2)
-            pos = removeFromVector(pos,pos.at(l),pos.at(l)+exam.first->getDuration()-1);
-        else
-            l++;
-    }
-
     //retirar os que podem sobrepor exames
     l=0;
     while(l < pos.size())
@@ -227,11 +227,15 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
 
         for (int i = 0; i < exam.first->getDuration(); ++i)
         {
-            if(l+1 < pos.size())
-                if(firstPos+i != pos.at(l+i))
-                {
+                if(l+i >= pos.size())
                     removed = true;
+                else if(firstPos+i != pos.at(l+i))
+                    removed = true;
+
+                if(removed)
+                {
                     pos = removeFromVector(pos,firstPos,firstPos+i-1);
+                    break;
                 }
         }
 
