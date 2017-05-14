@@ -4,10 +4,11 @@
 
 using namespace std;
 
-SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float acceptance){
+SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float temperatureRed, float acceptance){
     this->epoch = epoch;
     this->maxSlots = epoch->getNumdays() * HOURS_PER_DAY
     this->temperature = temperature;
+    this->temperatureReduction = temperatureRed;
     this->acceptance = acceptance;
 
     currentSolution = generateRandomSchedule();
@@ -16,13 +17,10 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float ac
 
 void SimulatedAnnealing::run(){
 
-    int rep = REPETITIONS;
-    float tempRed = temperature/(float)rep;
-
-    while(rep != 0){
+    while(temperature > 0){
         currentSolution = chooseNextSolution(temperature);
-        temperature -= tempRed;
-        rep--;
+        temperature -= temperatureReduction;
+        cout << endl << "NEW SOLUTION, F = " << currentSolution->getFitness() << " ,T = " << temperature << endl;
     }
 
     cout << "Solution: " << *currentSolution << endl;
@@ -73,11 +71,11 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         applyRandomChanges(solution,temperature/5 + 1);
         solution->calculateFitness();
 
-        cout << solution->getID() << " : " << solution->getFitness() << endl;
+        cout << endl << solution->getID() << " : " << solution->getFitness() << endl;
 
         //Probability of being the next solution
         if(solution->getFitness() > currentSolution->getFitness()){
-            cout << "Bigger Solutions" << endl;
+            cout << "BIGGER Solutions" << endl;
             return solution;
         }
         else if(chooseWorstSolution(solution,temperature))
@@ -96,10 +94,11 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
     //random probability
     float random = (float)(rand() % 10000)/10000;
 
+    cout << "WORST Solutions" << endl;
     cout << "Delta: " << deltaE << endl;
     cout << "d/t: " << deltaE/temperature << endl;
     cout <<"prob: " << probability << endl;
-    cout <<"random: " << random << endl << endl;
+    cout <<"random: " << random << endl;
 
     if(random <= probability)
         return true;

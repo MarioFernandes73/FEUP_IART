@@ -115,7 +115,7 @@ int main(int argc, char* argv[]) {
     algorithm.run();*/
 
     //Simulated Annealing
-    SimulatedAnnealing algorithm2(e,20,30);
+    SimulatedAnnealing algorithm2(e,50,0.5,20); //temperature,reduction,acceptance(40-15)
     algorithm2.run();
 
     //save .db
