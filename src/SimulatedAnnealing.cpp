@@ -4,9 +4,10 @@
 
 using namespace std;
 
-SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperature,float acceptance) : Algorithm(epoch,debug)
+SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperature, float reduction, float acceptance) : Algorithm(epoch,debug)
 {
     this->temperature = temperature;
+    this->temperatureReduction = reduction;
     this->acceptance = acceptance;
 
     vector<Exam *> exams = randomExams(this->epoch->getExams());
@@ -16,13 +17,13 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperat
 
 void SimulatedAnnealing::run(){
 
-    int rep = REPETITIONS;
-    float tempRed = temperature/(float)rep;
-
-    while(rep != 0){
+    while(temperature > 0){
         currentSolution = chooseNextSolution(temperature);
-        temperature -= tempRed;
-        rep--;
+        temperature -= temperatureReduction;
+
+        if(debug){
+            cout << endl << "NEW SOLUTION, F = " << currentSolution->getFitness() << " ,T = " << temperature << endl;
+        }
     }
 
     if(debug)
@@ -66,8 +67,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         //Probability of being the next solution
         if(solution->getFitness() > currentSolution->getFitness())
         {
-            if(debug)   cout << "Bigger Solutions" << endl;
-
+            if(debug)   cout << "BIGGER Solutions" << endl;
             this->epoch->setSchedule(solution);
             return solution;
         }
@@ -89,6 +89,7 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
 
     if(debug)
     {
+        cout << "WORST Solution" << endl;
         cout << "Delta: " << deltaE << endl;
         cout << "d/t: " << deltaE/temperature << endl;
         cout <<"prob: " << probability << endl;
