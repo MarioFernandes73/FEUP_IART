@@ -25,9 +25,10 @@ private:
     int fitness;
     double maxRouletteProb;
     int firstWeekDay;
+    bool debug;
     vector<Subscription *> subs;
 public:
-	Schedule();
+    Schedule(bool debug);
 	virtual ~Schedule();
     int getFitness() const;
     void setFitness(int f);
@@ -40,6 +41,7 @@ public:
 	void addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int>> examSlot);
     void setSubscriptions(vector<Subscription *> vector);
     void setFirstWeekDay(int i);
+    void setDebug(bool debug);
 	void printExams();
 
     bool createRandomSchedule(vector<Exam *> vector, int maxSlots);

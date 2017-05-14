@@ -20,14 +20,10 @@ Epoch::Epoch(std::string name, int day1, int month1, int year1, int day2, int mo
     initDate.tm_year = year1-1900;
     initDate.tm_wday = getWeekDay(day1,month1,year1);
 
-    cout << "Init time : " << asctime(&initDate) << "Secs : "<<mktime(&initDate) << endl;
-
     endDate.tm_mday = day2;
     endDate.tm_mon = month2-1;
     endDate.tm_year = year2-1900;
     endDate.tm_wday = getWeekDay(day2,month2,year2);
-
-    cout << "End time : " << asctime(&endDate) << "Secs : " << mktime(&endDate) << endl;
 
     numDays = (mktime(&endDate) - mktime(&initDate)) / (24*60*60) + 1;
 }

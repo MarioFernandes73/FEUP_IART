@@ -61,14 +61,13 @@ int main(int argc, char* argv[]) {
 
     //TESTE
 
-  /*  //genetic algorithm
-    Genetic algorithm1(e,40);
+   //genetic algorithm
+    Genetic algorithm1(e,false,40);
     algorithm1.run();
-    */
 
-    //Simulated Annealing
-    SimulatedAnnealing algorithm2(e,20,30);
-    algorithm2.run();
+   /* //Simulated Annealing
+    SimulatedAnnealing algorithm2(e,false,20,30);
+    algorithm2.run();*/
 
     //save .db
 

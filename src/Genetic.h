@@ -10,7 +10,7 @@ private:
     int populationLength;
     vector<Schedule *> population;
 public:
-    Genetic(Epoch *epoch, int populationLength);
+    Genetic(Epoch *epoch, bool debug, int populationLength);
     void run();
 
     void populate(vector<Exam *> exams);

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float acceptance) : Algorithm(epoch)
+SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperature,float acceptance) : Algorithm(epoch,debug)
 {
     this->temperature = temperature;
     this->acceptance = acceptance;
@@ -25,8 +25,11 @@ void SimulatedAnnealing::run(){
         rep--;
     }
 
-    cout << "Solution: " << *currentSolution << endl;
-    cout << "Fitness Function: " << currentSolution->getFitness() << endl;
+    if(debug)
+    {
+        cout << "Solution: " << *currentSolution << endl;
+        cout << "Fitness Function: " << currentSolution->getFitness() << endl;
+    }
 
 }
 
@@ -49,7 +52,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
     while(true){
 
         //new solution with modifications based on the current solution
-        Schedule * solution = new Schedule();
+        Schedule * solution = new Schedule(debug);
 
         number = solution->getID();
         *solution = *currentSolution;
@@ -58,18 +61,17 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         applyRandomChanges(solution,temperature/5 + 1);
         solution->calculateFitness();
 
-        cout << solution->getID() << " : " << solution->getFitness() << endl;
+        if(debug)   cout << solution->getID() << " : " << solution->getFitness() << endl;
 
         //Probability of being the next solution
-        if(solution->getFitness() > currentSolution->getFitness()){
-            cout << "Bigger Solutions" << endl;
+        if(solution->getFitness() > currentSolution->getFitness())
+        {
+            if(debug)   cout << "Bigger Solutions" << endl;
             return solution;
         }
         else if(chooseWorstSolution(solution,temperature))
             return solution;
     }
-
-
 }
 
 bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature) const{
@@ -81,10 +83,13 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
     //random probability
     float random = (float)(rand() % 10000)/10000;
 
-    cout << "Delta: " << deltaE << endl;
-    cout << "d/t: " << deltaE/temperature << endl;
-    cout <<"prob: " << probability << endl;
-    cout <<"random: " << random << endl << endl;
+    if(debug)
+    {
+        cout << "Delta: " << deltaE << endl;
+        cout << "d/t: " << deltaE/temperature << endl;
+        cout <<"prob: " << probability << endl;
+        cout <<"random: " << random << endl << endl;
+    }
 
     if(random <= probability)
         return true;

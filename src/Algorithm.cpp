@@ -3,22 +3,23 @@
 
 using namespace std;
 
-Algorithm::Algorithm(Epoch *epoch)
+Algorithm::Algorithm(Epoch *epoch, bool debug)
 {
     this->epoch = epoch;
     this->maxSlots = epoch->getNumdays() * HOURS_PER_DAY;
+    this->debug = debug;
 }
 
 Schedule * Algorithm::createRandomSchedule(vector<Exam *> exams)
 {
-    Schedule *s = new Schedule();
+    Schedule *s = new Schedule(debug);
     s->setSubscriptions(this->epoch->getSubscriptions());
     s->setFirstWeekDay(this->epoch->getInitWeekDay());
 
     bool valid = true;
     do{
         valid = s->createRandomSchedule(exams, this->maxSlots);
-        cout << endl << valid << endl<< endl;
+        if(debug)   cout << endl << valid << endl<< endl;
     }while(!valid);
 
     return s;

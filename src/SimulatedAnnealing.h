@@ -15,7 +15,7 @@ private:
                         //a da solução atual. Quando menor o valor,
                         //maior a rejeição
 public:
-    SimulatedAnnealing(Epoch *epoch, float temperature,float acceptance);
+    SimulatedAnnealing(Epoch *epoch, bool debug, float temperature,float acceptance);
     void run();
     void applyRandomChanges(Schedule * originalSchedule, int numberOfChanges);
     Schedule * chooseNextSolution(float temperature);
