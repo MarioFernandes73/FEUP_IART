@@ -4,13 +4,13 @@
 
 using namespace std;
 
-SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float acceptance){
-    this->epoch = epoch;
-    this->maxSlots = epoch->getNumdays() * HOURS_PER_DAY
+SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float acceptance) : Algorithm(epoch)
+{
     this->temperature = temperature;
     this->acceptance = acceptance;
 
-    currentSolution = generateRandomSchedule();
+    vector<Exam *> exams = randomExams(this->epoch->getExams());
+    currentSolution = createRandomSchedule(exams);
     currentSolution->calculateFitness();
 }
 
@@ -28,21 +28,6 @@ void SimulatedAnnealing::run(){
     cout << "Solution: " << *currentSolution << endl;
     cout << "Fitness Function: " << currentSolution->getFitness() << endl;
 
-}
-
-Schedule * SimulatedAnnealing::generateRandomSchedule(){
-    vector<Exam *> exams = Algorithm::randomExams(this->epoch->getExams());
-
-    Schedule *s = new Schedule();
-    s->setSubscriptions(this->epoch->getSubscriptions());
-
-    bool valid = true;
-    do{
-        valid = s->createRandomSchedule(exams, this->maxSlots);
-        cout << endl << valid << endl<< endl;
-    }while(!valid);
-
-    return s;
 }
 
 void SimulatedAnnealing::applyRandomChanges(Schedule *originalSchedule, int numberOfChanges){

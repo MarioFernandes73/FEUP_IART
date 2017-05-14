@@ -1,15 +1,13 @@
 #ifndef SIMULATEDANNEALING_H
 #define SIMULATEDANNEALING_H
 
-#include "Epoch.h"
 #include "Algorithm.h"
 
 using namespace std;
 
-class SimulatedAnnealing {
+class SimulatedAnnealing : public Algorithm
+{
 private:
-    Epoch *epoch;
-    int maxSlots;
     float temperature;
     Schedule * currentSolution;
     float acceptance;     //best value -> 40 -> influencia a rejeição
@@ -19,7 +17,6 @@ private:
 public:
     SimulatedAnnealing(Epoch *epoch, float temperature,float acceptance);
     void run();
-    Schedule * generateRandomSchedule();
     void applyRandomChanges(Schedule * originalSchedule, int numberOfChanges);
     Schedule * chooseNextSolution(float temperature);
     bool chooseWorstSolution(Schedule * worst, float temperature) const;
