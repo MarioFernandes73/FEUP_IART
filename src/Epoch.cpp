@@ -6,20 +6,39 @@
 
 int Epoch::currentId = 1;
 
-Epoch::Epoch(std::string name, int numDays)
+Epoch::Epoch(std::string name, int day1, int month1, int year1, int day2, int month2, int year2)
 {
-    this->schoolYear = name;
-    this->numDays = numDays;
+    this->epochName = name;
     this->id = currentId;
     currentId++;
+
+    initDate = {0};
+    endDate  = {0};
+
+    initDate.tm_mday = day1;
+    initDate.tm_mon = month1-1;
+    initDate.tm_year = year1-1900;
+    initDate.tm_wday = getWeekDay(day1,month1,year1);
+
+    cout << "Init time : " << asctime(&initDate) << "Secs : "<<mktime(&initDate) << endl;
+
+    endDate.tm_mday = day2;
+    endDate.tm_mon = month2-1;
+    endDate.tm_year = year2-1900;
+    endDate.tm_wday = getWeekDay(day2,month2,year2);
+
+    cout << "End time : " << asctime(&endDate) << "Secs : " << mktime(&endDate) << endl;
+
+    numDays = (mktime(&endDate) - mktime(&initDate)) / (24*60*60) + 1;
 }
 
-int Epoch::getNumdays() const{
-    return this->numDays;
+int Epoch::getNumdays() const
+{
+    return numDays;
 }
 
 std::string Epoch::getName() const{
-    return this->schoolYear;
+    return this->epochName;
 }
 
 int Epoch::getId() const{
@@ -63,6 +82,16 @@ std::vector<Exam *> Epoch::getExams() const {
             exams.push_back(e);
     }
     return exams;
+}
+
+int Epoch::getWeekDay(int d, int m, int y)
+{
+    return (d + 2*m + 3*(m+1)/5 + y + y/4 - y/100 + y/400 + 1) % 7;
+}
+
+int Epoch::getInitWeekDay()
+{
+    return initDate.tm_wday;
 }
 
 template<typename T>

@@ -59,6 +59,10 @@ void Schedule::setSubscriptions(std::vector<Subscription *>subs){
     this->subs = subs;
 }
 
+void Schedule::setFirstWeekDay(int i){
+    this->firstWeekDay = i;
+}
+
 void Schedule::addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int>> examSlot)
 {
     this->schedule = vector;
@@ -70,7 +74,6 @@ void Schedule::addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int
 bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)
 {
     //cout << "Filling schedule " << this->id<< endl;
-    std::vector<bool> boolSchedule;
     int hours = HOURS_PER_DAY;
 
     this->schedule.clear();
@@ -78,7 +81,6 @@ bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)
 
     //initialize all booleans = false and exams to NULL
     for (int i = 0; i < maxSlots; ++i) {
-        boolSchedule.push_back(false);
         schedule.push_back(NULL);
     }
 
@@ -120,7 +122,7 @@ void Schedule::optimize()
         {
             Exam *e2 = examSlot.at(j).first;
 
-            ////cout << "Comparing " << e1->getClassName() << " with " << e2->getClassName() << endl;
+            //cout << "Comparing " << e1->getClassName() << " with " << e2->getClassName() << endl;
 
             //not the same exam
             if(!(e1 == e2))
@@ -145,7 +147,7 @@ void Schedule::updateExamPosition(pair<Exam *,int> exam)
     if (possiblePos.size() > 0) {
         int random = rand() % possiblePos.size();
 
-        ////cout << "  New pos : " << possiblePos.at(random) << endl;
+        //cout << "  New pos : " << possiblePos.at(random) << endl;
 
         //retiro o exame da sua posicao atual no schedule
         //colocar na sua nova posicao
@@ -167,9 +169,18 @@ void Schedule::updateExamPosition(pair<Exam *,int> exam)
 vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
     vector<int> pos;
     int hours = HOURS_PER_DAY;
+    int currWeekDay = firstWeekDay;
 
-    for (int i = 0; i < schedule.size(); ++i) {
-        pos.push_back(i);
+    //cria vetor com todas as posicoes exceto fins de semana
+    for (int i = 0; i < schedule.size(); ++i)
+    {
+        if(i % hours == 0)  //new day
+            if(i != 0)      //not the first one
+                currWeekDay = (currWeekDay +1) % 7;
+
+        //0 - SUNDAY and 6 - SATURDAY
+         if(!(currWeekDay == 0 || currWeekDay == 6))
+             pos.push_back(i);
     }
 
     for (int j = 0; j < examSlot.size(); ++j)
@@ -230,11 +241,13 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
             l++;
     }
 
-    //cout << "  Possible positions : ";
+    /*
+    cout << "  Possible positions : ";
     for (int k = 0; k < pos.size(); ++k) {
-        //cout << pos.at(k) << " , ";
+        cout << pos.at(k) << " , ";
     }
-    //cout << endl;
+    cout << endl;
+    */
 
     return pos;
 }

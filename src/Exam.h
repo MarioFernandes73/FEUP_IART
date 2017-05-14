@@ -16,10 +16,8 @@ private:
     static int currentId;
     int id;
     Class myClass;
-    time_t startingTime;    //data e hora?
     int duration;
     int fitness;
-    //epoca Normal/Recurso
 public:
     Exam(string name);
     Exam(int id, Class myClass);

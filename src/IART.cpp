@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     // START TEST
 
     //criacao das epocas (nome + numero de dias)
-    Epoch * e = new Epoch("Normal",15);
+    Epoch * e = new Epoch("Normal",8,5,2017,19,5,2017);
     university->addEpoch(e);
 
     //read subscribes
@@ -111,12 +111,14 @@ int main(int argc, char* argv[]) {
     //initialOptions(university);
 
     //genetic algorithm
-    /*Algorithm algorithm(e,20);
-    algorithm.run();*/
 
+    Algorithm algorithm(e,40);
+    algorithm.run();
+/*
     //Simulated Annealing
     SimulatedAnnealing algorithm2(e,20,30);
     algorithm2.run();
+    */
 
     //save .db
 
@@ -129,7 +131,4 @@ int main(int argc, char* argv[]) {
     w.show();
 
     return a.exec();
-
-
-
 }

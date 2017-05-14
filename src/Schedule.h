@@ -24,7 +24,7 @@ private:
     std::vector<pair<Exam *, int>> examSlot;
     int fitness;
     double maxRouletteProb;
-
+    int firstWeekDay;
     vector<Subscription *> subs;
 public:
 	Schedule();
@@ -39,6 +39,7 @@ public:
     std::vector<pair<Exam *, int>> getExamSlot() const;
 	void addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int>> examSlot);
     void setSubscriptions(vector<Subscription *> vector);
+    void setFirstWeekDay(int i);
 	void printExams();
 
     bool createRandomSchedule(vector<Exam *> vector, int maxSlots);
