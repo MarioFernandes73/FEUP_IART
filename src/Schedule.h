@@ -20,8 +20,8 @@ class Schedule {
 private:
     static int currentId;
     int id;
-	std::vector<Exam *> schedule;
-    std::vector<pair<Exam *, int>> examSlot;
+    vector<Exam *> schedule;
+    vector<pair<Exam *, int>> examSlot;
     int fitness;
     double maxRouletteProb;
     int firstWeekDay;

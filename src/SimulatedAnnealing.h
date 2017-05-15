@@ -2,7 +2,7 @@
 #define SIMULATEDANNEALING_H
 
 #include "Algorithm.h"
-#include "statistics.h"
+#include "Statistics.h"
 
 using namespace std;
 
@@ -10,8 +10,6 @@ class SimulatedAnnealing : public Algorithm
 {
 private:
     Statistics *statistics;
-    Epoch *epoch;
-    int maxSlots;
     float temperature;
     float temperatureReduction;
     Schedule * currentSolution;

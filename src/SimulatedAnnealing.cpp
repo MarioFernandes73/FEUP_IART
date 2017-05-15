@@ -8,9 +8,9 @@ using namespace std;
 SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperature, float reduction, float acceptance) : Algorithm(epoch,debug)
 {
     this->temperature = temperature;
-    this->temperatureReduction = reduction;
     this->acceptance = acceptance;
     this->statistics = new Statistics("SimultatedAnnealing");
+    this->temperatureReduction = reduction;
 
     vector<Exam *> exams = randomExams(this->epoch->getExams());
     currentSolution = createRandomSchedule(exams);
