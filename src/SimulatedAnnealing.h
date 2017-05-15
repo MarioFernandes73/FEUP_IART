@@ -3,11 +3,13 @@
 
 #include "Epoch.h"
 #include "Algorithm.h"
+#include "statistics.h"
 
 using namespace std;
 
 class SimulatedAnnealing {
 private:
+    Statistics *statistics;
     Epoch *epoch;
     int maxSlots;
     float temperature;

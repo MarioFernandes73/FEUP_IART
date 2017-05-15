@@ -1,6 +1,7 @@
 #include "SimulatedAnnealing.h"
 #include "Utils.h"
 #include <math.h>
+#include <thread>
 
 using namespace std;
 
@@ -10,6 +11,7 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float te
     this->temperature = temperature;
     this->temperatureReduction = temperatureRed;
     this->acceptance = acceptance;
+    this->statistics = new Statistics("SimultatedAnnealing");
 
     currentSolution = generateRandomSchedule();
     currentSolution->calculateFitness();
@@ -18,14 +20,17 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float te
 void SimulatedAnnealing::run(){
 
     while(temperature > 0){
+        new thread([&] (Statistics *s) { s->startIteration();}, statistics);
         currentSolution = chooseNextSolution(temperature);
         temperature -= temperatureReduction;
         cout << endl << "NEW SOLUTION, F = " << currentSolution->getFitness() << " ,T = " << temperature << endl;
+        new thread([&] (Statistics *s,float best) { s->endIteration(best);}, statistics, currentSolution->getFitness());
     }
 
     cout << "Solution: " << *currentSolution << endl;
     cout << "Fitness Function: " << currentSolution->getFitness() << endl;
 
+    statistics->displayStatistics();
 }
 
 Schedule * SimulatedAnnealing::generateRandomSchedule(){
@@ -64,6 +69,8 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         //new solution with modifications based on the current solution
         Schedule * solution = new Schedule();
 
+        new thread([&] (Statistics *s) { s->addSchedulesGenerated();}, statistics);
+
         number = solution->getID();
         *solution = *currentSolution;
         solution->setID(number);
@@ -76,6 +83,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         //Probability of being the next solution
         if(solution->getFitness() > currentSolution->getFitness()){
             cout << "BIGGER Solutions" << endl;
+            new thread([&] (Statistics *s) { s->addScheduleAboveCurrent();}, statistics);
             return solution;
         }
         else if(chooseWorstSolution(solution,temperature))
@@ -99,6 +107,8 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
     cout << "d/t: " << deltaE/temperature << endl;
     cout <<"prob: " << probability << endl;
     cout <<"random: " << random << endl;
+
+    new thread([&] (Statistics *s,float p,float r) { s->addWorst(p,r);}, statistics,probability,random);
 
     if(random <= probability)
         return true;
