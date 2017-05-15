@@ -6,37 +6,35 @@
 #define EXAMSCHEDULER_EPOCH_H
 
 #include <string>
-#include <ctime>
 #include "Schedule.h"
 
 class Epoch {
 private:
     int id;
     static int currentId;
-    //std::string schoolYear;
+    std::string schoolYear;
     int semester;
-    std::string epochName;  //normal ou recurso
-    struct tm initDate;
-    struct tm endDate;
+    std::string epoch;
+    //begin and end date
     int numDays;
-    std::vector<Subscription *> subs;
     Schedule *global;
+    std::vector<Subscription *> subs;
 public:
-    Epoch(std::string name, int day1, int month1, int year1, int day2, int month2, int year2);
-
+    Epoch(std::string name, int numDays);
     int getNumdays() const;
     std::string getName() const;
     int getId() const ;
     std::vector<Exam *> getExams() const;
     std::vector<Subscription *> getSubscriptions() const;
-    int getWeekDay(int d, int m, int y);
-    int getInitWeekDay();
-    vector<Student *> getStudents(Exam *pExam) const;
-    void setSchedule(Schedule *pSchedule);
+//    void setSchedule(Schedule *newSched);
+
     void addSubscription(Subscription *s);
     template<typename T>
     bool notFound(vector<T *> vector, T *temp) const;
+
     bool commonStudents(Exam *pExam, Exam *pExam1);
+
+    vector<Student *> getStudents(Exam *pExam) const ;
 };
 
 

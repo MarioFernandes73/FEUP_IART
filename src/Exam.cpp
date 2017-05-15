@@ -17,14 +17,14 @@ Exam::Exam(string name) {
     currentId++;
 }
 
-Exam::Exam(int id, Class myClass, int duration) {
+Exam::Exam(int id, Class myClass) {
     this->id=id;
     currentId++;
 
     this->myClass = myClass;
-    this->duration = duration;
 
     this->fitness = 0;
+    this->duration = 2; //TODO receber este valor como parametro
 }
 
 Exam::~Exam() {

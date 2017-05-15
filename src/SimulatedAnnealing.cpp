@@ -5,15 +5,15 @@
 
 using namespace std;
 
-SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperature, float reduction, float acceptance) : Algorithm(epoch,debug)
-{
+SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, float temperature,float temperatureRed, float acceptance){
+    this->epoch = epoch;
+    this->maxSlots = epoch->getNumdays() * HOURS_PER_DAY
     this->temperature = temperature;
-    this->temperatureReduction = reduction;
+    this->temperatureReduction = temperatureRed;
     this->acceptance = acceptance;
     this->statistics = new Statistics("SimultatedAnnealing");
 
-    vector<Exam *> exams = randomExams(this->epoch->getExams());
-    currentSolution = createRandomSchedule(exams);
+    currentSolution = generateRandomSchedule();
     currentSolution->calculateFitness();
 }
 
@@ -23,20 +23,29 @@ void SimulatedAnnealing::run(){
         new thread([&] (Statistics *s) { s->startIteration();}, statistics);
         currentSolution = chooseNextSolution(temperature);
         temperature -= temperatureReduction;
-
-        if(debug){
-            cout << endl << "NEW SOLUTION, F = " << currentSolution->getFitness() << " ,T = " << temperature << endl;
-        }
+        cout << endl << "NEW SOLUTION, F = " << currentSolution->getFitness() << " ,T = " << temperature << endl;
         new thread([&] (Statistics *s,float best) { s->endIteration(best);}, statistics, currentSolution->getFitness());
     }
 
-    if(debug)
-    {
-        cout << "Solution: " << *currentSolution << endl;
-        cout << "Fitness Function: " << currentSolution->getFitness() << endl;
-    }
+    cout << "Solution: " << *currentSolution << endl;
+    cout << "Fitness Function: " << currentSolution->getFitness() << endl;
 
     statistics->displayStatistics();
+}
+
+Schedule * SimulatedAnnealing::generateRandomSchedule(){
+    vector<Exam *> exams = Algorithm::randomExams(this->epoch->getExams());
+
+    Schedule *s = new Schedule();
+    s->setSubscriptions(this->epoch->getSubscriptions());
+
+    bool valid = true;
+    do{
+        valid = s->createRandomSchedule(exams, this->maxSlots);
+        cout << endl << valid << endl<< endl;
+    }while(!valid);
+
+    return s;
 }
 
 void SimulatedAnnealing::applyRandomChanges(Schedule *originalSchedule, int numberOfChanges){
@@ -58,7 +67,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
     while(true){
 
         //new solution with modifications based on the current solution
-        Schedule * solution = new Schedule(debug);
+        Schedule * solution = new Schedule();
 
         new thread([&] (Statistics *s) { s->addSchedulesGenerated();}, statistics);
 
@@ -69,21 +78,19 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         applyRandomChanges(solution,temperature/5 + 1);
         solution->calculateFitness();
 
-        if(debug)   cout << solution->getID() << " : " << solution->getFitness() << endl;
+        cout << endl << solution->getID() << " : " << solution->getFitness() << endl;
 
         //Probability of being the next solution
-        if(solution->getFitness() > currentSolution->getFitness())
-        {
-            if(debug)   cout << "BIGGER Solutions" << endl;
-            this->epoch->setSchedule(solution);
+        if(solution->getFitness() > currentSolution->getFitness()){
+            cout << "BIGGER Solutions" << endl;
             new thread([&] (Statistics *s) { s->addScheduleAboveCurrent();}, statistics);
             return solution;
         }
-        else if(chooseWorstSolution(solution,temperature)){
-            this->epoch->setSchedule(solution);
+        else if(chooseWorstSolution(solution,temperature))
             return solution;
-        }
     }
+
+
 }
 
 bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature) const{
@@ -95,14 +102,11 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
     //random probability
     float random = (float)(rand() % 10000)/10000;
 
-    if(debug)
-    {
-        cout << "WORST Solution" << endl;
-        cout << "Delta: " << deltaE << endl;
-        cout << "d/t: " << deltaE/temperature << endl;
-        cout <<"prob: " << probability << endl;
-        cout <<"random: " << random << endl << endl;
-    }
+    cout << "WORST Solutions" << endl;
+    cout << "Delta: " << deltaE << endl;
+    cout << "d/t: " << deltaE/temperature << endl;
+    cout <<"prob: " << probability << endl;
+    cout <<"random: " << random << endl;
 
     new thread([&] (Statistics *s,float p,float r) { s->addWorst(p,r);}, statistics,probability,random);
 
