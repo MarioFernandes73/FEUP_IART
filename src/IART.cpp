@@ -11,33 +11,29 @@
 
 #include "Database.h"
 #include "University.h"
-#include "Algorithm.h"
-#include "Algorithm.h"
+#include "Genetic.h"
 #include "SimulatedAnnealing.h"
-
-void subscribe(int id, int student_id);
-
-using namespace std;
-
 #include "mainwindow.h"
 #include <QApplication>
 
-int main(int argc, char* argv[]) {
+using namespace std;
 
+vector<Student *> loadStudents(vector<vector<string>> studentsInfo);
+vector<Exam *> loadExams(vector<vector<string>> examsInfo);
+void loadSubscriptions(vector<vector<string>> subscribeInfo, University * university);
+
+int main(int argc, char* argv[]) {
 
     //random numbers
     srand ((unsigned int) time(NULL));
 
     // database variables
     Database *db;
-    vector<vector<string>> studentsInfo;
-    vector<vector<string>> examsInfo;
-    vector<vector<string>> subscribeInfo;
-    vector<Student *> students;
-    vector<Exam *> exams;
+
     char *filename = (char *) "../iart.db";         // QT
-    //char *filename = (char *) "../proj/iart.db";
-    //char * filename = (char*)"iart.db";
+    //char *filename = (char *) "../proj/iart.db";  //clion
+    //char * filename = (char*)"iart.db";           //eclipse
+
     char *selectStudentQuery = (char *) "SELECT * FROM Student";
     char *selectExamQuery = (char *) "SELECT * FROM Exam";
     char *selectSubscribeQuery = (char *) "SELECT * FROM Subscription";
@@ -45,82 +41,35 @@ int main(int argc, char* argv[]) {
     // database operations
     db = new Database(filename);
     db->open();
-    studentsInfo = db->query(selectStudentQuery);
-    examsInfo = db->query(selectExamQuery);
-    subscribeInfo = db->query(selectSubscribeQuery);
 
-    //read students
-    for (vector<vector<string> >::iterator it = studentsInfo.begin(); it < studentsInfo.end(); ++it) {
-        vector<string> row = *it;
-        int student_id;
-        string name;
-        stringstream ss;
-        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++) {
-            ss << (*it2);
-        }
-        ss >> student_id >> name;
-        students.push_back(new Student(student_id, name));
-    }
+    //load students and exams
+    vector<Student *> students = loadStudents(db->query(selectStudentQuery));
+    vector<Exam *> exams = loadExams(db->query(selectExamQuery));
 
-    //read exams
-    for (vector<vector<string> >::iterator it = examsInfo.begin(); it < examsInfo.end(); ++it) {
-        vector<string> row = *it;
-        int exam_id, year;
-        string className;
-        stringstream ss;
-        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++) {
-            ss << (*it2);
-        }
-        stringstream ss2;
-        ss2 << ss.str().at(ss.str().length()-1);
-        ss2 >> year;
-        ss2.clear();
-        ss2.str("");
-        string temp = ss.str();
-        temp.erase(temp.length()-1);
-        ss2 << temp;
-        ss2 >> exam_id >> className;
-        exams.push_back(new Exam(exam_id, Class(className,year)));
-    }
-
-    // university initialization
+    // university initialization and epoch
     University * university = new University(students,exams);
-
-    // START TEST
-
-    //criacao das epocas (nome + numero de dias)
-    Epoch * e = new Epoch("Normal",15);
+    Epoch * e = new Epoch("Normal",8,5,2017,26,5,2017);
     university->addEpoch(e);
 
-    //read subscribes
-    for (vector<vector<string> >::iterator it = subscribeInfo.begin(); it < subscribeInfo.end(); ++it) {
-        vector<string> row = *it;
-        int exam_id = 0, student_id = 0, epoch_id = 0;
-        char c;
-        stringstream ss;
-        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++) {
-            ss << (*it2) << ",";
-        }
-        ss >> epoch_id >> c >> exam_id >> c >> student_id;
-        university->addSubscription(epoch_id,exam_id,student_id);
-    }
+    //load subscriptions of students to exams
+    loadSubscriptions(db->query(selectSubscribeQuery), university);
 
     db->close();
 
     //interface
     //initialOptions(university);
 
-    //genetic algorithm
-    /*Algorithm algorithm(e,20);
-    algorithm.run();*/
+    //TESTE
 
+   //genetic algorithm
+   /* Genetic algorithm1(e,false,40);
+    algorithm1.run();
+*/
     //Simulated Annealing
-    SimulatedAnnealing algorithm2(e,50,0.5,20); //temperature,reduction,acceptance(40-15)
+    SimulatedAnnealing algorithm2(e,true,50,0.5,20);
     algorithm2.run();
 
     //save .db
-
-    // END TEST
 
     //Qt setup
     QApplication a(argc, argv);
@@ -129,7 +78,72 @@ int main(int argc, char* argv[]) {
     w.show();
 
     return a.exec();
+}
 
+//read students
+vector<Student *> loadStudents(vector<vector<string>> studentsInfo)
+{
+    vector<Student *> students;
 
+    for (vector<vector<string> >::iterator it = studentsInfo.begin(); it < studentsInfo.end(); ++it)
+    {
+        int student_id;
+        string name;
+        stringstream ss;
 
+        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++)
+            ss << (*it2);
+
+        ss >> student_id >> name;
+
+        students.push_back(new Student(student_id, name));
+    }
+
+    return students;
+}
+
+ //read exams
+vector<Exam *> loadExams(vector<vector<string>> examsInfo)
+{
+    vector<Exam *> exams;
+
+    for (vector<vector<string> >::iterator it = examsInfo.begin(); it < examsInfo.end(); ++it)
+    {   
+        int exam_id, year, duration;
+        string className;
+        char c;
+        stringstream ss;
+
+        int i = 0;
+        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++){
+            if(i == 1)
+               className = (*it2);
+            else
+                ss << (*it2) << "x";
+            i++;
+        }
+        ss >> exam_id >> c >> year >> c >> duration;
+
+        exams.push_back(new Exam(exam_id, Class(className,year),duration));
+    }
+
+    return exams;
+}
+
+//read subscribes
+void loadSubscriptions(vector<vector<string>> subscribeInfo, University * university)
+{
+    for (vector<vector<string> >::iterator it = subscribeInfo.begin(); it < subscribeInfo.end(); ++it)
+    {
+        int exam_id = 0, student_id = 0, epoch_id = 0;
+        char c;
+        stringstream ss;
+
+        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++)
+            ss << (*it2) << ",";
+
+        ss >> epoch_id >> c >> exam_id >> c >> student_id;
+
+        university->addSubscription(epoch_id,exam_id,student_id);
+    }
 }

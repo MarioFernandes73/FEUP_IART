@@ -50,6 +50,7 @@ SOURCES +=\
     dialoggenerateschedule.cpp \
     dialogliststatistics.cpp \
     SimulatedAnnealing.cpp \
+    Genetic.cpp
     Statistics.cpp
 
 HEADERS  += mainwindow.h \
@@ -80,6 +81,7 @@ HEADERS  += mainwindow.h \
     dialogliststatistics.h \
     SimulatedAnnealing.h \
     Statistics.h
+    Genetic.h
 
 FORMS    += mainwindow.ui \
     mainmenu.ui \
