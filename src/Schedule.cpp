@@ -417,12 +417,15 @@ void Schedule::printExams()
 
 void Schedule::mutate(int slot)
 {
-    pair<Exam *,int> myPair = std::make_pair<Exam *,int>((Exam *&&) this->examSlot.at(slot), (int &&) -1);
+    pair<Exam *,int> myPair = make_pair<Exam *,int>((Exam *&&) this->examSlot.at(slot), (int &&) -1);
     vector<int> possiblePos = getPossiblePositions(myPair);
-    int random = rand() % possiblePos.size();
-    this->examSlot.at(slot).second = possiblePos.at(random);
 
-    optimize();
+    if(possiblePos.size() > 0){
+        int random = rand() % possiblePos.size();
+        this->examSlot.at(slot).second = possiblePos.at(random);
+
+        optimize();
+    }
 }
 
 ostream& operator<<(ostream& out, const Schedule& s)

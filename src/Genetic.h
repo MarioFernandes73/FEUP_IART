@@ -2,6 +2,7 @@
 #define GENETIC_H
 
 #include "Algorithm.h"
+#include "Statistics.h"
 
 using namespace std;
 
@@ -9,6 +10,7 @@ class Genetic : public Algorithm {
 private:
     int populationLength;
     vector<Schedule *> population;
+    Statistics * statistics;
 public:
     Genetic(Epoch *epoch, bool debug, int populationLength);
     void run();
@@ -16,6 +18,7 @@ public:
     void populate(vector<Exam *> exams);
     void calculateFitness();
     int getPopulationFitness();
+    int static calculatePopulationFitness(vector<Schedule *> population);
     void createRandomProbs(double * randomProbs,int i);
     void selectNextPopulation();
     vector<Schedule *> selectElitistPopulation();

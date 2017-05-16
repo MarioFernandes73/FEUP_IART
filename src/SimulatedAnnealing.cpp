@@ -9,7 +9,7 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperat
 {
     this->temperature = temperature;
     this->acceptance = acceptance;
-    this->statistics = new Statistics("SimultatedAnnealing");
+    this->statistics = new Statistics(SIMULATED_ANNEALING);
     this->temperatureReduction = reduction;
 
     vector<Exam *> exams = randomExams(this->epoch->getExams());
@@ -19,8 +19,11 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperat
 
 void SimulatedAnnealing::run(){
 
+    statistics->startAlgorithm();
+
     while(temperature > 0){
         new thread([&] (Statistics *s) { s->startIteration();}, statistics);
+
         currentSolution = chooseNextSolution(temperature);
         temperature -= temperatureReduction;
 
@@ -29,6 +32,8 @@ void SimulatedAnnealing::run(){
         }
         new thread([&] (Statistics *s,float best) { s->endIteration(best);}, statistics, currentSolution->getFitness());
     }
+
+    statistics->endAlgorithm();
 
     if(debug)
     {
@@ -93,7 +98,7 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
     float probability = exp(-deltaE/temperature);
 
     //random probability
-    float random = (float)(rand() % 10000)/10000;
+    float random = (float)(rand() % 10000)/((float)10000);
 
     if(debug)
     {

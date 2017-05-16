@@ -1,12 +1,19 @@
 #include "Genetic.h"
 #include "Utils.h"
+#include <thread>
 
 using namespace std;
 
 Genetic::Genetic(Epoch *e, bool debug, int populationLength) : Algorithm(e,debug)
 {
+    statistics = new Statistics(GENETIC);
+    statistics->addNPopulation(populationLength);
+
     this->populationLength = populationLength;
+
+    statistics->startStage();
     populate(e->getExams());
+    statistics->endStage(POPULATE);
 }
 
 void Genetic::populate(vector<Exam *> exams)
@@ -24,18 +31,36 @@ void Genetic::populate(vector<Exam *> exams)
 
 void Genetic::run()
 {
+    statistics->startAlgorithm();
     int rep = REPETITIONS;
 
     while(rep > 0)
     {
+        //Statistics
+        new thread([&] (Statistics *s) { s->startIteration();}, statistics);
+
         if(debug) cout << endl << "-- New repetition : --" << rep<< endl;
 
+        //stage: SELECTION
+        new thread([&] (Statistics *s) { s->startStage();}, statistics);
         calculateFitness();
         selectNextPopulation();
+        new thread([&] (Statistics *s, int fitness){s->endStage(SELECTION);s->addFitnessSelection(fitness);
+                s->startStage();}, statistics,getPopulationFitness());
+
+        //stage: CROSSOVER
         crossover();
+        new thread([&] (Statistics *s, int fitness){s->endStage(CROSSOVER);s->addFitnessSelection(fitness);
+                s->startStage();}, statistics,getPopulationFitness());
+
         mutation();
+        new thread([&] (Statistics *s, int fitness){s->endStage(MUTATION);s->addFitnessSelection(fitness);
+                s->startStage();}, statistics,getPopulationFitness());
 
         rep--;
+
+        //Statistics
+       new thread([&] (Statistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
     }
 
     calculateFitness();
@@ -44,6 +69,9 @@ void Genetic::run()
     if(debug) cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
 
     this->epoch->setSchedule(population.at(best));
+    statistics->endAlgorithm();
+
+    statistics->displayStatistics();
 }
 
 void Genetic::calculateFitness()
@@ -64,6 +92,10 @@ void Genetic::calculateFitness()
 }
 
 int Genetic::getPopulationFitness() {
+    return calculatePopulationFitness(population);
+}
+
+int Genetic::calculatePopulationFitness(vector<Schedule *> population){
     int populationFitness = 0;
     for (int i = 0; i < population.size(); ++i)
     {
@@ -86,6 +118,10 @@ int Genetic::getBestSchedule(std::vector<Schedule *> schedules)
 void Genetic::selectNextPopulation()
 {
     int populationFitness = getPopulationFitness();
+
+    //Statistics
+    new thread([&] (Statistics *s,int fitness) { s->addPopulationFitness(fitness);}, statistics,populationFitness);
+
     int numElitists = NUM_ELITISTS;
     vector<Schedule *> nextPopulation = selectElitistPopulation();
 
@@ -110,12 +146,19 @@ vector<Schedule *> Genetic::selectElitistPopulation()
     for(int i = 0; i < numElitists; i++)
     {
         int mybest = getBestSchedule(oldPopulation);
+
+        if(i == 0)
+            new thread([&] (Statistics *s, int fitness) { s->addBestElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
+        else if(i == numElitists - 1)
+            new thread([&] (Statistics *s, int fitness) { s->addWorstElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
+
+
         //add to next population
         nextPopulation.push_back((Schedule *&&) oldPopulation.at(mybest));
         //delete from old population (to do not be select twice)
         oldPopulation.erase(oldPopulation.begin()+mybest);
-    }
 
+    }
     if(debug)
     {
         cout << endl << "Elitist selection : " << endl;
@@ -235,16 +278,16 @@ void Genetic::executeCrossover(std::vector<Schedule *> pop)
     int i = 0;
     while (i < size)
     {
-//chose random crossover point
+        //chose random crossover point
         int position = rand() % (epoch->getExams().size()-1) +1;
 
         if(debug)   cout << pop.at(i)->getID() << " + " << pop.at(i+1)->getID() << " at "<< position << endl;
 
-//create the 2 new schedules
+        //create the 2 new schedules
         vector<pair<Exam *, int>> new1 = createMap(pop.at(i)->getExamSlot(),pop.at(i+1)->getExamSlot(), position);
         vector<pair<Exam *, int>> new2 = createMap(pop.at(i+1)->getExamSlot(),pop.at(i)->getExamSlot(), position);
 
-//update the schedule object
+    //update the schedule object
         Schedule *s1 = new Schedule(debug);
         s1->setSubscriptions(epoch->getSubscriptions());
         s1->updateSchedule(new1,this->maxSlots);
@@ -275,18 +318,40 @@ vector<pair<Exam *, int>> Genetic::createMap(std::vector<pair<Exam *, int>> map1
 
 void Genetic::mutation()
 {
-    double mut = MUTATION_PROB;
     int numExams = epoch->getExams().size();
+    int size = population.size() * numExams;   //number of random numbers to generate
 
-    double mutNum = (mut / 100) * population.size() * numExams;
+    double * examsProbs = new double[size];
+    createRandomProbs(examsProbs,size);
 
-    double scheduleNum = mutNum / numExams;
-    int examNum = mutNum - (int)scheduleNum*numExams;
+    int mutationN = 0;
+    double mutProb = MUTATION_PROB;
 
-    if(debug)
-        cout << "Mutation on schedule "<< population.at((int)scheduleNum)->getID()
-             << " at " << population.at((int)scheduleNum)->getExamSlot().at(examNum).first->getClassName()
-             << " exam ( " << (int)scheduleNum << " , " << examNum << " )"<< endl;
+    mutProb /= ((double) 100);
 
-    population.at((int)scheduleNum)->mutate(examNum);
+    cout << endl << "PROB: " << mutProb << endl;
+
+    //Statistics
+    new thread([&] (Statistics *s, int mutN) { s->addNMutations(mutN);}, statistics,mutationN);
+
+    int scheduleNum,examNum;
+
+    for(int i = 0; i < size; i++){
+
+        if(examsProbs[i] < mutProb){
+            mutationN++;
+
+            //-1 because it starts on 0
+            scheduleNum = i/numExams;
+            examNum = i - scheduleNum * numExams;
+
+            if(debug){
+                cout << "Mutation on schedule "<< population.at(scheduleNum)->getID()
+                     << " at " << population.at((int)scheduleNum)->getExamSlot().at(examNum).first->getClassName()
+                     << " exam ( " << (int)scheduleNum << " , " << examNum << " )"<< endl;
+            }
+
+           population.at(scheduleNum)->mutate(examNum);
+        }
+    }
 }
