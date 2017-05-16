@@ -74,12 +74,12 @@ int main(int argc, char* argv[]) {
     //save .db
 
     //Qt setup
-    QApplication a(argc, argv);
+   /* QApplication a(argc, argv);
     MainWindow w;
     w.setUniversity(university);
     w.show();
 
-    return a.exec();
+    return a.exec();*/
 }
 
 //read students

@@ -2,12 +2,14 @@
 #define SIMULATEDANNEALING_H
 
 #include "Algorithm.h"
+#include "Statistics.h"
 
 using namespace std;
 
 class SimulatedAnnealing : public Algorithm
 {
 private:
+    Statistics *statistics;
     float temperature;
     float temperatureReduction;
     Schedule * currentSolution;

@@ -49,8 +49,10 @@ SOURCES +=\
     dialogeditexams.cpp \
     dialoggenerateschedule.cpp \
     dialogliststatistics.cpp \
+    Statistics.cpp \
     SimulatedAnnealing.cpp \
     Genetic.cpp
+
 
 HEADERS  += mainwindow.h \
     Algorithm.h \
@@ -78,6 +80,7 @@ HEADERS  += mainwindow.h \
     dialogeditexams.h \
     dialoggenerateschedule.h \
     dialogliststatistics.h \
+    Statistics.h \
     SimulatedAnnealing.h \
     Genetic.h
 

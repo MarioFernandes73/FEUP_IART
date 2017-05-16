@@ -1,14 +1,16 @@
 #include "SimulatedAnnealing.h"
 #include "Utils.h"
 #include <math.h>
+#include <thread>
 
 using namespace std;
 
 SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperature, float reduction, float acceptance) : Algorithm(epoch,debug)
 {
     this->temperature = temperature;
-    this->temperatureReduction = reduction;
     this->acceptance = acceptance;
+    this->statistics = new Statistics("SimultatedAnnealing");
+    this->temperatureReduction = reduction;
 
     vector<Exam *> exams = randomExams(this->epoch->getExams());
     currentSolution = createRandomSchedule(exams);
@@ -18,12 +20,14 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperat
 void SimulatedAnnealing::run(){
 
     while(temperature > 0){
+        new thread([&] (Statistics *s) { s->startIteration();}, statistics);
         currentSolution = chooseNextSolution(temperature);
         temperature -= temperatureReduction;
 
         if(debug){
             cout << endl << "NEW SOLUTION, F = " << currentSolution->getFitness() << " ,T = " << temperature << endl;
         }
+        new thread([&] (Statistics *s,float best) { s->endIteration(best);}, statistics, currentSolution->getFitness());
     }
 
     if(debug)
@@ -32,6 +36,7 @@ void SimulatedAnnealing::run(){
         cout << "Fitness Function: " << currentSolution->getFitness() << endl;
     }
 
+    statistics->displayStatistics();
 }
 
 void SimulatedAnnealing::applyRandomChanges(Schedule *originalSchedule, int numberOfChanges){
@@ -56,6 +61,8 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         Schedule * solution = new Schedule(debug);
         solution->setFirstWeekDay(epoch->getInitDate().tm_wday);
 
+        new thread([&] (Statistics *s) { s->addSchedulesGenerated();}, statistics);
+
         number = solution->getID();
         *solution = *currentSolution;
         solution->setID(number);
@@ -70,6 +77,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         {
             if(debug)   cout << "BIGGER Solutions" << endl;
             this->epoch->setSchedule(solution);
+            new thread([&] (Statistics *s) { s->addScheduleAboveCurrent();}, statistics);
             return solution;
         }
         else if(chooseWorstSolution(solution,temperature)){
@@ -96,6 +104,8 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
         cout <<"prob: " << probability << endl;
         cout <<"random: " << random << endl << endl;
     }
+
+    new thread([&] (Statistics *s,float p,float r) { s->addWorst(p,r);}, statistics,probability,random);
 
     if(random <= probability)
         return true;
