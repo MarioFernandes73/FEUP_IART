@@ -14,7 +14,7 @@ Schedule * Algorithm::createRandomSchedule(vector<Exam *> exams)
 {
     Schedule *s = new Schedule(debug);
     s->setSubscriptions(this->epoch->getSubscriptions());
-    s->setFirstWeekDay(this->epoch->getInitWeekDay());
+    s->setFirstWeekDay(this->epoch->getInitDate().tm_wday);
 
     bool valid = true;
     do{

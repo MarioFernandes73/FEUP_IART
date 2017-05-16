@@ -290,11 +290,13 @@ void Genetic::executeCrossover(std::vector<Schedule *> pop)
     //update the schedule object
         Schedule *s1 = new Schedule(debug);
         s1->setSubscriptions(epoch->getSubscriptions());
+        s1->setFirstWeekDay(this->epoch->getInitDate().tm_wday);
         s1->updateSchedule(new1,this->maxSlots);
         population.push_back(s1);
 
         Schedule *s2 = new Schedule(debug);
         s2->setSubscriptions(epoch->getSubscriptions());
+        s2->setFirstWeekDay(this->epoch->getInitDate().tm_wday);
         s2->updateSchedule(new2,this->maxSlots);
         population.push_back(s2);
 

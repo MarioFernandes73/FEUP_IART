@@ -20,7 +20,6 @@ private slots:
 private:
     Ui::DialogCreateStudent *ui;
     University * university;
-
 public:
     explicit DialogCreateStudent(QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}

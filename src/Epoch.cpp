@@ -83,9 +83,12 @@ int Epoch::getWeekDay(int d, int m, int y)
     return (d + 2*m + 3*(m+1)/5 + y + y/4 - y/100 + y/400 + 1) % 7;
 }
 
-int Epoch::getInitWeekDay()
-{
-    return initDate.tm_wday;
+struct tm Epoch::getInitDate() const{
+    return initDate;
+}
+
+Schedule * Epoch::getSchedule(){
+    return global;
 }
 
 template<typename T>

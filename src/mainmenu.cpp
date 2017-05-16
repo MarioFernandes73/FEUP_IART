@@ -67,6 +67,7 @@ void MainMenu::on_pushButton_10_clicked()
 {
     DialogCurrentSchedule dialog;
     dialog.setUniversity(this->university);
+    dialog.createSchedule();
     dialog.setModal(true);
     dialog.exec();
 }
