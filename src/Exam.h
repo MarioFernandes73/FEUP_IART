@@ -23,6 +23,7 @@ public:
     Exam(int id, Class myClass, int duration);
     virtual ~Exam();
     std::string getInfo() const;
+    std::string displayExam() const;
     int getDuration() const;
     int getId() const;
     long getYear() const;

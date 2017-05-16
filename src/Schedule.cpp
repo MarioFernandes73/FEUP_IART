@@ -74,6 +74,27 @@ void Schedule::addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int
     this->maxRouletteProb = 0;
 }
 
+vector<string> Schedule::getExamsAtDay(int day)
+{
+    int hours = HOURS_PER_DAY;
+    vector<string> exams;
+
+    for (int var = 0; var < examSlot.size(); ++var)
+    {
+        int slot = examSlot.at(var).second;
+        int initHour = 10+slot%hours;
+        if(slot/hours == day)
+        {
+            string date = examSlot.at(var).first->displayExam()+
+                    "\n"+to_string(initHour)+":00\n"+to_string(initHour+examSlot.at(var).first->getDuration())+":00";
+            exams.push_back(date);
+
+            cout << date << endl;
+        }
+    }
+    return exams;
+}
+
 bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)
 {
     if(debug)
@@ -173,12 +194,12 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
     for (int i = 0; i < schedule.size(); ++i)
     {
         if(i % hours == 0)  //new day
-            if(i != 0)      //not the first one
+            if(i != 0)     //not the first one
                 currWeekDay = (currWeekDay +1) % 7;
 
         //0 - SUNDAY and 6 - SATURDAY
          if(!(currWeekDay == 0 || currWeekDay == 6))
-             pos.push_back(i);
+              pos.push_back(i);
     }
 
     //retirar aqueles cuja duracao excede o dia

@@ -54,6 +54,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
 
         //new solution with modifications based on the current solution
         Schedule * solution = new Schedule(debug);
+        solution->setFirstWeekDay(epoch->getInitDate().tm_wday);
 
         number = solution->getID();
         *solution = *currentSolution;

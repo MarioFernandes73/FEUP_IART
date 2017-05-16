@@ -42,6 +42,7 @@ public:
     void setSubscriptions(vector<Subscription *> vector);
     void setFirstWeekDay(int i);
     void setDebug(bool debug);
+    std::vector<string> getExamsAtDay(int day);
 	void printExams();
 
     bool createRandomSchedule(vector<Exam *> vector, int maxSlots);

@@ -30,8 +30,9 @@ public:
     std::vector<Exam *> getExams() const;
     std::vector<Subscription *> getSubscriptions() const;
     int getWeekDay(int d, int m, int y);
-    int getInitWeekDay();
+    struct tm getInitDate() const;
     vector<Student *> getStudents(Exam *pExam) const;
+    Schedule * getSchedule();
     void setSchedule(Schedule *pSchedule);
     void addSubscription(Subscription *s);
     template<typename T>
