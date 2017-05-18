@@ -9,7 +9,7 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperat
 {
     this->temperature = temperature;
     this->acceptance = acceptance;
-    this->statistics = new Statistics(SIMULATED_ANNEALING);
+    this->statistics = new SAStatistics();
     this->temperatureReduction = reduction;
 
     vector<Exam *> exams = randomExams(this->epoch->getExams());
@@ -25,7 +25,7 @@ void SimulatedAnnealing::run(){
     statistics->startAlgorithm();
 
     while(temperature > 0){
-        new thread([&] (Statistics *s) { s->startIteration();}, statistics);
+        new thread([&] (SAStatistics *s) { s->startIteration();}, statistics);
 
         currentSolution = chooseNextSolution(temperature);
         temperature -= temperatureReduction;
@@ -33,7 +33,7 @@ void SimulatedAnnealing::run(){
         if(debug){
             cout << endl << "NEW SOLUTION, F = " << currentSolution->getFitness() << " ,T = " << temperature << endl;
         }
-        new thread([&] (Statistics *s,float best) { s->endIteration(best);}, statistics, currentSolution->getFitness());
+        new thread([&] (SAStatistics *s,float best) { s->endIteration(best);}, statistics, currentSolution->getFitness());
     }
 
     statistics->endAlgorithm();
@@ -69,7 +69,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         Schedule * solution = new Schedule(debug);
         solution->setFirstWeekDay(epoch->getInitDate().tm_wday);
 
-        new thread([&] (Statistics *s) { s->addSchedulesGenerated();}, statistics);
+        new thread([&] (SAStatistics *s) { s->addSchedulesGenerated();}, statistics);
 
         number = solution->getID();
         *solution = *currentSolution;
@@ -85,7 +85,7 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
         {
             if(debug)   cout << "BIGGER Solutions" << endl;
             this->epoch->setSchedule(solution);
-            new thread([&] (Statistics *s) { s->addScheduleAboveCurrent();}, statistics);
+            new thread([&] (SAStatistics *s) { s->addScheduleAboveCurrent();}, statistics);
 
             if(bestSolutionEver->getFitness() < solution->getFitness())
                 *bestSolutionEver = *solution;
@@ -117,7 +117,7 @@ bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature
         cout <<"random: " << random << endl << endl;
     }
 
-    new thread([&] (Statistics *s,float p,float r) { s->addWorst(p,r);}, statistics,probability,random);
+    new thread([&] (SAStatistics *s,float p,float r) { s->addWorst(p,r);}, statistics,probability,random);
 
     if(random <= probability)
         return true;

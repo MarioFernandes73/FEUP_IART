@@ -9,7 +9,7 @@ using namespace std;
 class SimulatedAnnealing : public Algorithm
 {
 private:
-    Statistics *statistics;
+    SAStatistics *statistics;
     float temperature;
     float temperatureReduction;
     Schedule * currentSolution;

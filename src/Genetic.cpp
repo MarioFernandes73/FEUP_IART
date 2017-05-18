@@ -6,7 +6,7 @@ using namespace std;
 
 Genetic::Genetic(Epoch *e, bool debug, int populationLength) : Algorithm(e,debug)
 {
-    statistics = new Statistics(GENETIC);
+    statistics = new GStatistics();
     statistics->addNPopulation(populationLength);
 
     this->populationLength = populationLength;
@@ -37,37 +37,37 @@ void Genetic::run()
     while(rep > 0)
     {
         //Statistics
-        new thread([&] (Statistics *s) { s->startIteration();}, statistics);
+        new thread([&] (GStatistics *s) { s->startIteration();}, statistics);
 
         if(debug) cout << endl << "-- New repetition : --" << rep<< endl;
 
-        new thread([&] (Statistics *s) { s->startStage();}, statistics);
+        new thread([&] (GStatistics *s) { s->startStage();}, statistics);
 
         calculateFitness();
-        new thread([&] (Statistics *s,vector<Schedule *> pop) {s->addPopulationFitness(calculatePopulationFitness(pop));}, statistics,population);
+        new thread([&] (GStatistics *s,vector<Schedule *> pop) {s->addPopulationFitness(calculatePopulationFitness(pop));}, statistics,population);
 
         //stage: SELECTION
         selectNextPopulation();
-        new thread([&] (Statistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(SELECTION);s->addFitnessSelection(calculatePopulationFitness(pop));
+        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(SELECTION);s->addFitnessSelection(calculatePopulationFitness(pop));
                 s->startStage();}, statistics,population);
 
         //stage: CROSSOVER
         crossover();
-        new thread([&] (Statistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);
+        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);
            s->endStage(CROSSOVER);s->addFitnessCrossover(calculatePopulationFitness(pop));}, statistics,population);
 
         mutation();
 
         //statistics: best speciment
-        new thread([&] (Statistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(MUTATION);s->addFitnessMutation(calculatePopulationFitness(pop));
+        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(MUTATION);s->addFitnessMutation(calculatePopulationFitness(pop));
                 s->startStage();}, statistics,population);
 
-        new thread([&] (Statistics *s,vector<Schedule *> pop) {Genetic::calculatePopulationFitness(pop);s->addBestSpeciment(population.at(Genetic::getBestSchedule(pop))->getFitness());}, statistics,population);
+        new thread([&] (GStatistics *s,vector<Schedule *> pop) {Genetic::calculatePopulationFitness(pop);s->addBestSpeciment(population.at(Genetic::getBestSchedule(pop))->getFitness());}, statistics,population);
 
         rep--;
 
         //Statistics
-       new thread([&] (Statistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
+       new thread([&] (GStatistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
     }
 
     calculateFitness();
@@ -149,9 +149,9 @@ vector<Schedule *> Genetic::selectElitistPopulation()
         int mybest = getBestSchedule(oldPopulation);
 
         if(i == 0)
-            new thread([&] (Statistics *s, int fitness) { s->addBestElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
+            new thread([&] (GStatistics *s, int fitness) { s->addBestElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
         else if(i == numElitists - 1)
-            new thread([&] (Statistics *s, int fitness) { s->addWorstElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
+            new thread([&] (GStatistics *s, int fitness) { s->addWorstElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
 
 
         //add to next population
@@ -354,5 +354,5 @@ void Genetic::mutation()
     }
 
     //Statistics
-    new thread([&] (Statistics *s, int mutN) { s->addNMutations(mutN);}, statistics,mutationN);
+    new thread([&] (GStatistics *s, int mutN) { s->addNMutations(mutN);}, statistics,mutationN);
 }

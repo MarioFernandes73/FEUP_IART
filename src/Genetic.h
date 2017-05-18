@@ -10,7 +10,7 @@ class Genetic : public Algorithm {
 private:
     int populationLength;
     vector<Schedule *> population;
-    Statistics * statistics;
+    GStatistics * statistics;
 public:
     Genetic(Epoch *epoch, bool debug, int populationLength);
     void run();
