@@ -15,6 +15,9 @@ SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperat
     vector<Exam *> exams = randomExams(this->epoch->getExams());
     currentSolution = createRandomSchedule(exams);
     currentSolution->calculateFitness();
+
+    bestSolutionEver = new Schedule(debug);
+    *bestSolutionEver = *currentSolution;
 }
 
 void SimulatedAnnealing::run(){
@@ -37,8 +40,8 @@ void SimulatedAnnealing::run(){
 
     if(debug)
     {
-        cout << "Solution: " << *currentSolution << endl;
-        cout << "Fitness Function: " << currentSolution->getFitness() << endl;
+        cout << "Solution: " << *bestSolutionEver << endl;
+        cout << "Fitness Function: " << bestSolutionEver->getFitness() << endl;
     }
 
     statistics->displayStatistics();
@@ -83,6 +86,10 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
             if(debug)   cout << "BIGGER Solutions" << endl;
             this->epoch->setSchedule(solution);
             new thread([&] (Statistics *s) { s->addScheduleAboveCurrent();}, statistics);
+
+            if(bestSolutionEver->getFitness() < solution->getFitness())
+                *bestSolutionEver = *solution;
+
             return solution;
         }
         else if(chooseWorstSolution(solution,temperature)){

@@ -17,6 +17,7 @@ public:
 
     void populate(vector<Exam *> exams);
     void calculateFitness();
+    void static calculateFitness(vector<Schedule *> population);
     int getPopulationFitness();
     int static calculatePopulationFitness(vector<Schedule *> population);
     void createRandomProbs(double * randomProbs,int i);
