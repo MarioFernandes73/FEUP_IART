@@ -5,6 +5,7 @@
 #include "University.h"
 #include "Genetic.h"
 #include "SimulatedAnnealing.h"
+#include "dialogcurrentschedule.h"
 
 namespace Ui {
 class DialogGenerateSchedule;
@@ -23,6 +24,7 @@ private:
 public:
     explicit DialogGenerateSchedule(QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}
+    void showSchedule(string epoch);
     ~DialogGenerateSchedule();
 private slots:
     void on_pushButton_clicked();

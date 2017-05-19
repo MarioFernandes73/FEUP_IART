@@ -21,6 +21,7 @@ void DialogGenerateSchedule::on_pushButton_clicked()
         Genetic algorithm(epoch,false,ui->populationLength->value());
         algorithm.run();
         this->close();
+        showSchedule(text.toLocal8Bit().constData());
     }
 }
 
@@ -33,5 +34,14 @@ void DialogGenerateSchedule::on_pushButton_2_clicked()
         algorithm.run();
         cout << "ALL DONE" << endl;
         this->close();
+        showSchedule(text.toLocal8Bit().constData());
     }
+}
+
+void DialogGenerateSchedule::showSchedule(string epoch){
+    DialogCurrentSchedule dialog(epoch);
+    dialog.setUniversity(this->university);
+    dialog.setModal(true);
+    dialog.createSchedule(epoch);
+    dialog.exec();
 }

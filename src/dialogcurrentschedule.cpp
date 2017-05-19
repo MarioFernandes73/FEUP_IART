@@ -3,11 +3,12 @@
 
 #include <sstream>
 
-DialogCurrentSchedule::DialogCurrentSchedule(QWidget *parent) :
+DialogCurrentSchedule::DialogCurrentSchedule(string epoch, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogCurrentSchedule)
 {
     ui->setupUi(this);
+    ui->lineEdit->setText(QString::fromStdString(epoch));
 }
 
 DialogCurrentSchedule::~DialogCurrentSchedule()
@@ -15,9 +16,11 @@ DialogCurrentSchedule::~DialogCurrentSchedule()
     delete ui;
 }
 
-void DialogCurrentSchedule::createSchedule()
+void DialogCurrentSchedule::createSchedule(string epochName)
 {
-    Epoch *epoch = this->university->getEpochByName("Normal");
+    Epoch *epoch = this->university->getEpochByName(epochName);
+    if(!epoch)
+        return;
     Schedule *s = epoch->getSchedule();
     struct tm initDate = epoch->getInitDate();
     int totalDays = epoch->getNumdays();
@@ -60,6 +63,7 @@ void DialogCurrentSchedule::addTable(int i, int size)
     tableWidget->setGeometry(QRect(10, 10, 600, 200));
     tableWidget->move(0,250*i);
     this->myTables.push_back(tableWidget);
+    tableWidget->show();
 }
 
 void DialogCurrentSchedule::setHeader(int tableNum, struct tm initDate)
@@ -118,4 +122,10 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
 
      cout << "HEIGHT : "<< myTables.at(tableNum)->verticalHeader()->length()<< endl;
      return myTables.at(tableNum)->verticalHeader()->length();
+}
+
+void DialogCurrentSchedule::on_pushButton_clicked()
+{
+    QString text = ui->lineEdit->text();
+    this->createSchedule(text.toLocal8Bit().constData());
 }
