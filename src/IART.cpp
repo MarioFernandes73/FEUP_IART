@@ -20,6 +20,7 @@ using namespace std;
 
 vector<Student *> loadStudents(vector<vector<string>> studentsInfo);
 vector<Exam *> loadExams(vector<vector<string>> examsInfo);
+vector<Epoch *> loadEpochs(vector<vector<string>> epochsInfo);
 void loadSubscriptions(vector<vector<string>> subscribeInfo, University * university);
 
 int main(int argc, char* argv[]) {
@@ -37,6 +38,7 @@ int main(int argc, char* argv[]) {
     char *selectStudentQuery = (char *) "SELECT * FROM Student";
     char *selectExamQuery = (char *) "SELECT * FROM Exam";
     char *selectSubscribeQuery = (char *) "SELECT * FROM Subscription";
+    char *selectEpochQuery = (char *) "SELECT * FROM Epoch";
 
     // database operations
     db = new Database(filename);
@@ -48,13 +50,20 @@ int main(int argc, char* argv[]) {
 
     // university initialization and epoch
     University * university = new University(students,exams);
-    Epoch * e = new Epoch("Normal",8,5,2017,26,5,2017);
-    university->addEpoch(e);
+    vector<Epoch *> epochs = loadEpochs(db->query(selectEpochQuery));
+   // Epoch * e = new Epoch("Normal",8,5,2017,26,5,2017);
+    for(vector<Epoch * >::iterator it = epochs.begin(); it < epochs.end(); ++it){
+        university->addEpoch(*it);
+    }
+
 
     //load subscriptions of students to exams
     loadSubscriptions(db->query(selectSubscribeQuery), university);
 
     db->close();
+
+
+  //  cout << temp->getId() << endl;
 
     //interface
     //initialOptions(university);
@@ -62,7 +71,8 @@ int main(int argc, char* argv[]) {
     //TESTE
 
    //genetic algorithm
-    Genetic algorithm1(e,false,40);
+    Epoch * temp = university->getEpochByName("Normal");
+    Genetic algorithm1(temp,false,40);
     algorithm1.run();
     //e->getSchedule()->printExams();
     /*
@@ -148,4 +158,35 @@ void loadSubscriptions(vector<vector<string>> subscribeInfo, University * univer
 
         university->addSubscription(epoch_id,exam_id,student_id);
     }
+}
+
+vector<Epoch *> loadEpochs(vector<vector<string>> epochsInfo)
+{
+    vector<Epoch *> epochs;
+
+    for (vector<vector<string> >::iterator it = epochsInfo.begin(); it < epochsInfo.end(); ++it)
+    {
+        char c;
+        int day1, month1, year1;
+        int day2, month2, year2;
+        string name;
+        stringstream ss, ss2;
+
+        int i = 0;
+        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++){
+            if( i == 0)
+                name = *it2;
+            else if(i == 1)
+                ss << *it2;
+            else
+                ss2 << *it2;
+            i++;
+        }
+        ss >> year1 >> c >> month1 >> c >> day1;
+        ss2 >> year2 >> c >> month2 >> c >> day2;
+        //cout << name << " " << day1 << " " << month1 << " " << year1 << " " << day2 << " " << month2 << " " << year2 <<endl;
+        epochs.push_back(new Epoch(name, day1, month1, year1, day2, month2, year2));
+    }
+
+    return epochs;
 }
