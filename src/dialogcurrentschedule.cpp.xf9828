@@ -58,7 +58,7 @@ void DialogCurrentSchedule::addTable(int i, int size)
     QTableWidget *tableWidget = new QTableWidget(this);
     tableWidget->setObjectName(QString::fromStdString(ss.str()));
     tableWidget->setGeometry(QRect(10, 10, 600, 200));
-    tableWidget->move(0,250*i);
+    tableWidget->move(0,size+20);
     this->myTables.push_back(tableWidget);
 }
 
@@ -116,6 +116,6 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
      myTables.at(tableNum)->resizeColumnsToContents();
      myTables.at(tableNum)->resizeRowsToContents();
 
-     cout << "HEIGHT : "<< myTables.at(tableNum)->verticalHeader()->length()<< endl;
-     return myTables.at(tableNum)->verticalHeader()->length();
+     cout << "HEIGHT : "<< myTables.at(tableNum)->height();
+     return myTables.at(tableNum)->height();
 }

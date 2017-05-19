@@ -26,12 +26,11 @@ void DialogCurrentSchedule::createSchedule()
     if(totalWeeks%7 != 0)
         totalWeeks++;
 
-    int size = 0;
     for (int var = 0; var < totalWeeks; ++var)
     {
-        addTable(var,size);
+        addTable(var);
         setHeader(var,initDate);
-        size = setContent(var,s,initDate.tm_wday,totalDays);
+        setContent(var,s,initDate.tm_wday,totalDays);
     }
 
 }
@@ -50,15 +49,15 @@ QString DialogCurrentSchedule::getDate(struct tm date, int i)
     return QString::fromStdString(ss.str());
 }
 
-void DialogCurrentSchedule::addTable(int i, int size)
+void DialogCurrentSchedule::addTable(int i)
 {
     stringstream ss;
     ss << "table"<< i;
 
     QTableWidget *tableWidget = new QTableWidget(this);
     tableWidget->setObjectName(QString::fromStdString(ss.str()));
-    tableWidget->setGeometry(QRect(10, 10, 600, 200));
-    tableWidget->move(0,250*i);
+    tableWidget->setGeometry(QRect(10, 10, 720, 150));
+    tableWidget->move(0,i*170);
     this->myTables.push_back(tableWidget);
 }
 
@@ -67,7 +66,7 @@ void DialogCurrentSchedule::setHeader(int tableNum, struct tm initDate)
     //header
     QStringList header;
     QStringList weekday;
-    weekday <<"Sunday" << "Monday" << "Tuesday"<< "Wednesday"<< "Thursday"<< "Friday"<<"Saturday";
+    weekday <<"Sunday" << "Monday" << "Tuesday"<< "Wenesday"<< "Thursady"<< "Friday"<<"Saturday";
 
     for(int i = 0; i < 7; i++)
     {
@@ -80,7 +79,7 @@ void DialogCurrentSchedule::setHeader(int tableNum, struct tm initDate)
     myTables.at(tableNum)->setHorizontalHeaderLabels(header);
 }
 
-int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int totalDays)
+void DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int totalDays)
 {
     //conteudo
     int delta,row;
@@ -104,7 +103,7 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
                 if(row > lastRow){
                     lastRow = row;
                     myTables.at(tableNum)->insertRow(row);
-                    myTables.at(tableNum)->verticalHeader()->resizeSection(row, 80);
+                    //verticalHeader()->resizeSection(i, 30);
                 }
                 QTableWidgetItem *item = new QTableWidgetItem(QString::fromStdString(exams.at(j)));
 
@@ -112,10 +111,4 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
             }
         }
     }
-
-     myTables.at(tableNum)->resizeColumnsToContents();
-     myTables.at(tableNum)->resizeRowsToContents();
-
-     cout << "HEIGHT : "<< myTables.at(tableNum)->verticalHeader()->length()<< endl;
-     return myTables.at(tableNum)->verticalHeader()->length();
 }

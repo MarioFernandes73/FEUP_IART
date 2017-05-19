@@ -23,10 +23,10 @@ public:
     explicit DialogCurrentSchedule(QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}
     void createSchedule();
+    void addTable(int i, int size);
     void setHeader(int tableNum, struct tm initDate);
-    void setContent(int tableNum, Schedule *s, int init, int totalDays);
+    int setContent(int tableNum, Schedule *s, int init, int totalDays);
     QString getDate(struct tm date, int i);
-    void addTable(int i);
     ~DialogCurrentSchedule();
 };
 
