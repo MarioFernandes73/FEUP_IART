@@ -9,10 +9,11 @@ using namespace std;
 class SimulatedAnnealing : public Algorithm
 {
 private:
-    Statistics *statistics;
+    SAStatistics *statistics;
     float temperature;
     float temperatureReduction;
     Schedule * currentSolution;
+    Schedule * bestSolutionEver;
     float acceptance;     //best value -> 20 -> influencia a rejeição
                           //de soluções com uma função fitness pior do
                           //a da solução atual. Quando menor o valor,

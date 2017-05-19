@@ -6,7 +6,7 @@ using namespace std;
 
 Genetic::Genetic(Epoch *e, bool debug, int populationLength) : Algorithm(e,debug)
 {
-    statistics = new Statistics(GENETIC);
+    statistics = new GStatistics();
     statistics->addNPopulation(populationLength);
 
     this->populationLength = populationLength;
@@ -37,57 +37,61 @@ void Genetic::run()
     while(rep > 0)
     {
         //Statistics
-        new thread([&] (Statistics *s) { s->startIteration();}, statistics);
+        new thread([&] (GStatistics *s) { s->startIteration();}, statistics);
 
         if(debug) cout << endl << "-- New repetition : --" << rep<< endl;
 
-        //stage: SELECTION
-        new thread([&] (Statistics *s) { s->startStage();}, statistics);
+        new thread([&] (GStatistics *s) { s->startStage();}, statistics);
+
         calculateFitness();
+        new thread([&] (GStatistics *s,vector<Schedule *> pop) {s->addPopulationFitness(calculatePopulationFitness(pop));}, statistics,population);
+
+        //stage: SELECTION
         selectNextPopulation();
-        new thread([&] (Statistics *s, int fitness){s->endStage(SELECTION);s->addFitnessSelection(fitness);
-                s->startStage();}, statistics,getPopulationFitness());
+        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(SELECTION);s->addFitnessSelection(calculatePopulationFitness(pop));
+                s->startStage();}, statistics,population);
 
         //stage: CROSSOVER
         crossover();
-        new thread([&] (Statistics *s, int fitness){s->endStage(CROSSOVER);s->addFitnessSelection(fitness);
-                s->startStage();}, statistics,getPopulationFitness());
+        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);
+           s->endStage(CROSSOVER);s->addFitnessCrossover(calculatePopulationFitness(pop));}, statistics,population);
 
         mutation();
-        new thread([&] (Statistics *s, int fitness){s->endStage(MUTATION);s->addFitnessSelection(fitness);
-                s->startStage();}, statistics,getPopulationFitness());
+
+        //statistics: best speciment
+        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(MUTATION);s->addFitnessMutation(calculatePopulationFitness(pop));
+                s->startStage();}, statistics,population);
+
+        new thread([&] (GStatistics *s,vector<Schedule *> pop) {Genetic::calculatePopulationFitness(pop);s->addBestSpeciment(population.at(Genetic::getBestSchedule(pop))->getFitness());}, statistics,population);
 
         rep--;
 
         //Statistics
-       new thread([&] (Statistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
+       new thread([&] (GStatistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
     }
 
     calculateFitness();
     int best = getBestSchedule(population);
 
+    statistics->endAlgorithm();
+
     if(debug) cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
 
     this->epoch->setSchedule(population.at(best));
-    statistics->endAlgorithm();
 
     statistics->displayStatistics();
 }
 
 void Genetic::calculateFitness()
 {
+    calculateFitness(population);
+}
+
+void Genetic::calculateFitness(vector<Schedule *> population){
     //calculate schedule fitness
     for (int i = 0; i < population.size(); ++i)
     {
         int fitness = population.at(i)->calculateFitness();
-
-        if(debug)
-        {
-            if(fitness == -1)
-                cout << "Invalid Schedule!" << endl;
-
-             cout << * population.at(i) << "Fitness : " << population.at(i)->getFitness() << endl << endl;
-        }
     }
 }
 
@@ -119,9 +123,6 @@ void Genetic::selectNextPopulation()
 {
     int populationFitness = getPopulationFitness();
 
-    //Statistics
-    new thread([&] (Statistics *s,int fitness) { s->addPopulationFitness(fitness);}, statistics,populationFitness);
-
     int numElitists = NUM_ELITISTS;
     vector<Schedule *> nextPopulation = selectElitistPopulation();
 
@@ -148,9 +149,9 @@ vector<Schedule *> Genetic::selectElitistPopulation()
         int mybest = getBestSchedule(oldPopulation);
 
         if(i == 0)
-            new thread([&] (Statistics *s, int fitness) { s->addBestElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
+            new thread([&] (GStatistics *s, int fitness) { s->addBestElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
         else if(i == numElitists - 1)
-            new thread([&] (Statistics *s, int fitness) { s->addWorstElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
+            new thread([&] (GStatistics *s, int fitness) { s->addWorstElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
 
 
         //add to next population
@@ -331,11 +332,6 @@ void Genetic::mutation()
 
     mutProb /= ((double) 100);
 
-    cout << endl << "PROB: " << mutProb << endl;
-
-    //Statistics
-    new thread([&] (Statistics *s, int mutN) { s->addNMutations(mutN);}, statistics,mutationN);
-
     int scheduleNum,examNum;
 
     for(int i = 0; i < size; i++){
@@ -356,4 +352,7 @@ void Genetic::mutation()
            population.at(scheduleNum)->mutate(examNum);
         }
     }
+
+    //Statistics
+    new thread([&] (GStatistics *s, int mutN) { s->addNMutations(mutN);}, statistics,mutationN);
 }

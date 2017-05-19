@@ -66,18 +66,13 @@ void Statistics::displayStatistics() const{
          << "Improvement/StartFitness : " << improvement/this->bestFitness[0] * ((float) 100) << " %" << endl
          << "MaxImprov/StartFitness   : " << maxImprovement/this->bestFitness[0] * ((float) 100) << " %" << endl
          << endl;
-
-    if(this->algorithm == SIMULATED_ANNEALING){
-        displaySimulatedAnnealingStat();
-    }
-    else if(this->algorithm == GENETIC){
-        displayGeneticStat();
-    }
 }
 
 /*
  * SimulatedAnnealing
  */
+
+SAStatistics::SAStatistics() : Statistics(SIMULATED_ANNEALING){};
 
 void Statistics::endIteration(float best){
     float duration = (float)(clock() - iterationTimer)/ ((float) CLOCKS_PER_SEC) * 1000.0f; //ms
@@ -85,22 +80,22 @@ void Statistics::endIteration(float best){
     bestFitness.push_back(best);
 }
 
-void Statistics::addWorst(float probability, float random){
+void SAStatistics::addWorst(float probability, float random){
     bool accepted = false;
     if(probability > random)
         accepted = true;
     worstAccepted.push_back(accepted);
 }
 
-void Statistics::addScheduleAboveCurrent(){
+void SAStatistics::addScheduleAboveCurrent(){
     this->schedulesAboveCurrent++;
 }
 
-void Statistics::addSchedulesGenerated(){
+void SAStatistics::addSchedulesGenerated(){
     this->schedulesGenerated++;
 }
 
-void Statistics::displaySimulatedAnnealingStat() const{
+void SAStatistics::displaySimulatedAnnealingStat() const{
     float worstAcceptedN = 0.0f;
     float worstRejectedN = 0.0f;
     float iterationsN = (float)iterationsTimes.size();
@@ -142,11 +137,14 @@ void Statistics::displaySimulatedAnnealingStat() const{
  * Genetic
  */
 
-void Statistics::startStage(){
+GStatistics::GStatistics() : Statistics(GENETIC){
+}
+
+void GStatistics::startStage(){
     stageTimer = clock();
 }
 
-void Statistics::endStage(GeneticStages stage){
+void GStatistics::endStage(GeneticStages stage){
 
     float duration = (float)(clock() - stageTimer)/((float) CLOCKS_PER_SEC) * 1000.0f; //ms
 
@@ -172,74 +170,108 @@ void Statistics::endStage(GeneticStages stage){
     }
 }
 
-void Statistics::addBestSpeciment(int fitness){
+void GStatistics::addBestSpeciment(int fitness){
     bestFitness.push_back(fitness);
 }
 
-void Statistics::addBestElite(int fitness){
+void GStatistics::addBestElite(int fitness){
     bestEliteFitness.push_back(fitness);
 }
 
-void Statistics::addWorstElite(int fitness){
+void GStatistics::addWorstElite(int fitness){
     worstEliteFitness.push_back(fitness);
 }
 
-void Statistics::addPopulationFitness(int fitness){
+void GStatistics::addPopulationFitness(int fitness){
     populationFitness.push_back(fitness);
 }
 
-void Statistics::addNPopulation(int np){
+void GStatistics::addNPopulation(int np){
     populationN = np;
 }
 
-void Statistics::addNMutations(int nm){
+void GStatistics::addNMutations(int nm){
     mutationN.push_back(nm);
 }
 
-void Statistics::addFitnessSelection(int fitness){
+void GStatistics::addFitnessSelection(int fitness){
     fitnessSelection.push_back(fitness);
 }
 
-void Statistics::addFitnessCrossover(int fitness){
+void GStatistics::addFitnessCrossover(int fitness){
     fitnessCrossover.push_back(fitness);
 }
 
-void Statistics::addFitnessMutation(int fitness){
+void GStatistics::addFitnessMutation(int fitness){
     fitnessMutation.push_back(fitness);
 }
 
-void Statistics::displayGeneticStat() const{
 
-    float sumWorstElite = 0.0f;
-    float sumPopFitness = 0.0f;
-    float sumFitnessSelection = 0.0f;
-    float sumFitnessCrossover = 0.0f;
-    float sumFitnessMutation = 0.0f;
-    float sumSelectionTimes = 0.0f;
-    float sumCrossoverTimes = 0.0f;
-    float sumMutationTimes = 0.0f;
-    float iterations = iterationsTimes.size();
+void GStatistics::displayStatistics() const{
+
+    Statistics::displayStatistics();
+
+    float perc = ((float) 100);
+
+    float sumWorstElite = 0.0f, sumPopFitness = 0.0f, sumBestElite = 0.0f;
+    float sumFitnessSelection = 0.0f, sumFitnessCrossover = 0.0f,sumFitnessMutation = 0.0f;
+    float sumSelectionTimes = 0.0f,sumCrossoverTimes = 0.0f,sumMutationTimes = 0.0f;
+    float sumMutationN = 0.0f;
+
+    float iterations = (float)iterationsTimes.size();
 
 
     for(int fitness : worstEliteFitness)    sumWorstElite += fitness;
-
+    for(int fitness : bestEliteFitness)     sumBestElite += fitness;
     for(int fitness : populationFitness)    sumPopFitness += fitness;
-
     for(int fitness : fitnessSelection)     sumFitnessSelection += fitness;
-
     for(int fitness : fitnessCrossover)     sumFitnessCrossover += fitness;
-
     for(int fitness : fitnessMutation)      sumFitnessMutation += fitness;
+    for(int time : selectionTimes)          sumSelectionTimes += time;
+    for(int time : crossoverTimes)          sumCrossoverTimes += time;
+    for(int time : mutationTimes)           sumMutationTimes += time;
+    for(int n : mutationN)                  sumMutationN += n;
 
-    for(int fitness : selectionTimes)       sumSelectionTimes += fitness;
+    float avgPopFit = sumPopFitness/iterations;
+    float avgSelFit = sumFitnessSelection/iterations;
+    float avgCroFil = sumFitnessCrossover/iterations;
+    float avgMutFit = sumFitnessMutation/iterations;
 
-    for(int fitness : crossoverTimes)       sumCrossoverTimes += fitness;
+    float imprvOnSel = (avgSelFit - avgPopFit)/avgPopFit * perc;
+    float imprvOnCro = (avgCroFil - avgSelFit)/avgSelFit * perc;
+    float imprvOnMut = (avgMutFit - avgCroFil)/avgCroFil * perc;
 
-    for(int fitness : mutationTimes)        sumMutationTimes += fitness;
+    float avgMutN = sumMutationN/iterations;
+
+    float avgSelTim = sumSelectionTimes/iterations;
+    float avgCroTim = sumCrossoverTimes/iterations;
+    float avgMutTim = sumMutationTimes/iterations;
+
+    float avgBestEliteFit = sumBestElite/iterations;
+    float avgWorstEliteFit = sumWorstElite/iterations;
 
     cout << "#######################################" << endl
          << "#              GENETIC                #" << endl
          << "#######################################" << endl << fixed << setprecision(2)
          << "Population               : " << populationN << endl
+         << endl
+         << "Avg population fitness   : " << avgPopFit << endl
+         << "Avg selection fitness    : " << avgSelFit << endl
+         << "Avg crossover fitness    : " << avgCroFil << endl
+         << "Avg mutation fitness     : " << avgMutFit << endl
+         << endl
+         << "Improvement on selection : " << imprvOnSel << " %" << endl
+         << "Improvement on crossover : " << imprvOnCro << " %" << endl
+         << "Improvement on mutation  : " << imprvOnMut << " %" << endl
+         << endl
+         << "Avg mutation number      : " << avgMutN << endl
+         << endl
+         << "Avg selection time       : " << avgSelTim << " ms" << endl
+         << "Avg crossover time       : " << avgCroTim << " ms" << endl
+         << "Avg mutation time        : " << avgMutTim << " ms" << endl
+         << endl
+         << "Avg best elite fitness   : " << avgBestEliteFit << endl
+         << "Avg worst elite fitness  : " << avgWorstEliteFit << endl
          << endl;
+
 }

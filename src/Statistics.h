@@ -6,12 +6,10 @@
 #include <cmath>
 #include <string>
 #include "Utils.h"
-
-
 using namespace std;
 
 class Statistics {
-private:
+protected:
     vector<float> iterationsTimes;
     vector<float> bestFitness;
     clock_t iterationTimer;
@@ -21,11 +19,34 @@ private:
     //Algortihm
     AlgorithmType algorithm;
 
+public:
+    Statistics(AlgorithmType algorithm);
+    void startIteration();
+    void startAlgorithm();
+    void endIteration(float best);
+    void endAlgorithm();
+    virtual void displayStatistics() const;
+};
+
+class SAStatistics: public Statistics{
+protected:
     //SimulatedAnnealing
     vector<bool> worstAccepted; //records if a worstSolution was accepted
     int schedulesGenerated = 1;
     int schedulesAboveCurrent = 0;  //Number of schedules that have the fitness above the current fitness
 
+public:
+    SAStatistics();
+    //Simulated Annealing
+    void addWorst(float probability, float random);
+    void addSchedulesGenerated();
+    void addScheduleAboveCurrent();
+    void displaySimulatedAnnealingStat() const;
+
+};
+
+class GStatistics : public Statistics{
+protected:
     //Genetic
     clock_t stageTimer;
     int populationN;
@@ -46,19 +67,7 @@ private:
     vector<float> mutationTimes;
 
 public:
-    Statistics(AlgorithmType algorithm);
-    void startIteration();
-    void startAlgorithm();
-    void endIteration(float best);
-    void endAlgorithm();
-    void displayStatistics() const;
-
-    //Simulated Annealing
-    void addWorst(float probability, float random);
-    void addSchedulesGenerated();
-    void addScheduleAboveCurrent();
-    void displaySimulatedAnnealingStat() const;
-
+    GStatistics();
     //Genetic
     void startStage();
     void endStage(GeneticStages stage);
@@ -71,7 +80,7 @@ public:
     void addFitnessSelection(int fitness);
     void addFitnessCrossover(int fitness);
     void addFitnessMutation(int fitness);
-    void displayGeneticStat() const;
+    void displayStatistics() const;
 
 };
 
