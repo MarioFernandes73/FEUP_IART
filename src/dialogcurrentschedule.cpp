@@ -3,10 +3,11 @@
 
 #include <sstream>
 
-DialogCurrentSchedule::DialogCurrentSchedule(string epoch, QWidget *parent) :
+DialogCurrentSchedule::DialogCurrentSchedule(string epoch, string statistics, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogCurrentSchedule)
 {
+    this->statisticsText = statistics;
     ui->setupUi(this);
     ui->lineEdit->setText(QString::fromStdString(epoch));
 }
@@ -120,7 +121,6 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
      myTables.at(tableNum)->resizeColumnsToContents();
      myTables.at(tableNum)->resizeRowsToContents();
 
-     cout << "HEIGHT : "<< myTables.at(tableNum)->verticalHeader()->length()<< endl;
      return myTables.at(tableNum)->verticalHeader()->length();
 }
 
@@ -128,4 +128,11 @@ void DialogCurrentSchedule::on_pushButton_clicked()
 {
     QString text = ui->lineEdit->text();
     this->createSchedule(text.toLocal8Bit().constData());
+}
+
+void DialogCurrentSchedule::on_pushButton_2_clicked()
+{
+    DialogListStatistics dialogStatistics(this->statisticsText);
+    dialogStatistics.setModal(true);
+    dialogStatistics.exec();
 }

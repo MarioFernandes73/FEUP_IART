@@ -89,7 +89,6 @@ vector<string> Schedule::getExamsAtDay(int day)
                     "\n"+to_string(initHour)+":00\n"+to_string(initHour+examSlot.at(var).first->getDuration())+":00";
             exams.push_back(date);
 
-            cout << date << endl;
         }
     }
     return exams;

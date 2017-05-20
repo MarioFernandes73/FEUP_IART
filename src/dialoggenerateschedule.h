@@ -24,7 +24,7 @@ private:
 public:
     explicit DialogGenerateSchedule(QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}
-    void showSchedule(string epoch);
+    void showSchedule(string epoch, string stats);
     ~DialogGenerateSchedule();
 private slots:
     void on_pushButton_clicked();
