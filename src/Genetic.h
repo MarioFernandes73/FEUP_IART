@@ -8,11 +8,12 @@ using namespace std;
 
 class Genetic : public Algorithm {
 private:
+    int numReps;
     int populationLength;
     vector<Schedule *> population;
     GStatistics * statistics;
 public:
-    Genetic(Epoch *epoch, bool debug, int populationLength);
+    Genetic(Epoch *epoch, bool debug, int populationLength,int numReps);
     void run();
 
     void populate(vector<Exam *> exams);

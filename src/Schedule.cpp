@@ -106,20 +106,6 @@ vector<string> Schedule::getExamsAtDay(int day, vector<string> filter, bool usef
     return exams;
 }
 
-string Schedule::createDisplay(int day,Exam *e,int slot)
-{
-    cout << "estou a criar\n";
-
-    int hours = HOURS_PER_DAY;
-    int initHour = 10+slot%hours;
-    int myday = slot/hours;
-
-    if(myday == day)
-    {
-        string text(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
-    }
-}
-
 bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)
 {
     if(debug)
@@ -130,7 +116,7 @@ bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)
     this->schedule.clear();
     this->examSlot.clear();
 
-    //initialize all booleans = false and exams to NULL
+    //initialize all exams to NULL
     for (int i = 0; i < maxSlots; ++i) {
         schedule.push_back(NULL);
     }
@@ -252,8 +238,8 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
             {
                 int currDay = examSlot.at(j).second / hours;
                 int a,b;
-                a = (currDay-1)*hours;
-                b = (currDay+2)*hours-1;
+                a = (currDay)*hours;
+                b = (currDay+1)*hours-1;
                 if(a < 0)
                     a = 0;
                 if(b >= schedule.size())
@@ -385,11 +371,12 @@ int Schedule::calculateFitness()
     return fitness;
 }
 
+//TODO  mudar o nome desta funcao
 bool Schedule::consecutiveDaysExams(int currExam, int exam)
 {
     int day1 = currExam / HOURS_PER_DAY;
     int day2 = exam / HOURS_PER_DAY;
-    return (abs(day1-day2) < 2);
+    return (abs(day1-day2) < 1);
 }
 
 double Schedule::calculateMaxRouletteProb(double minRouletteProb, double total) {
@@ -443,6 +430,19 @@ void Schedule::updateSchedule(std::vector<pair<Exam *, int>> examSlot, int maxSl
     optimize();
 }
 
+void Schedule::mutate(int slot)
+{
+    pair<Exam *,int> myPair = make_pair<Exam *,int>((Exam *&&) this->examSlot.at(slot), (int &&) -1);
+    vector<int> possiblePos = getPossiblePositions(myPair);
+
+    if(possiblePos.size() > 0){
+        int random = rand() % possiblePos.size();
+        this->examSlot.at(slot).second = possiblePos.at(random);
+
+        optimize();
+    }
+}
+
 void Schedule::printExams()
 {
     cout << "Print exams from Schedule " << id << endl;
@@ -458,19 +458,6 @@ void Schedule::printExams()
     {
         pair<Exam *,int> x = (pair<Exam *, int> &&) examSlot.at(j);
         cout << "   " << x.first->getClassName() << " : " << x.second << endl;
-    }
-}
-
-void Schedule::mutate(int slot)
-{
-    pair<Exam *,int> myPair = make_pair<Exam *,int>((Exam *&&) this->examSlot.at(slot), (int &&) -1);
-    vector<int> possiblePos = getPossiblePositions(myPair);
-
-    if(possiblePos.size() > 0){
-        int random = rand() % possiblePos.size();
-        this->examSlot.at(slot).second = possiblePos.at(random);
-
-        optimize();
     }
 }
 

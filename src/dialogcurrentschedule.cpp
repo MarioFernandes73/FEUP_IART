@@ -10,12 +10,20 @@ DialogCurrentSchedule::DialogCurrentSchedule(string epoch,string statistics,stri
     this->student = student;
     this->statisticsText = statistics;
     ui->setupUi(this);
-    ui->lineEdit->setText(QString::fromStdString(epoch));
 }
 
 DialogCurrentSchedule::~DialogCurrentSchedule()
 {
     delete ui;
+}
+
+void DialogCurrentSchedule::setUniversity(University * u){
+    this->university=u;
+
+    vector<Epoch *> epochs = this->university->getEpochs();
+    for (int i = 0; i < epochs.size(); ++i) {
+        ui->comboBox->addItem(QString::fromStdString(epochs.at(i)->getName()));
+    }
 }
 
 void DialogCurrentSchedule::createSchedule(string epochName)
@@ -139,7 +147,7 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
 
 void DialogCurrentSchedule::on_pushButton_clicked()
 {
-    QString text = ui->lineEdit->text();
+    QString text = ui->comboBox->currentText();
     this->createSchedule(text.toLocal8Bit().constData());
 }
 

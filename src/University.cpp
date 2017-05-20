@@ -97,6 +97,10 @@ Epoch * University::getEpochByName(string name)
     return NULL;
 }
 
+std::vector<Epoch *> University::getEpochs(){
+    return epochs;
+}
+
 void University::addSubscription(int epochId, int examId, int studentId)
 {
     Exam *e = findById(exams,examId);

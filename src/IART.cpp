@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     // database variables
     Database *db;
 
-    char *filename = (char *) "../iart2.db";         // QT
+    char *filename = (char *) "../iart3.db";         // QT
     //char *filename = (char *) "../proj/iart.db";  //clion
     //char * filename = (char*)"iart.db";           //eclipse
 
@@ -62,19 +62,6 @@ int main(int argc, char* argv[]) {
 
     //interface
     //initialOptions(university);
-
-    //TESTE
-
-   //genetic algorithm
-    /*
-    Epoch * temp = university->getEpochByName("Normal");
-    Genetic algorithm1(temp,false,40);
-    algorithm1.run();
-    //e->getSchedule()->printExams();
-    //Simulated Annealing
-    SimulatedAnnealing algorithm2(e,true,50,0.5,20);
-    algorithm2.run();
-    */
 
     //save .db
 

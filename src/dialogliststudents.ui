@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="pushButton_5">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>470</x>
      <y>360</y>
      <width>93</width>
      <height>28</height>
@@ -46,8 +46,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>294</x>
-     <y>227</y>
+     <x>470</x>
+     <y>360</y>
     </hint>
     <hint type="destinationlabel">
      <x>291</x>

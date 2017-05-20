@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>426</height>
+    <width>400</width>
+    <height>349</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="pushButton_5">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>360</y>
+     <x>290</x>
+     <y>310</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -55,14 +55,14 @@
   <widget class="QPushButton" name="pushButton_7">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>160</x>
      <y>40</y>
      <width>111</width>
      <height>28</height>
     </rect>
    </property>
    <property name="text">
-    <string>Create</string>
+    <string>New Student</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_8">
@@ -88,46 +88,46 @@
     </rect>
    </property>
    <property name="text">
-    <string>Courses</string>
+    <string>Exams</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_9">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>160</x>
      <y>110</y>
      <width>111</width>
      <height>28</height>
     </rect>
    </property>
    <property name="text">
-    <string>Create</string>
+    <string>New Exam</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_10">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>190</y>
+     <x>20</x>
+     <y>270</y>
      <width>111</width>
      <height>28</height>
     </rect>
    </property>
    <property name="text">
-    <string>Current Schedule</string>
+    <string>See Schedules</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>150</y>
+     <y>160</y>
      <width>91</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Current Exams</string>
+    <string>Epochs</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_11">
@@ -146,14 +146,14 @@
   <widget class="QPushButton" name="pushButton_12">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>160</x>
      <y>190</y>
      <width>111</width>
      <height>28</height>
     </rect>
    </property>
    <property name="text">
-    <string>Edit</string>
+    <string>Edit Epoch</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -166,13 +166,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>Generate Schedule</string>
+    <string>Schedule</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_13">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>160</x>
      <y>270</y>
      <width>111</width>
      <height>28</height>

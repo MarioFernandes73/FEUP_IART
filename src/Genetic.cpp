@@ -4,12 +4,13 @@
 
 using namespace std;
 
-Genetic::Genetic(Epoch *e, bool debug, int populationLength) : Algorithm(e,debug)
+Genetic::Genetic(Epoch *e, bool debug, int populationLength, int numReps) : Algorithm(e,debug)
 {
     statistics = new GStatistics();
     statistics->addNPopulation(populationLength);
 
     this->populationLength = populationLength;
+    this->numReps = numReps;
 
     statistics->startStage();
     populate(e->getExams());
@@ -32,14 +33,13 @@ void Genetic::populate(vector<Exam *> exams)
 void Genetic::run()
 {
     statistics->startAlgorithm();
-    int rep = REPETITIONS;
 
-    while(rep > 0)
+    while(numReps > 0)
     {
         //Statistics
         new thread([&] (GStatistics *s) { s->startIteration();}, statistics);
 
-        if(debug) cout << endl << "-- New repetition : --" << rep<< endl;
+        if(debug) cout << endl << "-- New repetition : --" << numReps << endl;
 
         new thread([&] (GStatistics *s) { s->startStage();}, statistics);
 
@@ -64,7 +64,7 @@ void Genetic::run()
 
         new thread([&] (GStatistics *s,vector<Schedule *> pop) {Genetic::calculatePopulationFitness(pop);s->addBestSpeciment(population.at(Genetic::getBestSchedule(pop))->getFitness());}, statistics,population);
 
-        rep--;
+        numReps--;
 
         //Statistics
        new thread([&] (GStatistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);

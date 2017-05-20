@@ -34,6 +34,7 @@ public:
     void removeExam(Exam *oldExam);
 
     Epoch * getEpochByName(std::string name);
+    std::vector<Epoch *> getEpochs();
 
     template<typename T>
     T* findById(vector<T*> vec, int id);

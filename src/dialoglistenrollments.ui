@@ -62,13 +62,13 @@
     <string>Epoch's Name</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
      <x>630</x>
-     <y>60</y>
+     <y>50</y>
      <width>111</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

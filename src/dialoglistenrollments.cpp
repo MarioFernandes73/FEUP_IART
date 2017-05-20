@@ -29,7 +29,7 @@ int lineCounter = 0;
 
 void Dialoglistenrollments::on_pushButton_clicked()
 {
-    string epochName = this->ui->lineEdit->text().toUtf8().constData();
+    string epochName = this->ui->comboBox->currentText().toUtf8().constData();
     Epoch * epoch = this->university->getEpochByName(epochName);
     if(epoch)
         createList(epoch);
