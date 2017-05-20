@@ -41,6 +41,11 @@ string Exam::displayExam() const
     return (this->myClass.getName()+"\n"+to_string(this->myClass.getYear())+" year\n");
 }
 
+string Exam::displayInfo() const
+{
+    return (this->myClass.getName()+" - "+to_string(this->myClass.getYear())+" year - duration : "+to_string(this->duration));
+}
+
 bool Exam::operator ==(const Exam * e1)const
 {
     return (this->myClass.getName() == (*e1).myClass.getName()) && (e1->getId() == this->id);

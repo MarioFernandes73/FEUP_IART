@@ -35,6 +35,7 @@ void MainMenu::on_pushButton_8_clicked()
 {
     DialogListStudents dialog;
     dialog.setUniversity(this->university);
+    dialog.fillList();
     dialog.setModal(true);
     dialog.exec();
 }
@@ -43,6 +44,7 @@ void MainMenu::on_pushButton_6_clicked()
 {
     DialogListCourses dialog;
     dialog.setUniversity(this->university);
+    dialog.fillList();
     dialog.setModal(true);
     dialog.exec();
 }

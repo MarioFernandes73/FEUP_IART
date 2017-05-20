@@ -24,6 +24,7 @@ public:
     virtual ~Exam();
     std::string getInfo() const;
     std::string displayExam() const;
+    std::string displayInfo() const;
     int getDuration() const;
     int getId() const;
     long getYear() const;

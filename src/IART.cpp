@@ -51,19 +51,14 @@ int main(int argc, char* argv[]) {
     // university initialization and epoch
     University * university = new University(students,exams);
     vector<Epoch *> epochs = loadEpochs(db->query(selectEpochQuery));
-   // Epoch * e = new Epoch("Normal",8,5,2017,26,5,2017);
     for(vector<Epoch * >::iterator it = epochs.begin(); it < epochs.end(); ++it){
         university->addEpoch(*it);
     }
-
 
     //load subscriptions of students to exams
     loadSubscriptions(db->query(selectSubscribeQuery), university);
 
     db->close();
-
-
-  //  cout << temp->getId() << endl;
 
     //interface
     //initialOptions(university);
@@ -71,11 +66,11 @@ int main(int argc, char* argv[]) {
     //TESTE
 
    //genetic algorithm
+    /*
     Epoch * temp = university->getEpochByName("Normal");
     Genetic algorithm1(temp,false,40);
     algorithm1.run();
     //e->getSchedule()->printExams();
-    /*
     //Simulated Annealing
     SimulatedAnnealing algorithm2(e,true,50,0.5,20);
     algorithm2.run();
