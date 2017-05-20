@@ -62,6 +62,19 @@
     <string>Epoch's name</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>632</x>
+     <y>260</y>
+     <width>111</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show Statistics</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

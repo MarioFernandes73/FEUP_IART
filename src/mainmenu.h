@@ -31,8 +31,6 @@ private slots:
 
     void on_pushButton_13_clicked();
 
-    void on_pushButton_14_clicked();
-
 private:
     Ui::MainMenu *ui;
     University * university;

@@ -79,7 +79,7 @@ void Genetic::run()
 
     this->epoch->setSchedule(population.at(best));
 
-    statistics->displayStatistics();
+    //statistics->displayStatistics();
 }
 
 void Genetic::calculateFitness()

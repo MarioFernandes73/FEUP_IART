@@ -21,7 +21,8 @@ void DialogGenerateSchedule::on_pushButton_clicked()
         Genetic algorithm(epoch,false,ui->populationLength->value());
         algorithm.run();
         this->close();
-        showSchedule(text.toLocal8Bit().constData());
+        string stats = algorithm.getStatistics()->displayStatistics();
+        showSchedule(text.toLocal8Bit().constData(), stats);
     }
 }
 
@@ -30,16 +31,16 @@ void DialogGenerateSchedule::on_pushButton_2_clicked()
     QString text = ui->epochName->text();
     Epoch * epoch = university->getEpochByName(text.toLocal8Bit().constData());
     if(epoch){
-        SimulatedAnnealing algorithm(epoch,true,ui->temp->value(),ui->red->value(),ui->acc->value());
+        SimulatedAnnealing algorithm(epoch,false,ui->temp->value(),ui->red->value(),ui->acc->value());
         algorithm.run();
-        cout << "ALL DONE" << endl;
         this->close();
-        showSchedule(text.toLocal8Bit().constData());
+        string stats = algorithm.getStatistics()->displayStatistics();
+        showSchedule(text.toLocal8Bit().constData(), stats);
     }
 }
 
-void DialogGenerateSchedule::showSchedule(string epoch){
-    DialogCurrentSchedule dialog(epoch);
+void DialogGenerateSchedule::showSchedule(string epoch, string stats){
+    DialogCurrentSchedule dialog(epoch,stats);
     dialog.setUniversity(this->university);
     dialog.setModal(true);
     dialog.createSchedule(epoch);
