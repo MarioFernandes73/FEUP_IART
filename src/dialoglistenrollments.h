@@ -20,7 +20,7 @@ private:
 
 public:
     explicit Dialoglistenrollments(QWidget *parent = 0);
-    void setUniversity(University * university){this->university = university;}
+    void setUniversity(University * university);
     void createList(Epoch * epoch);
     ~Dialoglistenrollments();
 private slots:
