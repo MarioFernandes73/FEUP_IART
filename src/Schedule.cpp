@@ -74,24 +74,50 @@ void Schedule::addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int
     this->maxRouletteProb = 0;
 }
 
-vector<string> Schedule::getExamsAtDay(int day)
-{
-    int hours = HOURS_PER_DAY;
+vector<string> Schedule::getExamsAtDay(int day, vector<string> filter, bool usefilter)
+{  
     vector<string> exams;
+    int hours = HOURS_PER_DAY;
 
     for (int var = 0; var < examSlot.size(); ++var)
     {
+        Exam *e = examSlot.at(var).first;
         int slot = examSlot.at(var).second;
         int initHour = 10+slot%hours;
-        if(slot/hours == day)
-        {
-            string date = examSlot.at(var).first->displayExam()+
-                    "\n"+to_string(initHour)+":00\n"+to_string(initHour+examSlot.at(var).first->getDuration())+":00";
-            exams.push_back(date);
+        int myday = slot/hours;
 
+        if(usefilter)
+        {
+             for(int j = 0; j < filter.size(); j++)
+             {
+                 if(examSlot.at(var).first->getClassName() == filter.at(j))
+                 {
+                     if(myday == day)
+                          exams.push_back(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
+                 }
+             }
+        }
+        else
+        {
+            if(myday == day)
+                 exams.push_back(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
         }
     }
     return exams;
+}
+
+string Schedule::createDisplay(int day,Exam *e,int slot)
+{
+    cout << "estou a criar\n";
+
+    int hours = HOURS_PER_DAY;
+    int initHour = 10+slot%hours;
+    int myday = slot/hours;
+
+    if(myday == day)
+    {
+        string text(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
+    }
 }
 
 bool Schedule::createRandomSchedule(std::vector<Exam *> exams, int maxSlots)

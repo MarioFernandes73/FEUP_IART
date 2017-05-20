@@ -12,10 +12,12 @@ private:
     vector<Schedule *> population;
     GStatistics * statistics;
 public:
+    Genetic(Epoch *epoch, bool debug, int populationLength, vector<Schedule *> pop);
     Genetic(Epoch *epoch, bool debug, int populationLength);
     void run();
 
     void populate(vector<Exam *> exams);
+    static vector<Schedule *> populate(Epoch *e, int poplength, bool debug);
     void calculateFitness();
     void static calculateFitness(vector<Schedule *> population);
     int getPopulationFitness();

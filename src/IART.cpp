@@ -65,6 +65,17 @@ int main(int argc, char* argv[]) {
 
     //TESTE
 
+    Schedule *s = Algorithm::createRandomSchedule(false,e);
+    vector<Schedule *> pop = Genetic::populate(e,40,false);
+    s->calculateFitness();
+
+    cout << "Fitness: " << s->getFitness() << endl;
+    cout << *s << endl;
+
+    /*for(Schedule * s: pop){
+        cout << *s << endl;
+    }*/
+
    //genetic algorithm
     /*
     Epoch * temp = university->getEpochByName("Normal");
@@ -72,9 +83,56 @@ int main(int argc, char* argv[]) {
     algorithm1.run();
     //e->getSchedule()->printExams();
     //Simulated Annealing
-    SimulatedAnnealing algorithm2(e,true,50,0.5,20);
+
+    cout << endl << "1 iteration" << endl << endl;
+    Schedule *s1 = new Schedule(false);
+    *s1 = *s;
+    Epoch *e1 = new Epoch("Normal",8,5,2017,26,5,2017);
+    *e1 = *e;
+    SimulatedAnnealing algorithm2(e1,false,40,1,0,s1);
     algorithm2.run();
-    */
+
+    cout << endl << "2 iteration" << endl << endl;
+    Schedule *s2 = new Schedule(false);
+    *s2 = *s;
+    Epoch *e2 = new Epoch("Normal",8,5,2017,26,5,2017);
+    *e2 = *e;
+    SimulatedAnnealing algorithm3(e2,false,40,1,10,s2);
+    algorithm3.run();
+
+    cout << endl << "3 iteration" << endl << endl;
+    Schedule *s3 = new Schedule(false);
+    *s3 = *s;
+    Epoch *e3 = new Epoch("Normal",8,5,2017,26,5,2017);
+    *e3 = *e;
+    SimulatedAnnealing algorithm4(e3,false,40,1,20,s3);
+    algorithm4.run();
+
+    cout << endl << "4 iteration" << endl << endl;
+    Schedule *s4 = new Schedule(false);
+    *s4 = *s;
+    Epoch *e4 = new Epoch("Normal",8,5,2017,26,5,2017);
+    *e4 = *e;
+    SimulatedAnnealing algorithm5(e4,false,40,1,30,s4);
+    algorithm5.run();
+
+    cout << endl << "5 iteration" << endl << endl;
+    Schedule *s5 = new Schedule(false);
+    *s5 = *s;
+    Epoch *e5 = new Epoch("Normal",8,5,2017,26,5,2017);
+    *e5 = *e;
+    SimulatedAnnealing algorithm6(e5,false,40,1,40,s5);
+    algorithm6.run();
+
+
+    cout << endl << "6 iteration" << endl << endl;
+    Schedule *s6 = new Schedule(false);
+    *s6 = *s;
+    Epoch *e6 = new Epoch("Normal",8,5,2017,26,5,2017);
+    *e6 = *e;
+    SimulatedAnnealing algorithm7(e6,false,40,1,50,s6);
+    algorithm7.run();
+
 
     //save .db
 

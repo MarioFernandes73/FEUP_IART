@@ -3,6 +3,10 @@
 #include <iostream>
 #include <iomanip>
 
+/*
+ * Statistics
+ */
+
 Statistics::Statistics(AlgorithmType algorithm){
     this->algorithm = algorithm;
 }
@@ -76,7 +80,7 @@ string Statistics::displayStatistics() const{
  * SimulatedAnnealing
  */
 
-SAStatistics::SAStatistics() : Statistics(SIMULATED_ANNEALING){};
+SAStatistics::SAStatistics() : Statistics(SIMULATED_ANNEALING){}
 
 void Statistics::endIteration(float best){
     float duration = (float)(clock() - iterationTimer)/ ((float) CLOCKS_PER_SEC) * 1000.0f; //ms

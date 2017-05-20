@@ -4,6 +4,17 @@
 
 using namespace std;
 
+Genetic::Genetic(Epoch *epoch, bool debug, int populationLength, vector<Schedule *> pop) : Algorithm(epoch,debug){
+    statistics = new GStatistics();
+    statistics->addNPopulation(populationLength);
+
+    this->populationLength = populationLength;
+
+    statistics->startStage();
+    population = pop;
+    statistics->endStage(POPULATE);
+}
+
 Genetic::Genetic(Epoch *e, bool debug, int populationLength) : Algorithm(e,debug)
 {
     statistics = new GStatistics();
@@ -23,10 +34,25 @@ void Genetic::populate(vector<Exam *> exams)
     for (int i = 0; i < this->populationLength; ++i)
     {
         Schedule * s = createRandomSchedule(exams2);
-        this->population.push_back(s);
+        population.push_back(s);
 
         if(debug)   s->printExams();
     }
+}
+
+vector<Schedule *> Genetic::populate(Epoch *epoch, int poplength, bool debug){
+    vector<Exam *> exams = randomExams(epoch->getExams());
+    vector<Schedule *> pop;
+
+    for (int i = 0; i < poplength; ++i)
+    {
+        Schedule * s = createRandomSchedule(debug,epoch);
+        pop.push_back(s);
+
+        if(debug)   s->printExams();
+    }
+
+    return pop;
 }
 
 void Genetic::run()

@@ -26,6 +26,8 @@ Epoch::Epoch(std::string name, int day1, int month1, int year1, int day2, int mo
     endDate.tm_wday = getWeekDay(day2,month2,year2);
 
     numDays = (mktime(&endDate) - mktime(&initDate)) / (24*60*60) + 1;
+
+    global = NULL;
 }
 
 int Epoch::getNumdays() const
@@ -51,6 +53,21 @@ void Epoch::setSchedule(Schedule *pSchedule) {
 
 std::vector<Subscription *> Epoch::getSubscriptions() const{
     return this->subs;
+}
+
+std::vector<string> Epoch::getStudentExams(string student)
+{
+    vector<string> exams;
+
+    for (int i = 0; i < subs.size(); ++i)
+    {
+        string name = subs.at(i)->getStudent()->getName();
+
+        if(name == student)
+            exams.push_back(subs.at(i)->getExam()->getClassName());
+    }
+
+    return exams;
 }
 
 vector<Student *> Epoch::getStudents(Exam *e) const {
