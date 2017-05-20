@@ -26,6 +26,8 @@ Epoch::Epoch(std::string name, int day1, int month1, int year1, int day2, int mo
     endDate.tm_wday = getWeekDay(day2,month2,year2);
 
     numDays = (mktime(&endDate) - mktime(&initDate)) / (24*60*60) + 1;
+
+    global = NULL;
 }
 
 int Epoch::getNumdays() const

@@ -30,12 +30,10 @@ void DialogCurrentSchedule::createSchedule(string epochName)
     {
         isStud = true;
         filter = epoch->getStudentExams(student);
-
-        cout << "nao e estudante" << endl;
     }
 
     Schedule *s = epoch->getSchedule();
-    if(!s)
+    if(s == NULL)
         return;
 
     struct tm initDate = epoch->getInitDate();
