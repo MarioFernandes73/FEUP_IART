@@ -11,6 +11,8 @@
 #include "dialogliststatistics.h"
 #include "dialogliststudents.h"
 
+#include <sstream>
+
 MainMenu::MainMenu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MainMenu)
@@ -35,6 +37,7 @@ void MainMenu::on_pushButton_8_clicked()
 {
     DialogListStudents dialog;
     dialog.setUniversity(this->university);
+    dialog.fillList();
     dialog.setModal(true);
     dialog.exec();
 }
@@ -43,6 +46,7 @@ void MainMenu::on_pushButton_6_clicked()
 {
     DialogListCourses dialog;
     dialog.setUniversity(this->university);
+    dialog.fillList();
     dialog.setModal(true);
     dialog.exec();
 }
@@ -65,9 +69,10 @@ void MainMenu::on_pushButton_11_clicked()
 
 void MainMenu::on_pushButton_10_clicked()
 {
-    DialogCurrentSchedule dialog;
+    stringstream ss;
+    ss << "No statistics to be shown." << endl << "Please generate a schedule.";
+    DialogCurrentSchedule dialog("",ss.str(),"");
     dialog.setUniversity(this->university);
-    dialog.createSchedule();
     dialog.setModal(true);
     dialog.exec();
 }
@@ -83,14 +88,6 @@ void MainMenu::on_pushButton_12_clicked()
 void MainMenu::on_pushButton_13_clicked()
 {
     DialogGenerateSchedule dialog;
-    dialog.setUniversity(this->university);
-    dialog.setModal(true);
-    dialog.exec();
-}
-
-void MainMenu::on_pushButton_14_clicked()
-{
-    DialogListStatistics dialog;
     dialog.setUniversity(this->university);
     dialog.setModal(true);
     dialog.exec();

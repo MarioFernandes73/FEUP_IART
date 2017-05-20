@@ -33,5 +33,6 @@ public:
     void mutation();
     int getBestSchedule(vector<Schedule *> schedules);
     vector<pair<Exam *, int>> createMap(vector<pair<Exam *, int>> map1, vector<pair<Exam *, int>> map2, int pos);
+    GStatistics * getStatistics(){return this->statistics;}
 };
 #endif // GENETIC_H

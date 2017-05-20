@@ -17,13 +17,23 @@
    <property name="geometry">
     <rect>
      <x>290</x>
-     <y>240</y>
+     <y>250</y>
      <width>93</width>
      <height>28</height>
     </rect>
    </property>
    <property name="text">
     <string>Back</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>271</width>
+     <height>271</height>
+    </rect>
    </property>
   </widget>
  </widget>

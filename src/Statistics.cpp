@@ -23,7 +23,9 @@ void Statistics::endAlgorithm(){
     algorithmExecTime = (float)(clock() - algorithmTimer)/((float) CLOCKS_PER_SEC) * 1000.0f;//ms
 }
 
-void Statistics::displayStatistics() const{
+string Statistics::displayStatistics() const{
+    stringstream ss;
+
     //times
     float avgTime = 0.0f;
     float longestTime = 0.0f;
@@ -48,9 +50,9 @@ void Statistics::displayStatistics() const{
     improvement = (lastFitness - initialFitness);
     maxImprovement = (bestFitness - initialFitness);
 
-    cout << "#######################################" << endl
-         << "#             STATISTICS              #" << endl
-         << "#######################################" << endl
+    ss << "#########################" << endl
+         << "#             STATISTICS                     #" << endl
+         << "#########################" << endl
          << endl << fixed << setprecision(2)
          << "Number of Iterations     : " << iterationsTimes.size() << endl
          << endl
@@ -70,6 +72,8 @@ void Statistics::displayStatistics() const{
          << "Improvement/StartFitness : " << improvement/this->bestFitness[0] * ((float) 100) << " %" << endl
          << "MaxImprov/StartFitness   : " << maxImprovement/this->bestFitness[0] * ((float) 100) << " %" << endl
          << endl;
+
+    return ss.str();
 }
 
 /*
@@ -99,9 +103,10 @@ void SAStatistics::addSchedulesGenerated(){
     this->schedulesGenerated++;
 }
 
-void SAStatistics::displayStatistics() const{
+string SAStatistics::displayStatistics() const{
 
-    Statistics::displayStatistics();
+    stringstream ss;
+    ss << Statistics::displayStatistics();
 
     float worstAcceptedN = 0.0f;
     float worstRejectedN = 0.0f;
@@ -116,9 +121,9 @@ void SAStatistics::displayStatistics() const{
         else            worstRejectedN+=1.0f;
     }
 
-    cout << "#######################################" << endl
+    ss << "#########################" << endl
          << "#           SIMULATED ANNEALING       #" << endl
-         << "#######################################" << endl << fixed << setprecision(2)
+         << "#########################" << endl << fixed << setprecision(2)
          << endl
          << "Generated                : " << (int) generatedN << endl
          << "Iterations               : " << (int)iterationsN << endl
@@ -138,6 +143,8 @@ void SAStatistics::displayStatistics() const{
          << "WorstAccepted/Generated  : " << worstAcceptedN/generatedN * perc << " %" << endl
          << "WorstRejected/Generated  : " << worstRejectedN/generatedN * perc << " %" << endl
          << "Best/Generated           : " << bestN/generatedN * perc << " %" << endl;
+
+    return ss.str();
 }
 
 /*
@@ -213,9 +220,12 @@ void GStatistics::addFitnessMutation(int fitness){
     fitnessMutation.push_back(fitness);
 }
 
-void GStatistics::displayStatistics() const{
 
-    Statistics::displayStatistics();
+string GStatistics::displayStatistics() const{
+
+
+    stringstream ss;
+    ss << Statistics::displayStatistics();
 
     float perc = ((float) 100);
 
@@ -256,9 +266,9 @@ void GStatistics::displayStatistics() const{
     float avgBestEliteFit = sumBestElite/iterations;
     float avgWorstEliteFit = sumWorstElite/iterations;
 
-    cout << "#######################################" << endl
-         << "#              GENETIC                #" << endl
-         << "#######################################" << endl << fixed << setprecision(2)
+    ss << "#########################" << endl
+         << "#              GENETIC                         #" << endl
+         << "#########################" << endl << fixed << setprecision(2)
          << "Population               : " << populationN << endl
          << endl
          << "Avg population fitness   : " << avgPopFit << endl
@@ -280,4 +290,5 @@ void GStatistics::displayStatistics() const{
          << "Avg worst elite fitness  : " << avgWorstEliteFit << endl
          << endl;
 
+    return ss.str();
 }

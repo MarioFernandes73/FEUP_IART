@@ -19,7 +19,7 @@ private:
     University * university;
 
 public:
-    explicit DialogListStatistics(QWidget *parent = 0);
+    explicit DialogListStatistics(string text, QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}
     ~DialogListStatistics();
 };

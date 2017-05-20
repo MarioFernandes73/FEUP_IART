@@ -22,6 +22,12 @@ id_exam INTEGER,
 id_student INTEGER
 );
 
+CREATE TABLE Epoch (
+name VARCHAR NOT NULL,
+date1 DATETIME,
+date2 DATETIME
+);
+
 INSERT INTO Student VALUES(1,'Cat');
 INSERT INTO Student VALUES(2,'Ines');
 INSERT INTO Student VALUES(3,'Mario');
@@ -76,3 +82,6 @@ INSERT INTO Subscription VALUES(1,10,2);
 INSERT INTO Subscription VALUES(1,10,3);
 INSERT INTO Subscription VALUES(1,10,5);
 INSERT INTO Subscription VALUES(1,11,4);
+
+INSERT INTO Epoch VALUES('Normal','2017-05-08','2017-05-26');
+INSERT INTO Epoch VALUES('Recurso','2017-05-29','2017-05-16');

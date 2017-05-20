@@ -58,7 +58,7 @@ void SimulatedAnnealing::run(){
         cout << "Fitness Function: " << bestSolutionEver->getFitness() << endl;
     }
 
-    statistics->displayStatistics();
+   // statistics->displayStatistics();
 }
 
 void SimulatedAnnealing::applyRandomChanges(Schedule *originalSchedule, int numberOfChanges){

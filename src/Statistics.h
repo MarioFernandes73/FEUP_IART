@@ -6,6 +6,7 @@
 #include <cmath>
 #include <string>
 #include "Utils.h"
+#include <sstream>
 using namespace std;
 
 class Statistics {
@@ -25,7 +26,7 @@ public:
     void startAlgorithm();
     void endIteration(float best);
     void endAlgorithm();
-    virtual void displayStatistics() const;
+    virtual string displayStatistics() const;
 };
 
 class SAStatistics: public Statistics{
@@ -41,7 +42,7 @@ public:
     void addWorst(float probability, float random);
     void addSchedulesGenerated();
     void addScheduleAboveCurrent();
-    void displayStatistics() const;
+    string displayStatistics() const;
 
 };
 
@@ -80,7 +81,7 @@ public:
     void addFitnessSelection(int fitness);
     void addFitnessCrossover(int fitness);
     void addFitnessMutation(int fitness);
-    void displayStatistics() const;
+    string displayStatistics() const;
 
 };
 

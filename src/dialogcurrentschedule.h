@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTableWidget>
 #include "University.h"
+#include "dialogliststatistics.h"
 
 namespace Ui {
 class DialogCurrentSchedule;
@@ -19,15 +20,21 @@ private:
     Ui::DialogCurrentSchedule *ui;
     University * university;
     std::vector<QTableWidget *> myTables;
+    std::string statisticsText;
+    std::string student;
 public:
-    explicit DialogCurrentSchedule(QWidget *parent = 0);
+    explicit DialogCurrentSchedule(string epoch, string statistics, string student, QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}
-    void createSchedule();
+    void createSchedule(string epochName);
+    void addTable(int i, int size);
     void setHeader(int tableNum, struct tm initDate);
-    void setContent(int tableNum, Schedule *s, int init, int totalDays);
+    int setContent(int tableNum, Schedule *s, int init, int totalDays, vector<string> filter, bool isStud);
     QString getDate(struct tm date, int i);
-    void addTable(int i);
+    vector<string> filterMyExams(vector<string> schedule, vector<string> subscriptions);
     ~DialogCurrentSchedule();
+private slots:
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
 };
 
 #endif // DIALOGCURRENTSCHEDULE_H

@@ -182,19 +182,6 @@
     <string>New Schedule</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_14">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>270</y>
-     <width>111</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Statistics</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>

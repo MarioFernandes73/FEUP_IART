@@ -21,6 +21,7 @@ private:
 public:
     explicit DialogListCourses(QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}
+    void fillList();
     ~DialogListCourses();
 };
 

@@ -25,6 +25,7 @@ public:
     void applyRandomChanges(Schedule * originalSchedule, int numberOfChanges);
     Schedule * chooseNextSolution(float temperature);
     bool chooseWorstSolution(Schedule * worst, float temperature) const;
+    SAStatistics * getStatistics(){return this->statistics;}
 };
 
 #endif // SIMULATEDANNEALING_H

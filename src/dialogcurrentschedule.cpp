@@ -3,11 +3,14 @@
 
 #include <sstream>
 
-DialogCurrentSchedule::DialogCurrentSchedule(QWidget *parent) :
+DialogCurrentSchedule::DialogCurrentSchedule(string epoch,string statistics,string student,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogCurrentSchedule)
 {
+    this->student = student;
+    this->statisticsText = statistics;
     ui->setupUi(this);
+    ui->lineEdit->setText(QString::fromStdString(epoch));
 }
 
 DialogCurrentSchedule::~DialogCurrentSchedule()
@@ -15,10 +18,24 @@ DialogCurrentSchedule::~DialogCurrentSchedule()
     delete ui;
 }
 
-void DialogCurrentSchedule::createSchedule()
+void DialogCurrentSchedule::createSchedule(string epochName)
 {
-    Epoch *epoch = this->university->getEpochByName("Normal");
+    bool isStud = false;
+    Epoch *epoch = this->university->getEpochByName(epochName);
+    if(!epoch)
+        return;
+
+    vector<string> filter;
+    if(student != "")
+    {
+        isStud = true;
+        filter = epoch->getStudentExams(student);
+    }
+
     Schedule *s = epoch->getSchedule();
+    if(s == NULL)
+        return;
+
     struct tm initDate = epoch->getInitDate();
     int totalDays = epoch->getNumdays();
     int totalWeeks = (initDate.tm_wday+totalDays) / 7;
@@ -26,11 +43,12 @@ void DialogCurrentSchedule::createSchedule()
     if(totalWeeks%7 != 0)
         totalWeeks++;
 
+    int size = 0;
     for (int var = 0; var < totalWeeks; ++var)
     {
-        addTable(var);
+        addTable(var,size);
         setHeader(var,initDate);
-        setContent(var,s,initDate.tm_wday,totalDays);
+        size = setContent(var,s,initDate.tm_wday,totalDays,filter,isStud);
     }
 
 }
@@ -49,16 +67,17 @@ QString DialogCurrentSchedule::getDate(struct tm date, int i)
     return QString::fromStdString(ss.str());
 }
 
-void DialogCurrentSchedule::addTable(int i)
+void DialogCurrentSchedule::addTable(int i, int size)
 {
     stringstream ss;
     ss << "table"<< i;
 
     QTableWidget *tableWidget = new QTableWidget(this);
     tableWidget->setObjectName(QString::fromStdString(ss.str()));
-    tableWidget->setGeometry(QRect(10, 10, 720, 150));
-    tableWidget->move(0,i*170);
+    tableWidget->setGeometry(QRect(10, 10, 600, 200));
+    tableWidget->move(0,250*i);
     this->myTables.push_back(tableWidget);
+    tableWidget->show();
 }
 
 void DialogCurrentSchedule::setHeader(int tableNum, struct tm initDate)
@@ -66,7 +85,7 @@ void DialogCurrentSchedule::setHeader(int tableNum, struct tm initDate)
     //header
     QStringList header;
     QStringList weekday;
-    weekday <<"Sunday" << "Monday" << "Tuesday"<< "Wenesday"<< "Thursady"<< "Friday"<<"Saturday";
+    weekday <<"Sunday" << "Monday" << "Tuesday"<< "Wednesday"<< "Thursday"<< "Friday"<<"Saturday";
 
     for(int i = 0; i < 7; i++)
     {
@@ -79,7 +98,7 @@ void DialogCurrentSchedule::setHeader(int tableNum, struct tm initDate)
     myTables.at(tableNum)->setHorizontalHeaderLabels(header);
 }
 
-void DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int totalDays)
+int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int totalDays, vector<string> filter,bool isStud)
 {
     //conteudo
     int delta,row;
@@ -94,7 +113,7 @@ void DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int 
         if(delta >= 0 && delta < totalDays)
         {
             //exames desse dia
-            vector<string> exams = s->getExamsAtDay(delta);
+            vector<string> exams = s->getExamsAtDay(delta,filter,isStud);
 
             for (int j = 0; j < exams.size(); ++j)
             {
@@ -103,6 +122,7 @@ void DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int 
                 if(row > lastRow){
                     lastRow = row;
                     myTables.at(tableNum)->insertRow(row);
+                    myTables.at(tableNum)->verticalHeader()->resizeSection(row, 80);
                 }
                 QTableWidgetItem *item = new QTableWidgetItem(QString::fromStdString(exams.at(j)));
 
@@ -110,4 +130,22 @@ void DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int 
             }
         }
     }
+
+     myTables.at(tableNum)->resizeColumnsToContents();
+     myTables.at(tableNum)->resizeRowsToContents();
+
+     return myTables.at(tableNum)->verticalHeader()->length();
+}
+
+void DialogCurrentSchedule::on_pushButton_clicked()
+{
+    QString text = ui->lineEdit->text();
+    this->createSchedule(text.toLocal8Bit().constData());
+}
+
+void DialogCurrentSchedule::on_pushButton_2_clicked()
+{
+    DialogListStatistics dialogStatistics(this->statisticsText);
+    dialogStatistics.setModal(true);
+    dialogStatistics.exec();
 }
