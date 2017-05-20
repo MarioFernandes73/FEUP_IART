@@ -3,6 +3,10 @@
 #include <iostream>
 #include <iomanip>
 
+/*
+ * Statistics
+ */
+
 Statistics::Statistics(AlgorithmType algorithm){
     this->algorithm = algorithm;
 }
@@ -72,7 +76,7 @@ void Statistics::displayStatistics() const{
  * SimulatedAnnealing
  */
 
-SAStatistics::SAStatistics() : Statistics(SIMULATED_ANNEALING){};
+SAStatistics::SAStatistics() : Statistics(SIMULATED_ANNEALING){}
 
 void Statistics::endIteration(float best){
     float duration = (float)(clock() - iterationTimer)/ ((float) CLOCKS_PER_SEC) * 1000.0f; //ms
@@ -95,7 +99,10 @@ void SAStatistics::addSchedulesGenerated(){
     this->schedulesGenerated++;
 }
 
-void SAStatistics::displaySimulatedAnnealingStat() const{
+void SAStatistics::displayStatistics() const{
+
+    Statistics::displayStatistics();
+
     float worstAcceptedN = 0.0f;
     float worstRejectedN = 0.0f;
     float iterationsN = (float)iterationsTimes.size();
@@ -205,7 +212,6 @@ void GStatistics::addFitnessCrossover(int fitness){
 void GStatistics::addFitnessMutation(int fitness){
     fitnessMutation.push_back(fitness);
 }
-
 
 void GStatistics::displayStatistics() const{
 

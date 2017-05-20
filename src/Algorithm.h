@@ -14,6 +14,7 @@ protected:
 public:
     Algorithm(Epoch *epoch, bool debug);
     Schedule * createRandomSchedule(vector<Exam *> exams);
+    static Schedule * createRandomSchedule(bool debug,Epoch *epoch);
     static vector<Exam *> randomExams(vector<Exam *> exams);
     virtual void run();
 };

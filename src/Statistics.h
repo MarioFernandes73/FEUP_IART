@@ -41,7 +41,7 @@ public:
     void addWorst(float probability, float random);
     void addSchedulesGenerated();
     void addScheduleAboveCurrent();
-    void displaySimulatedAnnealingStat() const;
+    void displayStatistics() const;
 
 };
 
