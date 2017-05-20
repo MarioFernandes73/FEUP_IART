@@ -64,14 +64,14 @@ int main(int argc, char* argv[]) {
     //initialOptions(university);
 
     //TESTE
-
+/*
     Schedule *s = Algorithm::createRandomSchedule(false,e);
     vector<Schedule *> pop = Genetic::populate(e,40,false);
     s->calculateFitness();
 
     cout << "Fitness: " << s->getFitness() << endl;
     cout << *s << endl;
-
+*/
     /*for(Schedule * s: pop){
         cout << *s << endl;
     }*/
@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
     Epoch *e6 = new Epoch("Normal",8,5,2017,26,5,2017);
     *e6 = *e;
     SimulatedAnnealing algorithm7(e6,false,40,1,50,s6);
-    algorithm7.run();
+    algorithm7.run();*/
 
 
     //save .db
