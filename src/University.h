@@ -39,7 +39,6 @@ public:
     template<typename T>
     T* findById(vector<T*> vec, int id);
     void addSubscription(int epochId, int examId, int studentId);
-    vector<Epoch *> getEpochs(){return this->epochs;}
     int getExamId(string examName);
     int getStudentId(string studentName);
     Epoch * deleteStudent(string studentName, string examName);
