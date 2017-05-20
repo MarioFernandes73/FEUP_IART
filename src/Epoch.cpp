@@ -51,7 +51,7 @@ void Epoch::setSchedule(Schedule *pSchedule) {
     this->global = pSchedule;
 }
 
-std::vector<Subscription *> Epoch::getSubscriptions() const {
+std::vector<Subscription *> Epoch::getSubscriptions() const{
     return this->subs;
 }
 
@@ -116,3 +116,24 @@ bool Epoch::notFound(vector<T *> vector, T *temp) const {
     return true;
 }
 
+bool Epoch::deleteStudent(string examName, string studentName){
+    for(unsigned int j = 0; j < this->getSubscriptions().size(); j++){
+        Subscription * currentSub = this->getSubscriptions()[j];
+        if(currentSub->getExam()->getClassName() == examName && currentSub->getStudent()->getName() == studentName){
+            this->subs.erase(subs.begin()+j);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Epoch::addStudentExam(Student * student, string examName ){
+    for(unsigned int j = 0; j < this->getSubscriptions().size(); j++){
+        Subscription * currentSub = this->getSubscriptions()[j];
+        if(currentSub->getExam()->getClassName() == examName){
+            this->subs.push_back(new Subscription(student, currentSub->getExam()));
+            return true;
+        }
+    }
+    return false;
+}

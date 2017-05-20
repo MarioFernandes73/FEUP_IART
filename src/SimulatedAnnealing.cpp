@@ -5,6 +5,20 @@
 
 using namespace std;
 
+SimulatedAnnealing::SimulatedAnnealing(Epoch *epoch, bool debug, float temperature, float reduction, float acceptance, Schedule *current) : Algorithm(epoch,debug){
+    this->temperature = temperature;
+    this->acceptance = acceptance;
+    this->statistics = new SAStatistics();
+    this->temperatureReduction = reduction;
+
+    //Does not count for statistics
+    currentSolution = current;
+    currentSolution->calculateFitness();
+
+    bestSolutionEver = new Schedule(debug);
+    *bestSolutionEver = *currentSolution;
+}
+
 SimulatedAnnealing::SimulatedAnnealing(Epoch * epoch, bool debug, float temperature, float reduction, float acceptance) : Algorithm(epoch,debug)
 {
     this->temperature = temperature;

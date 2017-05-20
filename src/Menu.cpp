@@ -44,7 +44,7 @@ short int initialMenu() {
 void initialOptions(University &university) {
     unsigned short int option;
 
-    while (option = initialMenu())
+    while ((option = initialMenu()))
         switch (option) {
             case 1:
                 studentsOptions(university);
