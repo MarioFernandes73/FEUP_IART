@@ -1,6 +1,7 @@
 #include "dialogliststudents.h"
 #include "ui_dialogliststudents.h"
 #include "DialogCurrentSchedule.h"
+#include <sstream>
 
 DialogListStudents::DialogListStudents(QWidget *parent) :
     QDialog(parent),
@@ -13,7 +14,9 @@ DialogListStudents::DialogListStudents(QWidget *parent) :
 
 void DialogListStudents::currentSchedule(QListWidgetItem* item)
 {
-    DialogCurrentSchedule dialog("");
+    stringstream ss;
+    ss << "No statistics to be shown." << endl << "Please generate a schedule.";
+    DialogCurrentSchedule dialog("",ss.str(),item->text().toLocal8Bit().constData());
     dialog.setUniversity(this->university);
     dialog.setModal(true);
     dialog.exec();
@@ -30,6 +33,6 @@ void DialogListStudents::fillList()
 
     for (int i = 0; i < students.size(); ++i)
     {
-        ui->listWidget->insertItem(i,QString::fromStdString(students.at(i)->getInfo()));
+        ui->listWidget->insertItem(i,QString::fromStdString(students.at(i)->getName()));
     }
 }

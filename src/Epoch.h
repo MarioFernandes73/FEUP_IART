@@ -32,6 +32,7 @@ public:
     int getWeekDay(int d, int m, int y);
     struct tm getInitDate() const;
     vector<Student *> getStudents(Exam *pExam) const;
+    vector<string> getStudentExams(string student);
     Schedule * getSchedule();
     void setSchedule(Schedule *pSchedule);
     void addSubscription(Subscription *s);

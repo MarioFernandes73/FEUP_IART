@@ -3,10 +3,11 @@
 
 #include <sstream>
 
-DialogCurrentSchedule::DialogCurrentSchedule(string epoch, string statistics, QWidget *parent) :
+DialogCurrentSchedule::DialogCurrentSchedule(string epoch,string statistics,string student,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogCurrentSchedule)
 {
+    this->student = student;
     this->statisticsText = statistics;
     ui->setupUi(this);
     ui->lineEdit->setText(QString::fromStdString(epoch));
@@ -19,10 +20,24 @@ DialogCurrentSchedule::~DialogCurrentSchedule()
 
 void DialogCurrentSchedule::createSchedule(string epochName)
 {
+    bool isStud = false;
     Epoch *epoch = this->university->getEpochByName(epochName);
     if(!epoch)
         return;
+
+    vector<string> filter;
+    if(student != "")
+    {
+        isStud = true;
+        filter = epoch->getStudentExams(student);
+
+        cout << "nao e estudante" << endl;
+    }
+
     Schedule *s = epoch->getSchedule();
+    if(!s)
+        return;
+
     struct tm initDate = epoch->getInitDate();
     int totalDays = epoch->getNumdays();
     int totalWeeks = (initDate.tm_wday+totalDays) / 7;
@@ -35,7 +50,7 @@ void DialogCurrentSchedule::createSchedule(string epochName)
     {
         addTable(var,size);
         setHeader(var,initDate);
-        size = setContent(var,s,initDate.tm_wday,totalDays);
+        size = setContent(var,s,initDate.tm_wday,totalDays,filter,isStud);
     }
 
 }
@@ -85,7 +100,7 @@ void DialogCurrentSchedule::setHeader(int tableNum, struct tm initDate)
     myTables.at(tableNum)->setHorizontalHeaderLabels(header);
 }
 
-int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int totalDays)
+int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int totalDays, vector<string> filter,bool isStud)
 {
     //conteudo
     int delta,row;
@@ -100,7 +115,7 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
         if(delta >= 0 && delta < totalDays)
         {
             //exames desse dia
-            vector<string> exams = s->getExamsAtDay(delta);
+            vector<string> exams = s->getExamsAtDay(delta,filter,isStud);
 
             for (int j = 0; j < exams.size(); ++j)
             {

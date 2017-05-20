@@ -40,7 +40,7 @@ void DialogGenerateSchedule::on_pushButton_2_clicked()
 }
 
 void DialogGenerateSchedule::showSchedule(string epoch, string stats){
-    DialogCurrentSchedule dialog(epoch,stats);
+    DialogCurrentSchedule dialog(epoch,stats,"");
     dialog.setUniversity(this->university);
     dialog.setModal(true);
     dialog.createSchedule(epoch);

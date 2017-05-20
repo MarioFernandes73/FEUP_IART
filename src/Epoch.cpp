@@ -53,6 +53,21 @@ std::vector<Subscription *> Epoch::getSubscriptions() const {
     return this->subs;
 }
 
+std::vector<string> Epoch::getStudentExams(string student)
+{
+    vector<string> exams;
+
+    for (int i = 0; i < subs.size(); ++i)
+    {
+        string name = subs.at(i)->getStudent()->getName();
+
+        if(name == student)
+            exams.push_back(subs.at(i)->getExam()->getClassName());
+    }
+
+    return exams;
+}
+
 vector<Student *> Epoch::getStudents(Exam *e) const {
     vector<Student *> students;
 
