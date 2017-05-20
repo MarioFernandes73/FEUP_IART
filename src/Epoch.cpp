@@ -126,3 +126,14 @@ bool Epoch::deleteStudent(string examName, string studentName){
     }
     return false;
 }
+
+bool Epoch::addStudentExam(Student * student, string examName ){
+    for(unsigned int j = 0; j < this->getSubscriptions().size(); j++){
+        Subscription * currentSub = this->getSubscriptions()[j];
+        if(currentSub->getExam()->getClassName() == examName){
+            this->subs.push_back(new Subscription(student, currentSub->getExam()));
+            return true;
+        }
+    }
+    return false;
+}

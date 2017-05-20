@@ -143,3 +143,22 @@ Epoch * University::deleteStudent(string studentName, string examName){
     }
     return NULL;
 }
+
+Epoch * University::addStudentExam(string studentName, string examName){
+
+    Student * student = NULL;
+    for(unsigned int i = 0; i<  this->getStudents().size(); i++){
+       if(this->getStudents()[i]->getName() == studentName){
+           student = this->getStudents()[i];
+           break;
+       }
+   }
+    if(!student)
+        return NULL;
+
+    for(unsigned int i = 0; i < this->getEpochs().size(); i++){
+        if(this->getEpochs()[i]->addStudentExam(student, examName));
+            return this->getEpochs()[i];
+    }
+    return NULL;
+}

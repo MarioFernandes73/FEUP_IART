@@ -40,6 +40,14 @@ void Dialoglistenrollments::on_pushButton_2_clicked()
     //add
     string studentName = ui->studentName->text().toUtf8().constData();
     string examName = ui->examName->text().toUtf8().constData();
+
+    Epoch * currentEpoch = this->university->addStudentExam(studentName, examName);
+
+    if(!currentEpoch)
+        return;
+
+    ui->list->clear();
+    this->createList(currentEpoch);
 }
 
 void Dialoglistenrollments::on_pushButton_3_clicked()
@@ -49,6 +57,9 @@ void Dialoglistenrollments::on_pushButton_3_clicked()
     string examName = ui->examName->text().toUtf8().constData();
 
     Epoch * currentEpoch = this->university->deleteStudent(studentName,examName);
+
+    if(!currentEpoch)
+        return;
 
     ui->list->clear();
     this->createList(currentEpoch);

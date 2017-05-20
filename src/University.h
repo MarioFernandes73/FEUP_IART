@@ -42,6 +42,7 @@ public:
     int getExamId(string examName);
     int getStudentId(string studentName);
     Epoch * deleteStudent(string studentName, string examName);
+    Epoch * addStudentExam(string studentName, string examName);
 };
 
 #endif /* UNIVERSITY_H_ */
