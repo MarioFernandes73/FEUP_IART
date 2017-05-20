@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     // database variables
     Database *db;
 
-    char *filename = (char *) "../iart.db";         // QT
+    char *filename = (char *) "../iart2.db";         // QT
     //char *filename = (char *) "../proj/iart.db";  //clion
     //char * filename = (char*)"iart.db";           //eclipse
 
