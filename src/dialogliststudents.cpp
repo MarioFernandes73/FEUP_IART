@@ -13,10 +13,10 @@ DialogListStudents::DialogListStudents(QWidget *parent) :
 
 void DialogListStudents::currentSchedule(QListWidgetItem* item)
 {
-    DialogCurrentSchedule dialog("");
+   /* DialogCurrentSchedule dialog("");
     dialog.setUniversity(this->university);
     dialog.setModal(true);
-    dialog.exec();
+    dialog.exec();*/
 }
 
 DialogListStudents::~DialogListStudents()

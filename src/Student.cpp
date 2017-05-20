@@ -48,6 +48,6 @@ bool Student::operator ==(const Student * s1)const
 
 string Student::getInfo()
 {
-	string info = (to_string(this->id) + " - " + this->name + "\n");
+    string info = (to_string(this->id) + " - " + this->name);
 	return info;
 }
