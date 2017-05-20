@@ -38,6 +38,7 @@ public:
     template<typename T>
     bool notFound(vector<T *> vector, T *temp) const;
     bool commonStudents(Exam *pExam, Exam *pExam1);
+    bool deleteStudent(string examName, string studentName);
 };
 
 

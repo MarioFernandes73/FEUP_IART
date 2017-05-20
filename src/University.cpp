@@ -114,3 +114,32 @@ T* University::findById(vector<T*> vec, int id)
             return vec.at(i);
     return nullptr;
 }
+
+int University::getExamId(string examName){
+    for(unsigned int i = 0; i < this->getEpochs().size(); i++){
+        for(unsigned int j = 0; j < this->getEpochs()[i]->getExams().size(); j++){
+            if(this->getEpochs()[i]->getExams()[j]->getClassName() == examName){
+                return this->getEpochs()[i]->getExams()[j]->getId();
+
+            }
+        }
+    }
+    return -1;
+}
+
+int University::getStudentId(string studentName){
+    for(unsigned int i = 0; i < this->getStudents().size(); i++){
+            if(this->getStudents()[i]->getName() == studentName){
+                return this->getStudents()[i]->getId();
+            }
+    }
+    return -1;
+}
+
+Epoch * University::deleteStudent(string studentName, string examName){
+    for(unsigned int i = 0; i < this->getEpochs().size(); i++){
+        if(this->getEpochs()[i]->deleteStudent(examName,studentName));
+            return this->getEpochs()[i];
+    }
+    return NULL;
+}
