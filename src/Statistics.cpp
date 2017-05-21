@@ -66,15 +66,18 @@ string Statistics::displayStatistics() const{
        << "Algorithm Total Time     : " << algorithmExecTime << " ms" << endl
        << "Longest Time             : " << longestTime << " ms" << endl
        << endl
-       << "Starting Fitness         : " << initialFitness << endl
-       << "WorstFitness             : " << worstFitness << endl
-       << endl
-       << "Ending Fitness           : " << lastFitness << endl
-       << "BestFitness              : " << bestFitness << endl
-       << endl
-       << "Fitness Improvement      : " << improvement << endl
-       << "Max Fitness Improvement  : " << maxImprovement << endl
-       << endl
+       << "Starting Fitness         : " << initialFitness << endl;
+        if(algorithm != GENETIC)
+            ss << "WorstFitness             : " << worstFitness << endl;
+       ss<< endl
+       << "Ending Fitness           : " << lastFitness << endl;
+       if(algorithm != GENETIC)
+            ss << "BestFitness              : " << bestFitness << endl;
+       ss << endl
+       << "Fitness Improvement      : " << improvement << endl;
+       if(algorithm != GENETIC)
+            ss << "Max Fitness Improvement  : " << maxImprovement << endl;
+       ss << endl
        << "Improvement/StartFitness : " << improvement/this->bestFitness[0] * ((float) 100) << " %" << endl
        << "MaxImprov/StartFitness   : " << maxImprovement/this->bestFitness[0] * ((float) 100) << " %" << endl
        << endl;

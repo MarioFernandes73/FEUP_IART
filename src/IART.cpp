@@ -35,26 +35,6 @@ int main(int argc, char* argv[]) {
     GStatistics *s = g.getStatistics();
     cout << s->displayStatistics()<< endl;
 
-    vector<int> best = g.getStatistics()->bestEliteFitness;
-    vector<int> worst= g.getStatistics()->worstEliteFitness;
-    vector<int> avg = g.getStatistics()->populationFitness;
-
-    for(int b : best){
-        cout << b << endl;
-    }
-
-    cout << endl;
-
-    for(int w : worst){
-        cout << w << endl;
-    }
-
-    cout << endl;
-
-    for(int p : avg){
-        cout << p << endl;
-    }
-
     //w.show();
 
     /*return a.exec();*/
