@@ -1,7 +1,3 @@
-//
-// Created by gomes on 23/03/2017.
-//
-
 #ifndef EXAMSCHEDULER_UTILS_H
 #define EXAMSCHEDULER_UTILS_H
 

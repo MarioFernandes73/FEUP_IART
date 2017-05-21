@@ -1,7 +1,3 @@
-//
-// Created by gomes on 23/03/2017.
-//
-
 #include "Class.h"
 
 Class::Class() {}

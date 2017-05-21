@@ -14,8 +14,6 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-
-
 private slots:
     void on_MenuButton_clicked();
 

@@ -1,10 +1,3 @@
-/*
- * Student.h
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #ifndef STUDENT_H_
 #define STUDENT_H_
 

@@ -1,10 +1,3 @@
-/*
- * Student.cpp
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #include <string>
 #include <iostream>
 #include "Student.h"
@@ -15,39 +8,39 @@ int Student::currentId = 1;
 
 Student::Student(std::string name)
 {
-	this->id = currentId;
-	this->name = name;
-	currentId++;
+    this->id = currentId;
+    this->name = name;
+    currentId++;
 }
 Student::Student(int id, std::string name)
 {
-	this->id = id;
-	this->name = name;
-	currentId++;
+    this->id = id;
+    this->name = name;
+    currentId++;
 }
 
 int Student::getId()const
 {
-	return this->id;
+    return this->id;
 }
 
 string Student::getName()const
 {
-	return this->name;
+    return this->name;
 }
 
 void Student::setName(string name)
 {
-	this->name = name;
+    this->name = name;
 }
 
 bool Student::operator ==(const Student * s1)const
 {
-	return this->getName() == (*s1).getName();
+    return this->getName() == (*s1).getName();
 }
 
 string Student::getInfo()
 {
     string info = (to_string(this->id) + " - " + this->name);
-	return info;
+    return info;
 }

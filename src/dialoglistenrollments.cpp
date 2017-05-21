@@ -13,7 +13,8 @@ Dialoglistenrollments::~Dialoglistenrollments()
     delete ui;
 }
 
-void Dialoglistenrollments::setUniversity(University * university){
+void Dialoglistenrollments::setUniversity(University * university)
+{
     this->university = university;
     vector<Epoch *> epochs = this->university->getEpochs();
     for (unsigned int i = 0; i < epochs.size(); ++i) {
@@ -21,9 +22,11 @@ void Dialoglistenrollments::setUniversity(University * university){
     }
 }
 
-void Dialoglistenrollments::createList(Epoch * epoch){
-int lineCounter = 0;
-    for(unsigned int i = 0; i< epoch->getExams().size(); i++){
+void Dialoglistenrollments::createList(Epoch * epoch)
+{
+    int lineCounter = 0;
+    for(unsigned int i = 0; i< epoch->getExams().size(); i++)
+    {
         ui->list->insertItem(lineCounter,QString::fromStdString(epoch->getExams()[i]->displayInfo()));
         lineCounter ++;
         for(unsigned int j = 0; j < epoch->getStudents(epoch->getExams()[i]).size(); j++){
@@ -32,15 +35,11 @@ int lineCounter = 0;
         }
         lineCounter++;
     }
-
 }
 
 void Dialoglistenrollments::on_pushButton_clicked()
 {
     string epochName = this->ui->comboBox->currentText().toLocal8Bit().constData();
-
-    cout << epochName<< endl;
-
     Epoch * epoch = this->university->getEpochByName(epochName);
     if(epoch)
         createList(epoch);
@@ -74,6 +73,4 @@ void Dialoglistenrollments::on_pushButton_3_clicked()
 
     ui->list->clear();
     this->createList(currentEpoch);
-
-
 }

@@ -31,8 +31,7 @@ void DialogListStudents::fillList()
 {
     vector<Student *> students = this->university->getStudents();
 
-    for (unsigned int i = 0; i < students.size(); ++i)
-    {
+    for (unsigned int i = 0; i < students.size(); ++i){
         ui->listWidget->insertItem(i,QString::fromStdString(students.at(i)->getName()));
     }
 }

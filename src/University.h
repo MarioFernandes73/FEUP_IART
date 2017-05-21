@@ -1,10 +1,3 @@
-/*
- * University.h
- *
- *  Created on: 21 Feb 2017
- *     
- */
-
 #ifndef UNIVERSITY_H_
 #define UNIVERSITY_H_
 

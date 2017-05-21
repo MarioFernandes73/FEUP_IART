@@ -12,6 +12,7 @@ DialogListCourses::~DialogListCourses()
 {
     delete ui;
 }
+
 void DialogListCourses::fillList()
 {
     vector<Exam *> exams = this->university->getExams();

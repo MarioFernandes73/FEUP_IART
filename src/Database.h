@@ -1,10 +1,3 @@
-/*
- * Database.h
- *
- *  Created on: 22 Feb 2017
- *
- */
-
 #ifndef DATABASE_H_
 #define DATABASE_H_
 
@@ -15,15 +8,14 @@
 
 class Database {
 private:
-	sqlite3 *database;
-	char * filename;
+    sqlite3 *database;
+    char * filename;
 public:
-	Database(char * filename);
-	virtual ~Database(){}
-
-	bool open();
-	void close();
-	std::vector<std::vector <std::string>> query(char * query);
+    Database(char * filename);
+    virtual ~Database(){}
+    bool open();
+    void close();
+    std::vector<std::vector <std::string>> query(char * query);
 };
 
 #endif /* DATABASE_H_ */

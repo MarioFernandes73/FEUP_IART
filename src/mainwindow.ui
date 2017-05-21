@@ -105,9 +105,9 @@
      <property name="geometry">
       <rect>
        <x>270</x>
-       <y>30</y>
+       <y>70</y>
        <width>151</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -118,9 +118,9 @@
      <property name="geometry">
       <rect>
        <x>270</x>
-       <y>90</y>
+       <y>130</y>
        <width>151</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -130,10 +130,10 @@
     <widget class="QComboBox" name="comboBox">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>30</y>
-       <width>101</width>
-       <height>31</height>
+       <x>270</x>
+       <y>10</y>
+       <width>151</width>
+       <height>41</height>
       </rect>
      </property>
      <item>
@@ -260,7 +260,7 @@
      <x>0</x>
      <y>0</y>
      <width>720</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

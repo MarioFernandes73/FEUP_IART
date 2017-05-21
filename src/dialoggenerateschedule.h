@@ -15,8 +15,6 @@ class DialogGenerateSchedule : public QDialog
 {
     Q_OBJECT
 
-
-
 private:
     Ui::DialogGenerateSchedule *ui;
     University * university;

@@ -1,7 +1,3 @@
-//
-// Created by gomes on 23/03/2017.
-//
-
 #ifndef EXAMSCHEDULER_CLASS_H
 #define EXAMSCHEDULER_CLASS_H
 
@@ -15,14 +11,11 @@ private:
     int year;
 public:
     Class(std::string name, int year);
-
     Class();
-
     string getName() const;
     void setName(string name);
     int getYear() const;
     void setYear(int y);
 };
-
 
 #endif //EXAMSCHEDULER_CLASS_H

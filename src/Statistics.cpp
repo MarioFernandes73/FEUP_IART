@@ -51,27 +51,27 @@ string Statistics::displayStatistics() const{
     maxImprovement = (bestFitness - initialFitness);
 
     ss << "#########################" << endl
-         << "#             STATISTICS                     #" << endl
-         << "#########################" << endl
-         << endl << fixed << setprecision(2)
-         << "Number of Iterations     : " << iterationsTimes.size() << endl
-         << endl
-         << "Average Iteration Time   : " << avgTime << " ms" << endl
-         << "Algorithm Total Time     : " << algorithmExecTime << " ms" << endl
-         << "Longest Time             : " << longestTime << " ms" << endl
-         << endl
-         << "Starting Fitness         : " << initialFitness << endl
-         << "WorstFitness             : " << worstFitness << endl
-         << endl
-         << "Ending Fitness           : " << lastFitness << endl
-         << "BestFitness              : " << bestFitness << endl
-         << endl
-         << "Fitness Improvement      : " << improvement << endl
-         << "Max Fitness Improvement  : " << maxImprovement << endl
-         << endl
-         << "Improvement/StartFitness : " << improvement/this->bestFitness[0] * ((float) 100) << " %" << endl
-         << "MaxImprov/StartFitness   : " << maxImprovement/this->bestFitness[0] * ((float) 100) << " %" << endl
-         << endl;
+       << "#             STATISTICS                     #" << endl
+       << "#########################" << endl
+       << endl << fixed << setprecision(2)
+       << "Number of Iterations     : " << iterationsTimes.size() << endl
+       << endl
+       << "Average Iteration Time   : " << avgTime << " ms" << endl
+       << "Algorithm Total Time     : " << algorithmExecTime << " ms" << endl
+       << "Longest Time             : " << longestTime << " ms" << endl
+       << endl
+       << "Starting Fitness         : " << initialFitness << endl
+       << "WorstFitness             : " << worstFitness << endl
+       << endl
+       << "Ending Fitness           : " << lastFitness << endl
+       << "BestFitness              : " << bestFitness << endl
+       << endl
+       << "Fitness Improvement      : " << improvement << endl
+       << "Max Fitness Improvement  : " << maxImprovement << endl
+       << endl
+       << "Improvement/StartFitness : " << improvement/this->bestFitness[0] * ((float) 100) << " %" << endl
+       << "MaxImprov/StartFitness   : " << maxImprovement/this->bestFitness[0] * ((float) 100) << " %" << endl
+       << endl;
 
     return ss.str();
 }
@@ -122,27 +122,27 @@ string SAStatistics::displayStatistics() const{
     }
 
     ss << "#########################" << endl
-         << "#           SIMULATED ANNEALING       #" << endl
-         << "#########################" << endl << fixed << setprecision(2)
-         << endl
-         << "Generated                : " << (int) generatedN << endl
-         << "Iterations               : " << (int)iterationsN << endl
-         << "Total Worst              : " << (int) worstN << endl
-         << "Worst accepted           : " << (int) worstAcceptedN << endl
-         << "Worst rejected           : " << (int) worstRejectedN << endl
-         << "Best                     : " << (int) bestN << endl
-         << endl
-         << "WorstAccepted/TotalWorst : " << worstAcceptedN/worstN * perc << " %" << endl
-         << "WorstRejected/TotalWorst : " << worstRejectedN/worstN * perc << " %" << endl
-         << endl
-         << "Generated/Iterations     : " << generatedN/iterationsN << "  %" << endl
-         << "WorstAccepted/Iterations : " << worstAcceptedN/iterationsN * perc << " %" << endl
-         << "Best/Iterations          : " << bestN/iterationsN * perc << " %" << endl
-         << endl
-         << "TotalWorst/Generated     : " << worstN/generatedN * perc << " %" << endl
-         << "WorstAccepted/Generated  : " << worstAcceptedN/generatedN * perc << " %" << endl
-         << "WorstRejected/Generated  : " << worstRejectedN/generatedN * perc << " %" << endl
-         << "Best/Generated           : " << bestN/generatedN * perc << " %" << endl;
+       << "#           SIMULATED ANNEALING       #" << endl
+       << "#########################" << endl << fixed << setprecision(2)
+       << endl
+       << "Generated                : " << (int) generatedN << endl
+       << "Iterations               : " << (int)iterationsN << endl
+       << "Total Worst              : " << (int) worstN << endl
+       << "Worst accepted           : " << (int) worstAcceptedN << endl
+       << "Worst rejected           : " << (int) worstRejectedN << endl
+       << "Best                     : " << (int) bestN << endl
+       << endl
+       << "WorstAccepted/TotalWorst : " << worstAcceptedN/worstN * perc << " %" << endl
+       << "WorstRejected/TotalWorst : " << worstRejectedN/worstN * perc << " %" << endl
+       << endl
+       << "Generated/Iterations     : " << generatedN/iterationsN << "  %" << endl
+       << "WorstAccepted/Iterations : " << worstAcceptedN/iterationsN * perc << " %" << endl
+       << "Best/Iterations          : " << bestN/iterationsN * perc << " %" << endl
+       << endl
+       << "TotalWorst/Generated     : " << worstN/generatedN * perc << " %" << endl
+       << "WorstAccepted/Generated  : " << worstAcceptedN/generatedN * perc << " %" << endl
+       << "WorstRejected/Generated  : " << worstRejectedN/generatedN * perc << " %" << endl
+       << "Best/Generated           : " << bestN/generatedN * perc << " %" << endl;
 
     return ss.str();
 }
@@ -267,28 +267,28 @@ string GStatistics::displayStatistics() const{
     float avgWorstEliteFit = sumWorstElite/iterations;
 
     ss << "#########################" << endl
-         << "#              GENETIC                         #" << endl
-         << "#########################" << endl << fixed << setprecision(2)
-         << "Population               : " << populationN << endl
-         << endl
-         << "Avg population fitness   : " << avgPopFit << endl
-         << "Avg selection fitness    : " << avgSelFit << endl
-         << "Avg crossover fitness    : " << avgCroFil << endl
-         << "Avg mutation fitness     : " << avgMutFit << endl
-         << endl
-         << "Improvement on selection : " << imprvOnSel << " %" << endl
-         << "Improvement on crossover : " << imprvOnCro << " %" << endl
-         << "Improvement on mutation  : " << imprvOnMut << " %" << endl
-         << endl
-         << "Avg mutation number      : " << avgMutN << endl
-         << endl
-         << "Avg selection time       : " << avgSelTim << " ms" << endl
-         << "Avg crossover time       : " << avgCroTim << " ms" << endl
-         << "Avg mutation time        : " << avgMutTim << " ms" << endl
-         << endl
-         << "Avg best elite fitness   : " << avgBestEliteFit << endl
-         << "Avg worst elite fitness  : " << avgWorstEliteFit << endl
-         << endl;
+       << "#              GENETIC                         #" << endl
+       << "#########################" << endl << fixed << setprecision(2)
+       << "Population               : " << populationN << endl
+       << endl
+       << "Avg population fitness   : " << avgPopFit << endl
+       << "Avg selection fitness    : " << avgSelFit << endl
+       << "Avg crossover fitness    : " << avgCroFil << endl
+       << "Avg mutation fitness     : " << avgMutFit << endl
+       << endl
+       << "Improvement on selection : " << imprvOnSel << " %" << endl
+       << "Improvement on crossover : " << imprvOnCro << " %" << endl
+       << "Improvement on mutation  : " << imprvOnMut << " %" << endl
+       << endl
+       << "Avg mutation number      : " << avgMutN << endl
+       << endl
+       << "Avg selection time       : " << avgSelTim << " ms" << endl
+       << "Avg crossover time       : " << avgCroTim << " ms" << endl
+       << "Avg mutation time        : " << avgMutTim << " ms" << endl
+       << endl
+       << "Avg best elite fitness   : " << avgBestEliteFit << endl
+       << "Avg worst elite fitness  : " << avgWorstEliteFit << endl
+       << endl;
 
     return ss.str();
 }

@@ -12,8 +12,6 @@ class DialogCreateStudent : public QDialog
 {
     Q_OBJECT
 
-
-
 private slots:
     void on_pushButton_2_clicked();
 

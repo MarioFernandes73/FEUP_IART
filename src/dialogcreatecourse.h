@@ -12,8 +12,6 @@ class DialogCreateCourse : public QDialog
 {
     Q_OBJECT
 
-
-
 private:
     Ui::DialogCreateCourse *ui;
     University * university;

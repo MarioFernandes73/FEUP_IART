@@ -1,10 +1,3 @@
-/*
- * Exam.h
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #ifndef EXAM_H_
 #define EXAM_H_
 

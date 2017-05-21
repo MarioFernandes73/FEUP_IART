@@ -1,10 +1,3 @@
-/*
- * University.cpp
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #include <vector>
 
 #include "University.h"
@@ -15,17 +8,19 @@
 
 using namespace std;
 
-University::University(vector<Student *> students, vector<Exam *> exams) {
+University::University(vector<Student *> students, vector<Exam *> exams)
+{
     this->students = students;
     this->exams = exams;
 }
 
-vector<Student *> University::getStudents() {
+vector<Student *> University::getStudents()
+{
     return this->students;
 }
 
-Student *University::findStudent(Student *tempStudent) {
-
+Student *University::findStudent(Student *tempStudent)
+{
     for (vector<Student *>::iterator it = this->students.begin(); it != this->students.end(); it++) {
         if ((**it) == tempStudent) {
             return (*it);
@@ -37,12 +32,14 @@ Student *University::findStudent(Student *tempStudent) {
     return NULL;
 }
 
-void University::addStudent(Student *newStudent) {
+void University::addStudent(Student *newStudent)
+{
     this->students.push_back(newStudent);
     return;
 }
 
-void University::removeStudent(Student *oldStudent) {
+void University::removeStudent(Student *oldStudent)
+{
     for (vector<Student *>::iterator it = this->students.begin(); it != this->students.end(); it++) {
         if ((**it) == oldStudent) {
             this->students.erase(it);
@@ -52,17 +49,19 @@ void University::removeStudent(Student *oldStudent) {
     throw elementNotInVectorException<Student *>(oldStudent);
 }
 
-void University::addExam(Exam *newExam) {
+void University::addExam(Exam *newExam)
+{
     this->exams.push_back(newExam);
     return;
 }
 
-vector<Exam *> University::getExams() {
+vector<Exam *> University::getExams()
+{
     return this->exams;
 }
 
-Exam *University::findExam(Exam *tempExam) {
-
+Exam *University::findExam(Exam *tempExam)
+{
     for (vector<Exam *>::iterator it = this->exams.begin(); it != this->exams.end(); it++) {
         if ((**it) == tempExam) {
             return (*it);
@@ -74,7 +73,8 @@ Exam *University::findExam(Exam *tempExam) {
     return NULL;
 }
 
-void University::removeExam(Exam *oldExam) {
+void University::removeExam(Exam *oldExam)
+{
     for (vector<Exam *>::iterator it = this->exams.begin(); it != this->exams.end(); it++) {
         if ((**it) == oldExam) {
             this->exams.erase(it);
@@ -91,8 +91,8 @@ void University::addEpoch(Epoch * e) {
 Epoch * University::getEpochByName(string name)
 {
     for (unsigned int i = 0; i < epochs.size(); ++i) {
-      if(name == epochs.at(i)->getName())
-          return epochs.at(i);
+        if(name == epochs.at(i)->getName())
+            return epochs.at(i);
     }
     return NULL;
 }
@@ -133,9 +133,9 @@ int University::getExamId(string examName){
 
 int University::getStudentId(string studentName){
     for(unsigned int i = 0; i < this->getStudents().size(); i++){
-            if(this->getStudents()[i]->getName() == studentName){
-                return this->getStudents()[i]->getId();
-            }
+        if(this->getStudents()[i]->getName() == studentName){
+            return this->getStudents()[i]->getId();
+        }
     }
     return -1;
 }
@@ -152,11 +152,11 @@ Epoch * University::addStudentExam(string studentName, string examName){
 
     Student * student = NULL;
     for(unsigned int i = 0; i<  this->getStudents().size(); i++){
-       if(this->getStudents()[i]->getName() == studentName){
-           student = this->getStudents()[i];
-           break;
-       }
-   }
+        if(this->getStudents()[i]->getName() == studentName){
+            student = this->getStudents()[i];
+            break;
+        }
+    }
     if(!student)
         return NULL;
 
