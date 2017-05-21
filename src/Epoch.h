@@ -13,8 +13,6 @@ class Epoch {
 private:
     int id;
     static int currentId;
-    //std::string schoolYear;
-    int semester;
     std::string epochName;  //normal ou recurso
     struct tm initDate;
     struct tm endDate;

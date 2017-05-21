@@ -363,7 +363,7 @@ int Schedule::calculateFitness()
             cout << x.first->getClassName() << " "<< fitness << endl;
 
         this->fitness += fitness;       //fitness schedule
-        currExam->setFitness(fitness);   //fitness exam
+        //currExam->setFitness(fitness);   //fitness exam
     }
 
     return fitness;
