@@ -138,10 +138,10 @@ int DialogCurrentSchedule::setContent(int tableNum, Schedule *s, int init, int t
         }
     }
 
-     myTables.at(tableNum)->resizeColumnsToContents();
-     myTables.at(tableNum)->resizeRowsToContents();
+    myTables.at(tableNum)->resizeColumnsToContents();
+    myTables.at(tableNum)->resizeRowsToContents();
 
-     return myTables.at(tableNum)->verticalHeader()->length();
+    return myTables.at(tableNum)->verticalHeader()->length();
 }
 
 void DialogCurrentSchedule::on_pushButton_clicked()

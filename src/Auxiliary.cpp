@@ -1,10 +1,3 @@
-/*
- * Auxiliary.cpp
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -15,44 +8,44 @@ using namespace std;
 
 short int readUnsignedShortInt(unsigned short int first, unsigned short int last)
 {
-	unsigned short int input;
-	string temp;
-	stringstream ss;
+    unsigned short int input;
+    string temp;
+    stringstream ss;
 
-	getline(cin, temp);
+    getline(cin, temp);
 
-	if(temp=="")
-	{
-		return 0;
-	}
+    if(temp=="")
+    {
+        return 0;
+    }
 
-	for(unsigned int i=0; i<temp.size(); i++)
-	{
-		if(!isdigit(temp[i]))
-		{
-			return -1;
-		}
-	}
+    for(unsigned int i=0; i<temp.size(); i++)
+    {
+        if(!isdigit(temp[i]))
+        {
+            return -1;
+        }
+    }
 
-	ss << temp;
-	ss >> input;
+    ss << temp;
+    ss >> input;
 
-	if(first <= input && input <= last)
-	return input;
+    if(first <= input && input <= last)
+        return input;
 
-	return -2;
+    return -2;
 }
 
 
 bool confirm()
 {
-	string temp;
-	cout << "Insert Y to confirm your action: ";
-	getline(cin,temp);
-	if (temp=="Y" || temp == "y")
-	{
-		return true;
-	}
-	else
-		return false;
+    string temp;
+    cout << "Insert Y to confirm your action: ";
+    getline(cin,temp);
+    if (temp=="Y" || temp == "y")
+    {
+        return true;
+    }
+    else
+        return false;
 }

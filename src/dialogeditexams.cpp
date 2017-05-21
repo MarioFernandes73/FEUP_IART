@@ -15,9 +15,34 @@ DialogEditExams::~DialogEditExams()
     delete ui;
 }
 
+void DialogEditExams::setUniversity(University * university)
+{
+    this->university = university;
+
+    vector<Epoch *> epochs = this->university->getEpochs();
+    for (unsigned int i = 0; i < epochs.size(); ++i){
+        ui->comboBox->addItem(QString::fromStdString(epochs.at(i)->getName()));
+    }
+}
+
+void DialogEditExams::on_comboBox_currentIndexChanged(const QString &arg1)
+{
+    Epoch *e = university->getEpochByName(arg1.toUtf8().constData());
+
+    stringstream ss1;
+    struct tm start = e->getInitDate();
+    ss1 << start.tm_mday << "-" << start.tm_mon+1<< "-"<< start.tm_year+1900;
+    ui->startLabel->setText(QString::fromStdString(ss1.str()));
+
+    stringstream ss2;
+    struct tm end = e->getEndDate();
+    ss2 << end.tm_mday << "-" << end.tm_mon +1<< "-"<< end.tm_year+1900;
+    ui->endLabel->setText(QString::fromStdString(ss2.str()));
+}
+
 void DialogEditExams::on_pushButton_clicked()
 {
-    Epoch * epoch = this->university->getEpochByName(ui->epochName->text().toUtf8().constData());
+    Epoch * epoch = this->university->getEpochByName(ui->comboBox->currentText().toUtf8().constData());
 
     if(!epoch){
         stringstream ss;
@@ -44,34 +69,41 @@ void DialogEditExams::on_pushButton_clicked()
     setDates();
 }
 
-bool DialogEditExams::checkAllDates(){
-    QDate startDate = ui->startDateEdit->date();
-    QDate endDate = ui->endDateEdit->date();
-    Epoch * epoch = this->university->getEpochByName(ui->epochName->text().toUtf8().constData());
-    for(unsigned int i = 0; i< this->university->getEpochs().size(); i++){
+bool DialogEditExams::checkAllDates()
+{
+    QDate startDate = ui->widgetStart->selectedDate();
+            //ui->widgetStart->date();
+    QDate endDate = ui->widgetEnd->selectedDate();
+    Epoch * epoch = this->university->getEpochByName(ui->comboBox->currentText().toUtf8().constData());
+
+    for(unsigned int i = 0; i< this->university->getEpochs().size(); i++)
+    {
         Epoch * currentEpoch = this->university->getEpochs()[i];
         if(currentEpoch->getName() == epoch->getName())
             continue;
+
         QDate currentEpochStart = QDate(currentEpoch->getInitDate().tm_year+1900,currentEpoch->getInitDate().tm_mon+1, currentEpoch->getInitDate().tm_mday);
         QDate currentEpochEnd = QDate(currentEpoch->getEndDate().tm_year+1900,currentEpoch->getEndDate().tm_mon+1, currentEpoch->getEndDate().tm_mday);
+
         if((currentEpochStart < startDate && startDate < currentEpochEnd) || (currentEpochStart < endDate && endDate < currentEpochEnd) || (startDate < currentEpochStart && currentEpochStart < endDate))
             return false;
     }
-
     return true;
 }
 
-void DialogEditExams::setDates(){
-    QDate startDate = ui->startDateEdit->date();
-    QDate endDate = ui->endDateEdit->date();
-    Epoch * epoch = this->university->getEpochByName(ui->epochName->text().toUtf8().constData());
+void DialogEditExams::setDates()
+{
+    QDate startDate = ui->widgetStart->selectedDate();
+    QDate endDate = ui->widgetEnd->selectedDate();
+    Epoch * epoch = this->university->getEpochByName(ui->comboBox->currentText().toUtf8().constData());
     epoch->setInitDate(startDate.year(), startDate.month(), startDate.day());
     epoch->setEndDate(endDate.year(), endDate.month(), endDate.day());
 }
 
-bool DialogEditExams::validateDates(){
-    QDate startDate = ui->startDateEdit->date();
-    QDate endDate = ui->endDateEdit->date();
+bool DialogEditExams::validateDates()
+{
+    QDate startDate = ui->widgetStart->selectedDate();
+    QDate endDate = ui->widgetEnd->selectedDate();
 
     if(startDate > endDate){
         return false;
@@ -82,7 +114,7 @@ bool DialogEditExams::validateDates(){
 
 void DialogEditExams::on_pushButton_2_clicked()
 {
-    Epoch * epoch = this->university->getEpochByName(ui->epochName->text().toUtf8().constData());
+    Epoch * epoch = this->university->getEpochByName(ui->comboBox->currentText().toUtf8().constData());
 
     if(!epoch)
         return;
@@ -102,11 +134,10 @@ void DialogEditExams::on_pushButton_2_clicked()
     ss << "Epoch doesn't" << endl << "have a problem.";
     ui->dateLabel->setText(QString::fromStdString(ss.str()));
 
-
     QDate t1 = QDate(epoch->getInitDate().tm_year+1900, epoch->getInitDate().tm_mon+1, epoch->getInitDate().tm_mday);
     QDate t2 = QDate(epoch->getEndDate().tm_year+1900, epoch->getEndDate().tm_mon+1, epoch->getEndDate().tm_mday);
-    ui->startDateEdit->setDate(t1);
-    ui->endDateEdit->setDate(t2);
+    /*ui->widgetStart->setDate(t1);
+    ui->widgetEnd->setDate(t2);*/
 }
 
 bool DialogEditExams::checkDate( struct tm  initDate1, struct tm  endDate1, struct tm  initDate2, struct tm  endDate2){

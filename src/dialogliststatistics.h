@@ -12,8 +12,6 @@ class DialogListStatistics : public QDialog
 {
     Q_OBJECT
 
-
-
 private:
     Ui::DialogListStatistics *ui;
     University * university;

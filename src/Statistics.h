@@ -19,7 +19,6 @@ protected:
 
     //Algortihm
     AlgorithmType algorithm;
-
 public:
     Statistics(AlgorithmType algorithm);
     void startIteration();

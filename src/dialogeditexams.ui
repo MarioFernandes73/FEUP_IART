@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
-    <height>333</height>
+    <width>664</width>
+    <height>407</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="pushButton_5">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>270</y>
+     <x>560</x>
+     <y>360</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -39,21 +39,11 @@
     <string>Epoch's Name</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="epochName">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>50</y>
-     <width>251</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>270</y>
+     <x>440</x>
+     <y>360</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -66,33 +56,33 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>100</y>
+     <y>110</y>
      <width>251</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Starting Date</string>
+    <string>New Starting Date :</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>180</y>
+     <x>350</x>
+     <y>110</y>
      <width>251</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Ending Date</string>
+    <string>New Ending Date :</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>50</y>
+     <x>320</x>
+     <y>360</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -104,34 +94,96 @@
   <widget class="QLabel" name="dateLabel">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>90</y>
-     <width>131</width>
-     <height>141</height>
+     <x>20</x>
+     <y>340</y>
+     <width>261</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QDateEdit" name="startDateEdit">
+  <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>130</y>
-     <width>110</width>
-     <height>22</height>
+     <x>120</x>
+     <y>20</y>
+     <width>111</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
-  <widget class="QDateEdit" name="endDateEdit">
+  <widget class="QCalendarWidget" name="widgetStart">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>220</y>
-     <width>110</width>
-     <height>22</height>
+     <y>140</y>
+     <width>296</width>
+     <height>183</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QCalendarWidget" name="widgetEnd">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>140</y>
+     <width>296</width>
+     <height>183</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>251</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Current Starting Date :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>70</y>
+     <width>251</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Current Ending Date :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="startLabel">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>70</y>
+     <width>261</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="endLabel">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>70</y>
+     <width>261</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

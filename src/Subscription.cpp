@@ -1,9 +1,4 @@
-//
-// Created by gomes on 04/05/2017.
-//
-
 #include "Subscription.h"
-
 
 Subscription::Subscription(Student *student, Exam *exam) {
     this->student = student;

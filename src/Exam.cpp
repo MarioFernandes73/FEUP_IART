@@ -1,10 +1,3 @@
-/*
- * Exam.cpp
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #include "Exam.h"
 #include <iostream>
 using namespace std;
@@ -30,12 +23,10 @@ Exam::Exam(int id, Class myClass, int duration) {
 
     this->myClass = myClass;
     this->duration = duration;
-
-    this->fitness = 0;
 }
 
 Exam::~Exam() {
-	// TODO Auto-generated destructor stub
+
 }
 
 string Exam::getInfo() const
@@ -72,10 +63,6 @@ void Exam::setClassName(std::string className) {
 
 long Exam::getYear() const{
     return this->myClass.getYear();
-}
-
-void Exam::setFitness(int i) {
-    this->fitness = i;
 }
 
 int Exam::getId() const {

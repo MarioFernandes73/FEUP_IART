@@ -32,8 +32,6 @@ SOURCES +=\
     Epoch.cpp \
     Exam.cpp \
     IART.cpp \
-    Interaction.cpp \
-    Menu.cpp \
     Schedule.cpp \
     Student.cpp \
     Subscription.cpp \
@@ -61,8 +59,6 @@ HEADERS  += mainwindow.h \
     Database.h \
     Epoch.h \
     Exam.h \
-    Interaction.h \
-    Menu.h \
     MyExceptions.h \
     Schedule.h \
     sqlite3.h \

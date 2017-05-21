@@ -1,7 +1,3 @@
-//
-// Created by gomes on 23/03/2017.
-//
-
 #include "Epoch.h"
 
 int Epoch::currentId = 1;
@@ -117,7 +113,8 @@ bool Epoch::notFound(vector<T *> vector, T *temp) const {
     return true;
 }
 
-bool Epoch::deleteStudent(string examName, string studentName){
+bool Epoch::deleteStudent(string examName, string studentName)
+{
     for(unsigned int j = 0; j < this->getSubscriptions().size(); j++){
         Subscription * currentSub = this->getSubscriptions()[j];
         if(currentSub->getExam()->getClassName() == examName && currentSub->getStudent()->getName() == studentName){
@@ -132,7 +129,8 @@ bool Epoch::addStudentExam(Student * student, Exam * exam ){
     this->subs.push_back(new Subscription(student, exam));
 }
 
-void Epoch::setInitDate(int year, int month, int day){
+void Epoch::setInitDate(int year, int month, int day)
+{
     initDate.tm_mday = day;
     initDate.tm_mon = month-1;
     initDate.tm_year = year-1900;
@@ -141,7 +139,8 @@ void Epoch::setInitDate(int year, int month, int day){
     numDays = (mktime(&endDate) - mktime(&initDate)) / (24*60*60) + 1;
 }
 
-void Epoch::setEndDate(int year, int month, int day){
+void Epoch::setEndDate(int year, int month, int day)
+{
     endDate.tm_mday = day;
     endDate.tm_mon = month-1;
     endDate.tm_year = year-1900;

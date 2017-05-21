@@ -12,8 +12,6 @@ class Dialoglistenrollments : public QDialog
 {
     Q_OBJECT
 
-
-
 private:
     Ui::Dialoglistenrollments *ui;
     University * university;

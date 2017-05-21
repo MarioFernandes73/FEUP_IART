@@ -5,7 +5,8 @@
 
 using namespace std;
 
-SimulatedAnnealing::SimulatedAnnealing(Epoch *epoch, bool debug, float temperature, float reduction, float acceptance, Schedule *current) : Algorithm(epoch,debug){
+SimulatedAnnealing::SimulatedAnnealing(Epoch *epoch, bool debug, float temperature, float reduction, float acceptance, Schedule *current) : Algorithm(epoch,debug)
+{
     this->temperature = temperature;
     this->acceptance = acceptance;
     this->statistics = new SAStatistics();
@@ -57,8 +58,6 @@ void SimulatedAnnealing::run(){
         cout << "Solution: " << *bestSolutionEver << endl;
         cout << "Fitness Function: " << bestSolutionEver->getFitness() << endl;
     }
-
-   // statistics->displayStatistics();
 }
 
 void SimulatedAnnealing::applyRandomChanges(Schedule *originalSchedule, int numberOfChanges){
@@ -72,8 +71,8 @@ void SimulatedAnnealing::applyRandomChanges(Schedule *originalSchedule, int numb
     }
 }
 
-Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
-
+Schedule * SimulatedAnnealing::chooseNextSolution(float temperature)
+{
     int number;
 
     //while there is no next solution
@@ -113,7 +112,8 @@ Schedule * SimulatedAnnealing::chooseNextSolution(float temperature){
     }
 }
 
-bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature) const{
+bool SimulatedAnnealing::chooseWorstSolution(Schedule * worst, float temperature) const
+{
     //Probability of choosing a worst solution
     //div by x if we want to make it easier
     float deltaE = fabs(worst->getFitness() - (float)currentSolution->getFitness())/acceptance;

@@ -32,6 +32,7 @@ Schedule * Algorithm::createRandomSchedule(bool debug, Epoch *epoch)
     s->setFirstWeekDay(epoch->getInitDate().tm_wday);
     int maxSlots = epoch->getNumdays() * HOURS_PER_DAY;
 
+    //try to create new schedules until it's valid
     bool valid = true;
     do{
         valid = s->createRandomSchedule(epoch->getExams(), maxSlots);

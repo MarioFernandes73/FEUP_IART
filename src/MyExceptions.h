@@ -1,10 +1,3 @@
-/*
- * MyExceptions.h
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #ifndef MYEXCEPTIONS_H_
 #define MYEXCEPTIONS_H_
 

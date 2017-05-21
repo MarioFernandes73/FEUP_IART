@@ -19,7 +19,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_MenuButton_clicked()
 {
     University * university = loadUniversity();
-    MainMenu menuDialog; 
+    MainMenu menuDialog;
     menuDialog.setUniversity(university);
     menuDialog.setModal(true);
     this->hide();
@@ -109,7 +109,7 @@ vector<Student *> MainWindow::loadStudents(vector<vector<string>> studentsInfo)
     return students;
 }
 
- //read exams
+//read exams
 vector<Exam *> MainWindow::loadExams(vector<vector<string>> examsInfo)
 {
     vector<Exam *> exams;
@@ -124,7 +124,7 @@ vector<Exam *> MainWindow::loadExams(vector<vector<string>> examsInfo)
         int i = 0;
         for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++){
             if(i == 1)
-               className = (*it2);
+                className = (*it2);
             else
                 ss << (*it2) << "x";
             i++;

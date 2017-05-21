@@ -1,10 +1,3 @@
-/*
- * Database.cpp
- *
- *  Created on: 22 Feb 2017
- *
- */
-
 #include "Database.h"
 #include <iostream>
 
@@ -60,4 +53,3 @@ vector<vector<string> > Database::query(char* query)
     if(error != "not an error") cout << query << " " << error << endl;
     return results;
 }
-

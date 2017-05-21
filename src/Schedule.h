@@ -1,10 +1,3 @@
-/*
- * Schedule.h
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #ifndef SCHEDULE_H_
 #define SCHEDULE_H_
 
@@ -22,14 +15,14 @@ private:
     int id;
     vector<Exam *> schedule;
     vector<pair<Exam *, int>> examSlot;
+    vector<Subscription *> subs;
     int fitness;
     double maxRouletteProb;
     int firstWeekDay;
     bool debug;
-    vector<Subscription *> subs;
 public:
     Schedule(bool debug);
-	virtual ~Schedule();
+    virtual ~Schedule();
     int getFitness() const;
     void setFitness(int f);
     double getmaxRouletteProb() const;
@@ -38,19 +31,19 @@ public:
     int getID() const;
     int getNumExams() const;
     std::vector<pair<Exam *, int>> getExamSlot() const;
-	void addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int>> examSlot);
+    void addExams(std::vector<Exam *> vector, std::vector<pair<Exam *, int>> examSlot);
     void setSubscriptions(vector<Subscription *> vector);
     void setFirstWeekDay(int i);
     void setDebug(bool debug);
     std::vector<string> getExamsAtDay(int day, vector<string> filter, bool usefilter);
     std::string createDisplay(int day, Exam *e, int slot);
-	void printExams();
+    void printExams();
 
     bool createRandomSchedule(vector<Exam *> vector, int maxSlots);
 
     void optimize();
     void updateExamPosition(pair<Exam *,int> exam);
-	bool commonStudents(Exam *e1, Exam *e2);
+    bool commonStudents(Exam *e1, Exam *e2);
     vector<int> getPossiblePositions(pair<Exam *,int> exam);
     vector<int> removeFromVector(vector<int> vector, int a, int b);
 

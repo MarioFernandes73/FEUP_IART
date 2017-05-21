@@ -1,10 +1,3 @@
-/*
- * Exam.h
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #ifndef EXAM_H_
 #define EXAM_H_
 
@@ -17,7 +10,6 @@ private:
     int id;
     Class myClass;
     int duration;
-    int fitness;
 public:
     Exam(string name);
     Exam(Class classe, int duration);
@@ -31,8 +23,6 @@ public:
     long getYear() const;
     std::string getClassName()const;
     void setClassName(std::string className);
-    void setFitness(int i);
-
     bool operator==(const Exam * e1)const;
 };
 

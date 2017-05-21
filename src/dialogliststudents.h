@@ -18,7 +18,7 @@ private:
     University * university;
 
 private slots:
-     void currentSchedule(QListWidgetItem* item);
+    void currentSchedule(QListWidgetItem* item);
 
 public:
     explicit DialogListStudents(QWidget *parent = 0);

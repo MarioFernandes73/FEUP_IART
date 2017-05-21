@@ -1,10 +1,3 @@
-/*
- * Schedule.cpp
- *
- *  Created on: 21 Feb 2017
- *
- */
-
 #include "Schedule.h"
 #include "Utils.h"
 #include <cmath>
@@ -20,7 +13,7 @@ Schedule::Schedule(bool debug) {
 }
 
 Schedule::~Schedule() {
-    // TODO Auto-generated destructor stub
+
 }
 
 void Schedule::setID(int id){
@@ -88,19 +81,19 @@ vector<string> Schedule::getExamsAtDay(int day, vector<string> filter, bool usef
 
         if(usefilter)
         {
-             for(unsigned int j = 0; j < filter.size(); j++)
-             {
-                 if(examSlot.at(var).first->getClassName() == filter.at(j))
-                 {
-                     if(myday == day)
-                          exams.push_back(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
-                 }
-             }
+            for(unsigned int j = 0; j < filter.size(); j++)
+            {
+                if(examSlot.at(var).first->getClassName() == filter.at(j))
+                {
+                    if(myday == day)
+                        exams.push_back(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
+                }
+            }
         }
         else
         {
             if(myday == day)
-                 exams.push_back(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
+                exams.push_back(e->displayExam()+"\n"+to_string(initHour)+":00\n"+to_string(initHour+e->getDuration())+":00");
         }
     }
     return exams;
@@ -207,8 +200,8 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
                 currWeekDay = (currWeekDay +1) % 7;
 
         //0 - SUNDAY and 6 - SATURDAY
-         if(!(currWeekDay == 0 || currWeekDay == 6))
-              pos.push_back(i);
+        if(!(currWeekDay == 0 || currWeekDay == 6))
+            pos.push_back(i);
     }
 
     //retirar aqueles cuja duracao excede o dia
@@ -257,16 +250,16 @@ vector<int> Schedule::getPossiblePositions(pair<Exam *,int> exam) {
 
         for (int i = 0; i < exam.first->getDuration(); ++i)
         {
-                if(l+i >= pos.size())
-                    removed = true;
-                else if(firstPos+i != pos.at(l+i))
-                    removed = true;
+            if(l+i >= pos.size())
+                removed = true;
+            else if(firstPos+i != pos.at(l+i))
+                removed = true;
 
-                if(removed)
-                {
-                    pos = removeFromVector(pos,firstPos,firstPos+i-1);
-                    break;
-                }
+            if(removed)
+            {
+                pos = removeFromVector(pos,firstPos,firstPos+i-1);
+                break;
+            }
         }
 
         if(!removed)
@@ -297,7 +290,6 @@ std::vector<int> Schedule::removeFromVector(std::vector<int>vector,int a,int b){
     }
     return vector;
 }
-
 
 bool Schedule::commonStudents(Exam *e1, Exam *e2)
 {
@@ -363,13 +355,12 @@ int Schedule::calculateFitness()
             cout << x.first->getClassName() << " "<< fitness << endl;
 
         this->fitness += fitness;       //fitness schedule
-        currExam->setFitness(fitness);   //fitness exam
+        //currExam->setFitness(fitness);   //fitness exam
     }
 
     return fitness;
 }
 
-//TODO  mudar o nome desta funcao
 bool Schedule::consecutiveDaysExams(int currExam, int exam)
 {
     int day1 = currExam / HOURS_PER_DAY;

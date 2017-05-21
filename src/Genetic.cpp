@@ -33,7 +33,6 @@ Genetic::Genetic(Epoch *e, bool debug, int populationLength, int numReps) : Algo
 void Genetic::populate(vector<Exam *> exams)
 {
     vector<Exam *> exams2 = randomExams(exams);
-
     for (int i = 0; i < this->populationLength; ++i)
     {
         Schedule * s = createRandomSchedule(exams2);
@@ -43,7 +42,8 @@ void Genetic::populate(vector<Exam *> exams)
     }
 }
 
-vector<Schedule *> Genetic::populate(Epoch *epoch, int poplength, bool debug){
+vector<Schedule *> Genetic::populate(Epoch *epoch, int poplength, bool debug)
+{
     vector<Exam *> exams = randomExams(epoch->getExams());
     vector<Schedule *> pop;
 
@@ -77,25 +77,25 @@ void Genetic::run()
         //stage: SELECTION
         selectNextPopulation();
         new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(SELECTION);s->addFitnessSelection(calculatePopulationFitness(pop));
-                s->startStage();}, statistics,population);
+                                                                s->startStage();}, statistics,population);
 
         //stage: CROSSOVER
         crossover();
         new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);
-           s->endStage(CROSSOVER);s->addFitnessCrossover(calculatePopulationFitness(pop));}, statistics,population);
+                                                                s->endStage(CROSSOVER);s->addFitnessCrossover(calculatePopulationFitness(pop));}, statistics,population);
 
         mutation();
 
         //statistics: best speciment
         new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(MUTATION);s->addFitnessMutation(calculatePopulationFitness(pop));
-                s->startStage();}, statistics,population);
+                                                                s->startStage();}, statistics,population);
 
         new thread([&] (GStatistics *s,vector<Schedule *> pop) {Genetic::calculatePopulationFitness(pop);s->addBestSpeciment(population.at(Genetic::getBestSchedule(pop))->getFitness());}, statistics,population);
 
         numReps--;
 
         //Statistics
-       new thread([&] (GStatistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
+        new thread([&] (GStatistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
     }
 
     calculateFitness();
@@ -316,7 +316,7 @@ void Genetic::executeCrossover(std::vector<Schedule *> pop)
         vector<pair<Exam *, int>> new1 = createMap(pop.at(i)->getExamSlot(),pop.at(i+1)->getExamSlot(), position);
         vector<pair<Exam *, int>> new2 = createMap(pop.at(i+1)->getExamSlot(),pop.at(i)->getExamSlot(), position);
 
-    //update the schedule object
+        //update the schedule object
         Schedule *s1 = new Schedule(debug);
         s1->setSubscriptions(epoch->getSubscriptions());
         s1->setFirstWeekDay(this->epoch->getInitDate().tm_wday);
@@ -377,7 +377,7 @@ void Genetic::mutation()
                      << " exam ( " << (int)scheduleNum << " , " << examNum << " )"<< endl;
             }
 
-           population.at(scheduleNum)->mutate(examNum);
+            population.at(scheduleNum)->mutate(examNum);
         }
     }
 
