@@ -109,11 +109,8 @@ void Genetic::run()
 
     statistics->endAlgorithm();
 
-    cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
-
     this->epoch->setSchedule(population.at(best));
 
-    //statistics->displayStatistics();
 }
 
 void Genetic::calculateFitness()
