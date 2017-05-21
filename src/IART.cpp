@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     // database variables
     Database *db;
 
-    char *filename = (char *) "../iart2.db";         // QT
+    char *filename = (char *) "../iart3.db";         // QT
     //char *filename = (char *) "../proj/iart.db";  //clion
     //char * filename = (char*)"iart.db";           //eclipse
 
@@ -152,15 +152,30 @@ vector<Student *> loadStudents(vector<vector<string>> studentsInfo)
     for (vector<vector<string> >::iterator it = studentsInfo.begin(); it < studentsInfo.end(); ++it)
     {
         int student_id;
-        string name;
+        string name="";
         stringstream ss;
 
-        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++)
+        for (vector<string>::iterator it2 = (*it).begin(); it2 < (*it).end(); it2++){
             ss << (*it2);
+        }
 
-        ss >> student_id >> name;
+        int i = 0;
+        while(!ss.eof()){
+            if(i==0){
+                ss >> student_id;
+                i++;
+            }
+            else{
+                string temp;
+                ss >> temp;
+                if(ss.eof()){
+                    name+=temp;
+                } else {
+                    name += temp + " ";
+                }
 
-        cout << student_id << " "<< name <<endl;
+            }
+        }
 
         students.push_back(new Student(student_id, name));
     }
