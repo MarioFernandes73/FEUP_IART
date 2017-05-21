@@ -31,10 +31,11 @@ int main(int argc, char* argv[]) {
 
     Epoch *e = university->getEpochs()[0];
     Genetic g(e,false,50,80);
+    g.run();
     GStatistics *s = g.getStatistics();
     cout << s->displayStatistics()<< endl;
 
-   /* vector<int> best = g.getStatistics()->bestEliteFitness;
+    vector<int> best = g.getStatistics()->bestEliteFitness;
     vector<int> worst= g.getStatistics()->worstEliteFitness;
     vector<int> avg = g.getStatistics()->populationFitness;
 
@@ -52,7 +53,7 @@ int main(int argc, char* argv[]) {
 
     for(int p : avg){
         cout << p << endl;
-    }*/
+    }
 
     //w.show();
 

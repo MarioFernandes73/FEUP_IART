@@ -23,6 +23,12 @@ void Statistics::endAlgorithm(){
     algorithmExecTime = (float)(clock() - algorithmTimer)/((float) CLOCKS_PER_SEC) * 1000.0f;//ms
 }
 
+void Statistics::endIteration(float best){
+    float duration = (float)(clock() - iterationTimer)/ ((float) CLOCKS_PER_SEC) * 1000.0f; //ms
+    iterationsTimes.push_back(duration);
+    bestFitness.push_back(best);
+}
+
 string Statistics::displayStatistics() const{
     stringstream ss;
 
@@ -81,12 +87,6 @@ string Statistics::displayStatistics() const{
  */
 
 SAStatistics::SAStatistics() : Statistics(SIMULATED_ANNEALING){}
-
-void Statistics::endIteration(float best){
-    float duration = (float)(clock() - iterationTimer)/ ((float) CLOCKS_PER_SEC) * 1000.0f; //ms
-    iterationsTimes.push_back(duration);
-    bestFitness.push_back(best);
-}
 
 void SAStatistics::addWorst(float probability, float random){
     bool accepted = false;
@@ -184,10 +184,6 @@ void GStatistics::endStage(GeneticStages stage){
     }
 }
 
-void GStatistics::addBestSpeciment(int fitness){
-    bestFitness.push_back(fitness);
-}
-
 void GStatistics::addBestElite(int fitness){
     bestEliteFitness.push_back(fitness);
 }
@@ -235,7 +231,6 @@ string GStatistics::displayStatistics() const{
     float sumMutationN = 0.0f;
 
     float iterations = (float)iterationsTimes.size();
-
 
     for(int fitness : worstEliteFitness)    sumWorstElite += fitness;
     for(int fitness : bestEliteFitness)     sumBestElite += fitness;

@@ -64,6 +64,7 @@ void Genetic::run()
 
     while(numReps > 0)
     {
+
         //Statistics
         new thread([&] (GStatistics *s) { s->startIteration();}, statistics);
 
@@ -78,29 +79,29 @@ void Genetic::run()
         selectNextPopulation();
         new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(SELECTION);s->addFitnessSelection(calculatePopulationFitness(pop));
                                                                 s->startStage();}, statistics,population);
-
         //stage: CROSSOVER
         crossover();
         new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);
                                                                 s->endStage(CROSSOVER);s->addFitnessCrossover(calculatePopulationFitness(pop));}, statistics,population);
-
         mutation();
-
-        //statistics: best speciment
-        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);s->endStage(MUTATION);s->addFitnessMutation(calculatePopulationFitness(pop));
+        new thread([&] (GStatistics *s, vector<Schedule *> pop){Genetic::calculateFitness(pop);
+                                                                s->endStage(MUTATION);s->addFitnessMutation(calculatePopulationFitness(pop));
                                                                 s->startStage();}, statistics,population);
 
-        new thread([&] (GStatistics *s,vector<Schedule *> pop) {Genetic::calculatePopulationFitness(pop);s->addBestSpeciment(population.at(Genetic::getBestSchedule(pop))->getFitness());}, statistics,population);
 
+
+        int bestFit = elitistPop.at(0)->getFitness();
         //add elitist to currentPopulation
-        for(int i = 0; i < elitistPop.size(); i++)
+        for(int i = 0; i < elitistPop.size(); i++){
             population.push_back(elitistPop.at(i));
+        }
+
         elitistPop.clear();
 
         numReps--;
-
+        calculateFitness();
         //Statistics
-        new thread([&] (GStatistics *s) { s->endIteration(population.at(getBestSchedule(population))->getFitness());}, statistics);
+        new thread([&] (GStatistics *s,int bestFit) { s->endIteration(bestFit);}, statistics,bestFit);
     }
 
     calculateFitness();
@@ -108,7 +109,7 @@ void Genetic::run()
 
     statistics->endAlgorithm();
 
-    if(debug) cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
+    cout << endl << "Best Schedule is " << population.at(best)->getID() << " with fitness = " << population.at(best)->getFitness();
 
     this->epoch->setSchedule(population.at(best));
 
@@ -144,12 +145,15 @@ int Genetic::calculatePopulationFitness(vector<Schedule *> population){
 int Genetic::getBestSchedule(std::vector<Schedule *> schedules)
 {
     int mybest = 0;
-    for(unsigned int j = 0; j < schedules.size() ; ++j)
+    int index = 0;
+    for(unsigned int j = 0; j < schedules.size() ; j++)
     {
-        if((schedules.at(j)->getFitness() > schedules.at(mybest)->getFitness()))
-            mybest = j;
+        if(schedules.at(j)->getFitness() > mybest){
+            mybest = schedules.at(j)->getFitness();
+            index = j;
+        }
     }
-    return mybest;
+    return index;
 }
 
 void Genetic::selectNextPopulation()
@@ -182,12 +186,6 @@ vector<Schedule *> Genetic::selectElitistPopulation()
     {
         int mybest = getBestSchedule(oldPopulation);
 
-        if(i == 0)
-            new thread([&] (GStatistics *s, int fitness) { s->addBestElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
-        else if(i == numElitists - 1)
-            new thread([&] (GStatistics *s, int fitness) { s->addWorstElite(fitness);}, statistics,oldPopulation.at(mybest)->getFitness());
-
-
         //add to next population
         nextPopulation.push_back((Schedule *&&) oldPopulation.at(mybest));
         //delete from old population (to do not be select twice)
@@ -202,6 +200,15 @@ vector<Schedule *> Genetic::selectElitistPopulation()
     }
 
     elitistPop = nextPopulation;
+    int bestElite = 0, worstElite = 0;
+
+    if(elitistPop.size() > 0){
+        bestElite = ((Schedule *)elitistPop.at(0))->getFitness();
+        worstElite = ((Schedule *)elitistPop.at(numElitists - 1))->getFitness();
+    }
+
+    new thread([&] (GStatistics *s, int fitness) { s->addBestElite(fitness);}, statistics,bestElite);
+    new thread([&] (GStatistics *s, int fitness) { s->addWorstElite(fitness);}, statistics,worstElite);
 
     return nextPopulation;
 }
@@ -387,9 +394,9 @@ void Genetic::mutation()
             }
 
             population.at(scheduleNum)->mutate(examNum);
+            population.at(scheduleNum)->calculateFitness();
         }
     }
-
     //Statistics
     new thread([&] (GStatistics *s, int mutN) { s->addNMutations(mutN);}, statistics,mutationN);
 }

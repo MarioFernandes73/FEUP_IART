@@ -71,7 +71,6 @@ public:
     //Genetic
     void startStage();
     void endStage(GeneticStages stage);
-    void addBestSpeciment(int fitness);
     void addBestElite(int fitness);
     void addWorstElite(int fitness);
     void addPopulationFitness(int fitness);
