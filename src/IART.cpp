@@ -29,9 +29,32 @@ int main(int argc, char* argv[]) {
 
     University * university = w.loadUniversity();
 
-    cout << university->getEpochs().size() << endl;
+    Epoch *e = university->getEpochs()[0];
+    Genetic g(e,false,50,80);
+    GStatistics *s = g.getStatistics();
+    cout << s->displayStatistics()<< endl;
+
+   /* vector<int> best = g.getStatistics()->bestEliteFitness;
+    vector<int> worst= g.getStatistics()->worstEliteFitness;
+    vector<int> avg = g.getStatistics()->populationFitness;
+
+    for(int b : best){
+        cout << b << endl;
+    }
+
+    cout << endl;
+
+    for(int w : worst){
+        cout << w << endl;
+    }
+
+    cout << endl;
+
+    for(int p : avg){
+        cout << p << endl;
+    }*/
 
     //w.show();
 
-    return a.exec();
+    /*return a.exec();*/
 }

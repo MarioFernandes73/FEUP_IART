@@ -10,7 +10,7 @@
 using namespace std;
 
 class Statistics {
-protected:
+public:
     vector<float> iterationsTimes;
     vector<float> bestFitness;
     clock_t iterationTimer;
@@ -46,7 +46,7 @@ public:
 };
 
 class GStatistics : public Statistics{
-protected:
+public:
     //Genetic
     clock_t stageTimer;
     int populationN;
