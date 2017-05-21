@@ -25,23 +25,6 @@ Schedule * Algorithm::createRandomSchedule(vector<Exam *> exams)
     return s;
 }
 
-Schedule * Algorithm::createRandomSchedule(bool debug, Epoch *epoch)
-{
-    Schedule *s = new Schedule(debug);
-    s->setSubscriptions(epoch->getSubscriptions());
-    s->setFirstWeekDay(epoch->getInitDate().tm_wday);
-    int maxSlots = epoch->getNumdays() * HOURS_PER_DAY;
-
-    //try to create new schedules until it's valid
-    bool valid = true;
-    do{
-        valid = s->createRandomSchedule(epoch->getExams(), maxSlots);
-        if(debug)   cout << endl << valid << endl<< endl;
-    }while(!valid);
-
-    return s;
-}
-
 vector<Exam *> Algorithm::randomExams(std::vector<Exam *> vector)
 {
     std::vector<Exam *> exams1 = vector;
