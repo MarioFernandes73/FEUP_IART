@@ -18,12 +18,20 @@
 
 using namespace std;
 
+
 int main(int argc, char* argv[]) {
+
+
 
     //Qt setup
     QApplication a(argc, argv);
     MainWindow w;
-    w.show();
+
+    University * university = w.loadUniversity();
+
+    cout << university->getEpochs().size() << endl;
+
+    //w.show();
 
     return a.exec();
 }
