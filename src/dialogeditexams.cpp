@@ -102,6 +102,9 @@ void DialogEditExams::on_pushButton_2_clicked()
     ss << "Epoch doesn't" << endl << "have a problem.";
     ui->dateLabel->setText(QString::fromStdString(ss.str()));
 
+
+    QDate t1 = QDate(epoch->getInitDate().tm_year+1900, epoch->getInitDate().tm_mon+1, epoch->getInitDate().tm_mday);
+    QDate t2 = QDate(epoch->getEndDate().tm_year+1900, epoch->getEndDate().tm_mon+1, epoch->getEndDate().tm_mday);
     ui->startDateEdit->setDate(t1);
     ui->endDateEdit->setDate(t2);
 }
