@@ -27,11 +27,11 @@ void Dialoglistenrollments::createList(Epoch * epoch)
     int lineCounter = 0;
     for(unsigned int i = 0; i< epoch->getExams().size(); i++)
     {
-        ui->list->insertItem(lineCounter,QString::fromStdString(epoch->getExams()[i]->displayInfo()));
+        ui->list->insertItem(lineCounter,QString::fromStdString(epoch->getExams()[i]->getClassName()));
         lineCounter ++;
         for(unsigned int j = 0; j < epoch->getStudents(epoch->getExams()[i]).size(); j++){
             lineCounter ++;
-            ui->list->insertItem(lineCounter,QString::fromStdString("   * " + epoch->getStudents(epoch->getExams()[i])[j]->getInfo()));
+            ui->list->insertItem(lineCounter,QString::fromStdString("   -> " + epoch->getStudents(epoch->getExams()[i])[j]->getName()));
         }
         lineCounter++;
     }
