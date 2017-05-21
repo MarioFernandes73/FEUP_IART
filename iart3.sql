@@ -29,27 +29,26 @@ date1 DATETIME,
 date2 DATETIME
 );
 
-INSERT INTO Student (id_student,name) VALUES (1,"Fulton Marks"),(2,"Lance Vaughn"),(3,"Xena Sutton"),(4,"Laura Abbott"),(5,"Joshua Caldwell"),(6,"Alexis Livingston"),(7,"Adele Vinson"),(8,"Ruby Callahan"),(9,"Guy Patrick"),(10,"Noelani Kirk");
-INSERT INTO Student (id_student,name) VALUES (11,"Ivor Mullen"),(12,"Hashim Norton"),(13,"Odysseus Allen"),(14,"Keane Hunter"),(15,"Quail Vinson"),(16,"Roary Dudley"),(17,"Alea Mcfadden"),(18,"Stacy Norton"),(19,"Jermaine Moon"),(20,"Yuri Macdonald");
-INSERT INTO Student (id_student,name) VALUES (21,"Gemma Henson"),(22,"Morgan Mathis"),(23,"Clementine Freeman"),(24,"Rhona Rowland"),(25,"Yardley Medina"),(26,"Breanna Mosley"),(27,"Lev Lowe"),(28,"Riley Hudson"),(29,"Castor Franco"),(30,"Azalia Salazar");
-INSERT INTO Student (id_student,name) VALUES (31,"Priscilla Fry"),(32,"Leonard Kirk"),(33,"Jessamine Haynes"),(34,"Ainsley Sykes"),(35,"Aubrey Kent"),(36,"Melinda Stone"),(37,"Kane Vincent"),(38,"Tiger Stewart"),(39,"Stephen Hampton"),(40,"Velma Mcneil");
-INSERT INTO Student (id_student,name) VALUES (41,"Carter Carver"),(42,"Georgia Oliver"),(43,"Colby Stokes"),(44,"Daniel Kline"),(45,"Sylvia Allison"),(46,"Lana Valentine"),(47,"Jenna Avila"),(48,"Inga Guzman"),(49,"Lewis Calderon"),(50,"Rajah Singleton");
-INSERT INTO Student (id_student,name) VALUES (51,"Deirdre Sargent"),(52,"Dane Wood"),(53,"Iris Swanson"),(54,"Chester Shepherd"),(55,"Leo Chandler"),(56,"Rhona Burks"),(57,"Gloria Briggs"),(58,"Whilemina Hart"),(59,"Moses Duffy"),(60,"Jada Hess");
-INSERT INTO Student (id_student,name) VALUES (61,"Patricia Gonzalez"),(62,"Tarik Mcconnell"),(63,"Kuame Parks"),(64,"Benedict Chaney"),(65,"Colt Hendricks"),(66,"Amethyst Giles"),(67,"Shelby Walker"),(68,"Inez Mccall"),(69,"Dale Goff"),(70,"Gabriel Gray");
-INSERT INTO Student (id_student,name) VALUES (71,"Athena Ratliff"),(72,"Morgan Oneal"),(73,"Jemima Bowers"),(74,"Susan Flynn"),(75,"Tallulah Lee"),(76,"Mallory Hewitt"),(77,"Owen Randall"),(78,"Cooper Livingston"),(79,"Autumn Langley"),(80,"Tashya Lott");
-INSERT INTO Student (id_student,name) VALUES (81,"Brianna Serrano"),(82,"Lenore Daugherty"),(83,"Brittany Valenzuela"),(84,"Lane Taylor"),(85,"Martin Duncan"),(86,"Marcia Banks"),(87,"Bianca Dudley"),(88,"Basia Jones"),(89,"Ingrid Reeves"),(90,"Randall Morton");
-INSERT INTO Student (id_student,name) VALUES (91,"Sandra Foreman"),(92,"Charlotte Malone"),(93,"Howard Gilliam"),(94,"Jackson Evans"),(95,"Cyrus Macdonald"),(96,"Hayden Nelson"),(97,"Ruth Johnston"),(98,"Paki Wise"),(99,"Helen Clay"),(100,"Catherine Harding");
-INSERT INTO Student (id_student,name) VALUES (200,"Nehru Castillo"),(101,"Ronan Barry"),(102,"Althea Hopper"),(103,"Amos Hudson"),(104,"Hillary Stevens"),(105,"Demetria Mckenzie"),(106,"Eden Martin"),(107,"Ifeoma Stafford"),(108,"Cassandra Burt"),(109,"Charissa Ewing");
-INSERT INTO Student (id_student,name) VALUES (110,"Aphrodite Fields"),(111,"Nolan Douglas"),(112,"Drake Robles"),(113,"Harding Mcgowan"),(114,"Lawrence Mayo"),(115,"Sonia Roberts"),(116,"Keefe Alford"),(117,"Norman Alvarado"),(118,"Chiquita Lester"),(119,"Zachery Turner");
-INSERT INTO Student (id_student,name) VALUES (120,"Jakeem Gates"),(121,"Jenette Brock"),(122,"Joseph Burton"),(123,"Jessamine Colon"),(124,"Unity Mcfarland"),(125,"Bryar Witt"),(126,"Rae Daniels"),(127,"Lee Carson"),(128,"Ezra Kramer"),(129,"Kamal Hamilton");
-INSERT INTO Student (id_student,name) VALUES (130,"Hope Calhoun"),(131,"Otto Weiss"),(132,"Gavin Vinson"),(133,"Urielle Lucas"),(134,"Luke Wong"),(135,"Wang Brown"),(136,"Gisela Baldwin"),(137,"Buckminster Evans"),(138,"Paki Rice"),(139,"Elton Kidd");
-INSERT INTO Student (id_student,name) VALUES (140,"Silas Malone"),(141,"Kirestin Kline"),(142,"Lev Cash"),(143,"Jakeem Frye"),(144,"Doris Collier"),(145,"Anne Huff"),(146,"Zachery Gilbert"),(147,"Sonia Barron"),(148,"Hiram Butler"),(149,"Signe Kirby");
-INSERT INTO Student (id_student,name) VALUES (150,"Wilma Bass"),(151,"Serina Sandoval"),(152,"Hu Knox"),(153,"Cynthia Hopper"),(154,"Cairo Molina"),(155,"Logan Deleon"),(156,"Xanthus Mays"),(157,"Jessica Nash"),(158,"Astra Padilla"),(159,"Tad Goodman");
-INSERT INTO Student (id_student,name) VALUES (160,"Cairo Reynolds"),(161,"Kareem Lloyd"),(162,"Kimberly Kirby"),(163,"Chandler Caldwell"),(164,"Sacha Alvarez"),(165,"Chadwick Mcconnell"),(166,"Guy Reid"),(167,"Damon Ortega"),(168,"Thane Williams"),(169,"Hashim Drake");
-INSERT INTO Student (id_student,name) VALUES (170,"Demetria Blankenship"),(171,"Serina Lancaster"),(172,"Catherine Hurley"),(173,"Iola Skinner"),(174,"Logan Mcclure"),(175,"Sophia Mullins"),(176,"Regina Bishop"),(177,"Grace Ryan"),(178,"Stella Aguirre"),(179,"Nelle Watts");
-INSERT INTO Student (id_student,name) VALUES (180,"Teegan Hyde"),(181,"Karina Gentry"),(182,"Warren Bryan"),(183,"Trevor Wilkerson"),(184,"Dale Webb"),(185,"Jocelyn Randolph"),(186,"Evan Perez"),(187,"Bo Decker"),(188,"Tatyana Calderon"),(189,"Gil Mckay");
-INSERT INTO Student (id_student,name) VALUES (190,"Gabriel Burke"),(191,"Portia Manning"),(192,"Selma Pittman"),(193,"Zenia Duncan"),(194,"Mari Dominguez"),(195,"Elizabeth Parsons"),(196,"Britanney Garrett"),(197,"Norman Yates"),(198,"Michelle Cooley"),(199,"Jack Randolph");
-
+INSERT INTO Student (id_student,name) VALUES (1,"Nash Bender"),(2,"Nyssa Schmidt"),(3,"Lance Rios"),(4,"Talon Kaufman"),(5,"Gavin Berry"),(6,"Judah Trujillo"),(7,"Rosalyn Frazier"),(8,"Medge Schultz"),(9,"Yuli Bennett"),(10,"Eric Shelton");
+INSERT INTO Student (id_student,name) VALUES (11,"Sopoline Barlow"),(12,"Priscilla York"),(13,"Nolan Campos"),(14,"Casey Lynch"),(15,"Leonard Spencer"),(16,"Edward Juarez"),(17,"Melissa Booker"),(18,"Peter Hughes"),(19,"Xena Gallegos"),(20,"Dustin Maddox");
+INSERT INTO Student (id_student,name) VALUES (21,"Lois Morin"),(22,"Lilah Vance"),(23,"Brenda Mcneil"),(24,"Briar Warren"),(25,"Alyssa Franklin"),(26,"Adam Hendricks"),(27,"Hadley Wright"),(28,"Salvador Clayton"),(29,"Lucius Hayes"),(30,"Herman Wiley");
+INSERT INTO Student (id_student,name) VALUES (31,"Cruz Pope"),(32,"Melinda Peterson"),(33,"Nicole Marshall"),(34,"Xavier Francis"),(35,"Phelan Lester"),(36,"Vaughan Schneider"),(37,"Jared Morrow"),(38,"Callie Miles"),(39,"Coby Kemp"),(40,"Gemma Lindsey");
+INSERT INTO Student (id_student,name) VALUES (41,"Ruby King"),(42,"Cassady Mccall"),(43,"Oscar Witt"),(44,"Inga Benson"),(45,"Risa Butler"),(46,"Quon Andrews"),(47,"Lacy Talley"),(48,"Diana Rush"),(49,"Malcolm Joseph"),(50,"Hayfa Ray");
+INSERT INTO Student (id_student,name) VALUES (51,"Dorothy Macias"),(52,"Macaulay Benjamin"),(53,"Buffy Phillips"),(54,"Charles Kinney"),(55,"Armando Swanson"),(56,"Hector Rodriquez"),(57,"Judah Alvarez"),(58,"Myles Goodwin"),(59,"Jenna Alexander"),(60,"Rylee Everett");
+INSERT INTO Student (id_student,name) VALUES (61,"Amery Hopkins"),(62,"Ciara Ayers"),(63,"Harding Newton"),(64,"Oprah Franks"),(65,"Cassady Anderson"),(66,"Hanae Rosario"),(67,"Plato Walls"),(68,"Laura Bright"),(69,"Chandler Herrera"),(70,"Gemma Valentine");
+INSERT INTO Student (id_student,name) VALUES (71,"Alexander Bruce"),(72,"Meghan Fry"),(73,"Yoko Bass"),(74,"Debra Paul"),(75,"Andrew Valencia"),(76,"Jacob Goff"),(77,"Amelia Mosley"),(78,"Camden Conner"),(79,"Mikayla Mosley"),(80,"Tyler Myers");
+INSERT INTO Student (id_student,name) VALUES (81,"Hasad Stafford"),(82,"Alika Koch"),(83,"Meghan Kennedy"),(84,"Shafira Mcdonald"),(85,"Janna Moses"),(86,"Nyssa Vasquez"),(87,"Janna Steele"),(88,"Malik Gibbs"),(89,"Joel Eaton"),(90,"Hop Johnson");
+INSERT INTO Student (id_student,name) VALUES (91,"Zane Peters"),(92,"Sylvia Watkins"),(93,"Thane Pittman"),(94,"Jane Curtis"),(95,"Caldwell Hardin"),(96,"Rinah Bridges"),(97,"Mercedes Collins"),(98,"Serina Banks"),(99,"Ava Conway"),(100,"Uriel Cain");
+INSERT INTO Student (id_student,name) VALUES (101,"David Oneill"),(102,"Micah Barron"),(103,"Wyoming Anderson"),(104,"Jelani Barron"),(105,"Reagan Cardenas"),(106,"Todd Wyatt"),(107,"Signe Stewart"),(108,"Alexa Le"),(109,"Jermaine Hunt"),(110,"Price Colon");
+INSERT INTO Student (id_student,name) VALUES (111,"Gail Moran"),(112,"Ivan Cortez"),(113,"Sydnee Blevins"),(114,"Tamara Dejesus"),(115,"Hyatt Mcleod"),(116,"Mercedes Payne"),(117,"Colorado Nielsen"),(118,"Devin Green"),(119,"Summer Tyler"),(120,"Ila Fry");
+INSERT INTO Student (id_student,name) VALUES (121,"Grace Hodges"),(122,"Brynne Romero"),(123,"Mechelle Gibson"),(124,"Tallulah Delaney"),(125,"Basil Mclean"),(126,"Ray Dominguez"),(127,"Jelani Beasley"),(128,"Blaine Walls"),(129,"Martha Henry"),(130,"Neve Lamb");
+INSERT INTO Student (id_student,name) VALUES (131,"Briar Daniel"),(132,"Deborah Ferguson"),(133,"Reagan Craft"),(134,"Callum Blackburn"),(135,"Mechelle Barnes"),(136,"Harding Booker"),(137,"Justin Brock"),(138,"Maryam Estes"),(139,"Alana Roach"),(140,"Linda Hines");
+INSERT INTO Student (id_student,name) VALUES (141,"Althea Russell"),(142,"Abel Beasley"),(143,"Britanney Snow"),(144,"Chancellor Wolf"),(145,"Martha Guy"),(146,"Serena Bates"),(147,"Martina Harris"),(148,"Ori Black"),(149,"Signe Garrison"),(150,"John Price");
+INSERT INTO Student (id_student,name) VALUES (151,"Reese Lara"),(152,"Blaine Clarke"),(153,"Kevin Anthony"),(154,"Mikayla Miranda"),(155,"Victor Madden"),(156,"Hamilton Olsen"),(157,"Renee Day"),(158,"Maia Lawrence"),(159,"Maxwell Hall"),(160,"Tatyana Daugherty");
+INSERT INTO Student (id_student,name) VALUES (161,"Ivory Munoz"),(162,"Phillip Franklin"),(163,"Mari Lara"),(164,"Maggie Alexander"),(165,"Simon Gutierrez"),(166,"Inez Morris"),(167,"Hayley William"),(168,"Logan Lawson"),(169,"Bo Baird"),(170,"Zahir Figueroa");
+INSERT INTO Student (id_student,name) VALUES (171,"Armand Brooks"),(172,"Lunea Bentley"),(173,"Nolan Guerra"),(174,"Kirestin Wiley"),(175,"Guinevere Ford"),(176,"Paki Mckee"),(177,"Sybil Sullivan"),(178,"Evelyn Blankenship"),(179,"Ronan Poole"),(180,"Ivy Poole");
+INSERT INTO Student (id_student,name) VALUES (181,"Maryam Salinas"),(182,"Cassidy Vaughan"),(183,"Herman Austin"),(184,"Fuller Brennan"),(185,"Rhea Jefferson"),(186,"Lewis Newman"),(187,"Charlotte Hardin"),(188,"Dominique Pierce"),(189,"Abdul Knapp"),(190,"Hiroko Freeman");
+INSERT INTO Student (id_student,name) VALUES (191,"Noelle Duffy"),(192,"Elliott Roman"),(193,"Medge Small"),(194,"Chanda Knapp"),(195,"Colt Valenzuela"),(196,"Sylvester Robertson"),(197,"Macy Blackburn"),(198,"Geoffrey Horne"),(199,"Craig Conley"),(200,"Zenaida Kaufman");
 
 INSERT INTO Exam VALUES(1,'MEST',1,1);
 INSERT INTO Exam VALUES(2,'PROG',1,2);
@@ -73,17 +72,14 @@ INSERT INTO Exam VALUES(16,'AGRS',4,1);
 INSERT INTO Exam VALUES(17,'CPAR',4,2);
 INSERT INTO Exam VALUES(18,'MNSE',4,3);
 
-INSERT INTO Epoch VALUES('Normal','2017-05-08','2017-05-26');
-INSERT INTO Epoch VALUES('Recurso','2017-05-29','2017-05-16');
-
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,1,71),(1,1,196),(1,1,37),(1,1,137),(1,1,133),(1,1,123),(1,1,80),(1,1,100),(1,1,8),(1,1,169);
-INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,1,154),(1,1,65),(1,1,182),(1,1,224),(1,1,174),(1,1,74),(1,1,89),(1,1,41),(1,1,4),(1,1,107);
+INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,1,154),(1,1,65),(1,1,182),(1,1,127),(1,1,174),(1,1,74),(1,1,89),(1,1,41),(1,1,4),(1,1,107);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,2,71),(1,2,196),(1,2,37),(1,2,137),(1,2,133),(1,2,123),(1,2,80),(1,2,100),(1,2,8),(1,2,169);
-INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,2,154),(1,2,65),(1,2,182),(1,2,224),(1,2,136),(1,2,74),(1,2,89),(1,2,41),(1,2,4),(1,2,107);
+INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,2,154),(1,2,65),(1,2,182),(1,2,127),(1,2,136),(1,2,74),(1,2,89),(1,2,41),(1,2,4),(1,2,107);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,3,71),(1,3,196),(1,3,37),(1,3,137),(1,3,133),(1,3,123),(1,3,80),(1,3,100),(1,3,8),(1,3,169);
-INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,3,154),(1,3,65),(1,3,182),(1,3,224),(1,3,136),(1,3,74),(1,3,89),(1,3,41),(1,3,4),(1,3,107);
+INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,3,154),(1,3,65),(1,3,182),(1,3,127),(1,3,136),(1,3,74),(1,3,89),(1,3,41),(1,3,4),(1,3,107);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,4,71),(1,4,196),(1,4,37),(1,4,137),(1,4,133),(1,4,123),(1,4,80),(1,4,100),(1,4,8),(1,4,169);
-INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,4,154),(1,4,65),(1,4,182),(1,4,224),(1,4,174),(1,4,74),(1,4,89),(1,4,41),(1,4,4),(1,4,107);
+INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,4,154),(1,4,65),(1,4,182),(1,4,127),(1,4,174),(1,4,74),(1,4,89),(1,4,41),(1,4,4),(1,4,107);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,5,198),(1,5,191),(1,5,146),(1,5,59),(1,5,179),(1,5,52),(1,5,159),(1,5,119),(1,5,172),(1,5,124);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,5,106),(1,5,22),(1,5,73),(1,5,167),(1,5,46),(1,5,142),(1,5,114),(1,5,61),(1,5,79),(1,5,35);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (1,6,198),(1,6,191),(1,6,146),(1,6,59),(1,6,179),(1,6,52),(1,6,159),(1,6,119),(1,6,172),(1,6,124);
@@ -118,3 +114,6 @@ INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (2,10,52),(2,10,42
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (2,18,89),(2,14,60),(2,16,148),(2,16,17),(2,13,143),(2,15,14),(2,17,40),(2,13,138),(2,12,139),(2,17,136);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (2,11,159),(2,12,147),(2,17,96),(2,11,136),(2,15,162),(2,18,15),(2,17,107),(2,16,191),(2,17,82),(2,14,156);
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (2,13,184),(2,17,10),(2,17,124),(2,11,77),(2,16,4),(2,16,162),(2,15,196),(2,12,138),(2,11,137),(2,17,118);
+
+INSERT INTO Epoch VALUES('Normal','2017-05-08','2017-05-26');
+INSERT INTO Epoch VALUES('Recurso','2017-05-29','2017-05-16');
