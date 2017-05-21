@@ -11,6 +11,7 @@ private:
     int numReps;
     int populationLength;
     vector<Schedule *> population;
+    vector<Schedule *> elitistPop;
     GStatistics * statistics;
 public:
     Genetic(Epoch *epoch, bool debug, int populationLength, vector<Schedule *> pop, int numReps);

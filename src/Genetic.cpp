@@ -92,6 +92,11 @@ void Genetic::run()
 
         new thread([&] (GStatistics *s,vector<Schedule *> pop) {Genetic::calculatePopulationFitness(pop);s->addBestSpeciment(population.at(Genetic::getBestSchedule(pop))->getFitness());}, statistics,population);
 
+        //add elitist to currentPopulation
+        for(int i = 0; i < elitistPop.size(); i++)
+            population.push_back(elitistPop.at(i));
+        elitistPop.clear();
+
         numReps--;
 
         //Statistics
@@ -152,7 +157,8 @@ void Genetic::selectNextPopulation()
     int populationFitness = getPopulationFitness();
 
     int numElitists = NUM_ELITISTS;
-    vector<Schedule *> nextPopulation = selectElitistPopulation();
+    selectElitistPopulation();
+    vector<Schedule *> nextPopulation;
 
     //calculate population fitness probabilities to the roulette
     fitnessProbabilities(populationFitness);
@@ -195,6 +201,8 @@ vector<Schedule *> Genetic::selectElitistPopulation()
             cout << "id " << nextPopulation.at(i)->getID()<< " fitness " << nextPopulation.at(i)->getFitness() << endl;
     }
 
+    elitistPop = nextPopulation;
+
     return nextPopulation;
 }
 
@@ -225,7 +233,8 @@ void Genetic::createRandomProbs(double * randomProbs, int size) {
     }
 }
 
-void Genetic::selectRemainingPopulation(double *randomProbs, vector<Schedule *> nextPopulation) {
+void Genetic::selectRemainingPopulation(double *randomProbs, vector<Schedule *> nextPopulation)
+{
     int randomSize = population.size() - NUM_ELITISTS;
     for( int l = 0; l < randomSize; ++l)     //iterate randomProbs
     {
