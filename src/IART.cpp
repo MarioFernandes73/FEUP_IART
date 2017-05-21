@@ -25,13 +25,14 @@ void loadSubscriptions(vector<vector<string>> subscribeInfo, University * univer
 
 int main(int argc, char* argv[]) {
 
-    //random numbers
+   /* //random numbers
     srand ((unsigned int) time(NULL));
 
     // database variables
     Database *db;
 
-    char *filename = (char *) "../iart3.db";         // QT
+    char *filename = (char *) "iart3.db";       // release
+   // char *filename = (char *) "../iart3.db";         // QT
     //char *filename = (char *) "../proj/iart.db";  //clion
     //char * filename = (char*)"iart.db";           //eclipse
 
@@ -63,82 +64,11 @@ int main(int argc, char* argv[]) {
     //interface
     //initialOptions(university);
 
-    //TESTE
-/*
-    Schedule *s = Algorithm::createRandomSchedule(false,e);
-    vector<Schedule *> pop = Genetic::populate(e,40,false);
-    s->calculateFitness();
-
-    cout << "Fitness: " << s->getFitness() << endl;
-    cout << *s << endl;
-*/
-    /*for(Schedule * s: pop){
-        cout << *s << endl;
-    }*/
-
-   //genetic algorithm
-    /*
-    Epoch * temp = university->getEpochByName("Normal");
-    Genetic algorithm1(temp,false,40);
-    algorithm1.run();
-    //e->getSchedule()->printExams();
-    //Simulated Annealing
-
-    cout << endl << "1 iteration" << endl << endl;
-    Schedule *s1 = new Schedule(false);
-    *s1 = *s;
-    Epoch *e1 = new Epoch("Normal",8,5,2017,26,5,2017);
-    *e1 = *e;
-    SimulatedAnnealing algorithm2(e1,false,40,1,0,s1);
-    algorithm2.run();
-
-    cout << endl << "2 iteration" << endl << endl;
-    Schedule *s2 = new Schedule(false);
-    *s2 = *s;
-    Epoch *e2 = new Epoch("Normal",8,5,2017,26,5,2017);
-    *e2 = *e;
-    SimulatedAnnealing algorithm3(e2,false,40,1,10,s2);
-    algorithm3.run();
-
-    cout << endl << "3 iteration" << endl << endl;
-    Schedule *s3 = new Schedule(false);
-    *s3 = *s;
-    Epoch *e3 = new Epoch("Normal",8,5,2017,26,5,2017);
-    *e3 = *e;
-    SimulatedAnnealing algorithm4(e3,false,40,1,20,s3);
-    algorithm4.run();
-
-    cout << endl << "4 iteration" << endl << endl;
-    Schedule *s4 = new Schedule(false);
-    *s4 = *s;
-    Epoch *e4 = new Epoch("Normal",8,5,2017,26,5,2017);
-    *e4 = *e;
-    SimulatedAnnealing algorithm5(e4,false,40,1,30,s4);
-    algorithm5.run();
-
-    cout << endl << "5 iteration" << endl << endl;
-    Schedule *s5 = new Schedule(false);
-    *s5 = *s;
-    Epoch *e5 = new Epoch("Normal",8,5,2017,26,5,2017);
-    *e5 = *e;
-    SimulatedAnnealing algorithm6(e5,false,40,1,40,s5);
-    algorithm6.run();
-
-
-    cout << endl << "6 iteration" << endl << endl;
-    Schedule *s6 = new Schedule(false);
-    *s6 = *s;
-    Epoch *e6 = new Epoch("Normal",8,5,2017,26,5,2017);
-    *e6 = *e;
-    SimulatedAnnealing algorithm7(e6,false,40,1,50,s6);
-    algorithm7.run();*/
-
-    //save .db
+    //save .db*/
 
     //Qt setup
     QApplication a(argc, argv);
     MainWindow w;
-    w.setUniversity(university);
     w.show();
 
     return a.exec();

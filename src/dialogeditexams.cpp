@@ -26,61 +26,59 @@ void DialogEditExams::on_pushButton_clicked()
         return;
     }
 
-
-    string startDate = ui->startingDate->text().toUtf8().constData();
-    int code1 = checkDateFormat(startDate);
-    if(code1 == -1){
-        ui->dateLabel->setText(QString::fromStdString("Wrong date format."));
+    if(!validateDates()){
+        stringstream ss;
+        ss << "Starting date has " << endl << " to be after" << endl <<"Ending date.";
+        ui->dateLabel->setText(QString::fromStdString(ss.str()));
         return;
-    }
-    string endDate = ui->endingDate->text().toUtf8().constData();
-    int code2 = checkDateFormat(endDate);
-    if(code2 == -1){
-        ui->dateLabel->setText(QString::fromStdString("Wrong date format."));
-        return;
-    }
-            setDate(epoch, code1, code2);
-            ui->dateLabel->setText(QString::fromStdString("Success."));
-}
-
-int DialogEditExams::checkDateFormat(string date){
-
-    if(date == "")
-        return 0;
-
-    if(date.size() != 10){
-        return -1;
-    }
-
-    for(unsigned int i = 0; i < date.size(); i++){
-        if(i<=3 || i==5 || i==6 || i>=8)
-            if(!isdigit(date[i]))
-                return -1;
     }
 
     stringstream ss;
-    int year, month, day;
-    ss << date.substr(0,4);
-    ss >> year;
-    if(year < 1900 || year > 2100)
-        return -1;
-    ss.clear();
-    ss.str("");
-    ss << date.substr(5,7);
-    ss >> month;
-    if(month < 1 || month > 12)
-        return -1;
-    ss.clear();
-    ss.str("");
-    ss << date.substr(8,10);
-    ss >> day;
-    if((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && (day < 1 || day > 31))
-        return -1;
-    else if((month == 2 || month == 4 || month == 6 || month == 9 || month == 11) && (day < 1 || day > 30))
-        return -1;
+    if(!checkAllDates())
+        ss << "Success but epoch" << endl << "happens at the same" << endl <<"time has another one.";
+    else
+        ss << "Success!" << endl;
 
-    return 1;
+    ui->dateLabel->setText(QString::fromStdString(ss.str()));
+
+    setDates();
 }
+
+bool DialogEditExams::checkAllDates(){
+    QDate startDate = ui->startDateEdit->date();
+    QDate endDate = ui->endDateEdit->date();
+    Epoch * epoch = this->university->getEpochByName(ui->epochName->text().toUtf8().constData());
+    for(unsigned int i = 0; i< this->university->getEpochs().size(); i++){
+        Epoch * currentEpoch = this->university->getEpochs()[i];
+        if(currentEpoch->getName() == epoch->getName())
+            continue;
+        QDate currentEpochStart = QDate(currentEpoch->getInitDate().tm_year+1900,currentEpoch->getInitDate().tm_mon+1, currentEpoch->getInitDate().tm_mday);
+        QDate currentEpochEnd = QDate(currentEpoch->getEndDate().tm_year+1900,currentEpoch->getEndDate().tm_mon+1, currentEpoch->getEndDate().tm_mday);
+        if((currentEpochStart < startDate && startDate < currentEpochEnd) || (currentEpochStart < endDate && endDate < currentEpochEnd) || (startDate < currentEpochStart && currentEpochStart < endDate))
+            return false;
+    }
+
+    return true;
+}
+
+void DialogEditExams::setDates(){
+    QDate startDate = ui->startDateEdit->date();
+    QDate endDate = ui->endDateEdit->date();
+    Epoch * epoch = this->university->getEpochByName(ui->epochName->text().toUtf8().constData());
+    epoch->setInitDate(startDate.year(), startDate.month(), startDate.day());
+    epoch->setEndDate(endDate.year(), endDate.month(), endDate.day());
+}
+
+bool DialogEditExams::validateDates(){
+    QDate startDate = ui->startDateEdit->date();
+    QDate endDate = ui->endDateEdit->date();
+
+    if(startDate > endDate){
+        return false;
+    }
+    return true;
+}
+
 
 void DialogEditExams::on_pushButton_2_clicked()
 {
@@ -93,7 +91,7 @@ void DialogEditExams::on_pushButton_2_clicked()
         if(epoch->getName() == this->university->getEpochs()[i]->getName())
             continue;
         bool check = checkDate(epoch->getInitDate(), epoch->getEndDate(), this->university->getEpochs()[i]->getInitDate(), this->university->getEpochs()[i]->getEndDate());
-        if(check){
+        if(!check){
             stringstream ss;
             ss << "Epoch happens at" << endl << "the same time as" << endl << this->university->getEpochs()[i]->getName();
             ui->dateLabel->setText(QString::fromStdString(ss.str()));
@@ -103,89 +101,23 @@ void DialogEditExams::on_pushButton_2_clicked()
     stringstream ss;
     ss << "Epoch doesn't" << endl << "have a problem.";
     ui->dateLabel->setText(QString::fromStdString(ss.str()));
+
+
+    QDate t1 = QDate(epoch->getInitDate().tm_year+1900, epoch->getInitDate().tm_mon+1, epoch->getInitDate().tm_mday);
+    QDate t2 = QDate(epoch->getEndDate().tm_year+1900, epoch->getEndDate().tm_mon+1, epoch->getEndDate().tm_mday);
+    ui->startDateEdit->setDate(t1);
+    ui->endDateEdit->setDate(t2);
 }
 
 bool DialogEditExams::checkDate( struct tm  initDate1, struct tm  endDate1, struct tm  initDate2, struct tm  endDate2){
 
-    struct tm * temp = &initDate1;
-    time_t t1 = mktime(temp);
-    temp = &endDate1;
-    time_t t2 = mktime(temp);
-    temp = &initDate2;
-    time_t t3 = mktime(temp);
-    temp = &endDate2;
-    time_t t4 = mktime(temp);
+    QDate t1 = QDate(initDate1.tm_year+1900, initDate1.tm_mon+1, initDate1.tm_mday);
+    QDate t2 = QDate(endDate1.tm_year+1900, endDate1.tm_mon+1, endDate1.tm_mday);
+    QDate t3 = QDate(initDate2.tm_year+1900, initDate2.tm_mon+1, initDate2.tm_mday);
+    QDate t4 = QDate(endDate2.tm_year+1900, endDate2.tm_mon+1, endDate2.tm_mday);
 
-    if(((difftime(t1, t3) >= 0) && (difftime(t3, t2) < 0)) || ((difftime(t1, t4) >= 0) && (difftime(t4, t2) < 0)) )
-        return true;
+    if((t1 < t3 && t3 < t2) || (t1 < t4 && t4 < t2) || (t3 < t1 && t1 < t4) )
+        return false;
 
-
-    return false;
-}
-
-void DialogEditExams::setDate(Epoch * epoch, int code1, int code2){
-
-    struct tm initDate;
-    struct tm endDate;
-    if(code1 == 0){
-        initDate = epoch->getInitDate();
-    } else {
-        initDate = convertStringDate(ui->startingDate->text().toUtf8().constData());
-
-    }
-
-    if(code2 == 0){
-        endDate = epoch->getEndDate();
-    } else {
-        endDate = convertStringDate(ui->endingDate->text().toUtf8().constData());
-    }
-
-
-    struct tm * temp = &initDate;
-    time_t t1 = mktime(temp);
-    temp = &endDate;
-    time_t t2 = mktime(temp);
-
-    cout << initDate.tm_year << endl;
-    cout << endDate.tm_year << endl;
-    cout << t1 << endl;
-    cout << t2 << endl;
-    cout << difftime(t1, t2) << endl;
-    if(difftime(t1, t2) >= 0){
-        stringstream ss;
-        ss << "Ending date can't" << endl << "be lower than" << endl << "starting date.";
-
-        ui->dateLabel->setText(QString::fromStdString(ss.str()));
-        return;
-    }
-
-    if(code1 == 1)
-    epoch->setEndDate(endDate.tm_year, endDate.tm_mon, endDate.tm_mday);
-    if(code2 == 1)
-    epoch->setInitDate(initDate.tm_year, initDate.tm_mon, initDate.tm_mday);
-}
-
-struct tm DialogEditExams::convertStringDate(string date){
-    struct tm temp;
-    stringstream ss;
-    ss << date.substr(0,4);
-    int tempYear;
-    ss >> tempYear;
-    temp.tm_year = tempYear-1900;
-
-    ss.clear();
-    ss.str("");
-    ss << date.substr(5,7);
-    int tempMonth;
-    ss >> tempMonth;
-    temp.tm_mon = tempMonth-1;
-
-    ss.clear();
-    ss.str("");
-    ss << date.substr(8,10);
-    ss >> temp.tm_mday;
-
-    temp.tm_wday = (temp.tm_mday + 2*temp.tm_mon + 3*(temp.tm_mon+1)/5 + temp.tm_year + temp.tm_year/4 - temp.tm_year/100 + temp.tm_year/400 + 1) % 7;
-
-    return temp;
+    return true;
 }

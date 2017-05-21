@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "University.h"
+#include "Database.h"
+#include <sstream>
 
 namespace Ui {
 class MainWindow;
@@ -19,11 +21,14 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    University * university;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void setUniversity(University * university){this->university = university;}
+    University * loadUniversity();
+    vector<Epoch *> loadEpochs(vector<vector<string>> epochsInfo);
+    void loadSubscriptions(vector<vector<string>> subscribeInfo, University * university);
+    vector<Exam *> loadExams(vector<vector<string>> examsInfo);
+    vector<Student *> loadStudents(vector<vector<string>> studentsInfo);
     ~MainWindow();
 
 };

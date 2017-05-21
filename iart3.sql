@@ -116,4 +116,4 @@ INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (2,11,159),(2,12,1
 INSERT INTO Subscription (id_epoch,id_exam,id_student) VALUES (2,13,184),(2,17,10),(2,17,124),(2,11,77),(2,16,4),(2,16,162),(2,15,196),(2,12,138),(2,11,137),(2,17,118);
 
 INSERT INTO Epoch VALUES('Normal','2017-05-08','2017-05-26');
-INSERT INTO Epoch VALUES('Recurso','2017-05-29','2017-05-16');
+INSERT INTO Epoch VALUES('Recurso','2017-05-29','2017-06-16');
