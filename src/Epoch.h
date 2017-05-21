@@ -35,7 +35,7 @@ public:
     vector<string> getStudentExams(string student);
 
     bool deleteStudent(string examName, string studentName);
-    bool addStudentExam(Student * student, string examName );
+    bool addStudentExam(Student * student, Exam * exam );
     void addSubscription(Subscription *s);
 
     template<typename T>

@@ -22,9 +22,8 @@ void MainWindow::on_MenuButton_clicked()
     MainMenu menuDialog;
     menuDialog.setUniversity(university);
     menuDialog.setModal(true);
-    this->hide();
+    this->close();
     menuDialog.exec();
-    this->show();
 }
 
 University * MainWindow::loadUniversity(){

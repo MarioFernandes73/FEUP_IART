@@ -103,11 +103,13 @@ std::vector<Epoch *> University::getEpochs(){
 
 void University::addSubscription(int epochId, int examId, int studentId)
 {
+
     Exam *e = findById(exams,examId);
     Student *s = findById(students,studentId);
     Epoch *epoch = findById(epochs,epochId);
 
     epoch->addSubscription(new Subscription(s,e));
+
 }
 
 template<typename T>
@@ -151,6 +153,7 @@ Epoch * University::deleteStudent(string studentName, string examName){
 Epoch * University::addStudentExam(string studentName, string examName){
 
     Student * student = NULL;
+    Exam * exam = NULL;
     for(unsigned int i = 0; i<  this->getStudents().size(); i++){
         if(this->getStudents()[i]->getName() == studentName){
             student = this->getStudents()[i];
@@ -160,9 +163,19 @@ Epoch * University::addStudentExam(string studentName, string examName){
     if(!student)
         return NULL;
 
-    for(unsigned int i = 0; i < this->getEpochs().size(); i++){
-        if(this->getEpochs()[i]->addStudentExam(student, examName))
-            return this->getEpochs()[i];
+    for(unsigned int i = 0; i < this->getExams().size(); i++){
+        if(this->getExams()[i]->getClassName() == examName){
+            exam = this->getExams()[i];
+            break;
+        }
     }
-    return NULL;
+
+    if(!exam)
+        return NULL;
+
+    for(unsigned int i = 0; i < this->getEpochs().size(); i++){
+        this->getEpochs()[i]->addStudentExam(student, exam);
+    }
+
+    return this->getEpochs()[0];
 }
