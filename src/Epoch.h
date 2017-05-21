@@ -41,7 +41,7 @@ public:
     bool notFound(vector<T *> vector, T *temp) const;
     bool commonStudents(Exam *pExam, Exam *pExam1);
     bool deleteStudent(string examName, string studentName);
-    bool addStudentExam(Student * student, string examName );
+    bool addStudentExam(Student * student, Exam * exam );
     void setInitDate(int year, int month, int day);
     void setEndDate(int year, int month, int day);
 };
