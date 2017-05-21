@@ -28,7 +28,7 @@ void DialogCurrentSchedule::setUniversity(University * u){
 
 void DialogCurrentSchedule::createSchedule(string epochName)
 {
-   // bool isStud = false;
+    bool isStud = false;
     Epoch *epoch = this->university->getEpochByName(epochName);
     if(!epoch)
         return;
@@ -36,7 +36,7 @@ void DialogCurrentSchedule::createSchedule(string epochName)
     vector<string> filter;
     if(student != "")
     {
-       // isStud = true;
+        isStud = true;
         filter = epoch->getStudentExams(student);
     }
 
@@ -51,12 +51,11 @@ void DialogCurrentSchedule::createSchedule(string epochName)
     if(totalWeeks%7 != 0)
         totalWeeks++;
 
-   // unsigned int size;
     for (int var = 0; var < totalWeeks; ++var)
     {
         addTable(var);
         setHeader(var,initDate);
-      //  size = setContent(var,s,initDate.tm_wday,totalDays,filter,isStud);
+        setContent(var,s,initDate.tm_wday,totalDays,filter,isStud);
     }
 
 }

@@ -16,4 +16,5 @@ DialogCreateCourse::~DialogCreateCourse()
 void DialogCreateCourse::on_pushButton_clicked()
 {
     this->university->addExam(new Exam(Class(ui->courseName->text().toUtf8().constData(),ui->examYear->value()),ui->examDuration->value()));
+    this->close();
 }
