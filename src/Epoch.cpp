@@ -137,3 +137,21 @@ bool Epoch::addStudentExam(Student * student, string examName ){
     }
     return false;
 }
+
+void Epoch::setInitDate(int year, int month, int day){
+    initDate.tm_mday = day;
+    initDate.tm_mon = month-1;
+    initDate.tm_year = year-1900;
+    initDate.tm_wday = getWeekDay(day,month,year);
+
+    numDays = (mktime(&endDate) - mktime(&initDate)) / (24*60*60) + 1;
+}
+
+void Epoch::setEndDate(int year, int month, int day){
+    endDate.tm_mday = day;
+    endDate.tm_mon = month-1;
+    endDate.tm_year = year-1900;
+    endDate.tm_wday = getWeekDay(day,month,year);
+
+    numDays = (mktime(&endDate) - mktime(&initDate)) / (24*60*60) + 1;
+}

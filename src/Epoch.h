@@ -31,6 +31,7 @@ public:
     std::vector<Subscription *> getSubscriptions() const;
     int getWeekDay(int d, int m, int y);
     struct tm getInitDate() const;
+    struct tm getEndDate() const{return this->endDate;}
     vector<Student *> getStudents(Exam *pExam) const;
     vector<string> getStudentExams(string student);
     Schedule * getSchedule();
@@ -41,6 +42,8 @@ public:
     bool commonStudents(Exam *pExam, Exam *pExam1);
     bool deleteStudent(string examName, string studentName);
     bool addStudentExam(Student * student, string examName );
+    void setInitDate(int year, int month, int day);
+    void setEndDate(int year, int month, int day);
 };
 
 
