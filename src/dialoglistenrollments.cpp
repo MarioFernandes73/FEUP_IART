@@ -16,7 +16,7 @@ Dialoglistenrollments::~Dialoglistenrollments()
 void Dialoglistenrollments::setUniversity(University * university){
     this->university = university;
     vector<Epoch *> epochs = this->university->getEpochs();
-    for (int i = 0; i < epochs.size(); ++i) {
+    for (unsigned int i = 0; i < epochs.size(); ++i) {
         ui->comboBox->addItem(QString::fromStdString(epochs.at(i)->getName()));
     }
 }
