@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(QSize(720, 480));
-    ui->Background->setPixmap(QPixmap("schedule.jpg"));
+    ui->Background->setPixmap(QPixmap("../resources/schedule.jpg"));
 }
 
 MainWindow::~MainWindow()
