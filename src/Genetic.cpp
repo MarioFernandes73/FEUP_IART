@@ -117,7 +117,7 @@ void Genetic::calculateFitness()
 
 void Genetic::calculateFitness(vector<Schedule *> population){
     //calculate schedule fitness
-    for (int i = 0; i < population.size(); ++i)
+    for (unsigned int i = 0; i < population.size(); ++i)
     {
         int fitness = population.at(i)->calculateFitness();
     }
@@ -129,7 +129,7 @@ int Genetic::getPopulationFitness() {
 
 int Genetic::calculatePopulationFitness(vector<Schedule *> population){
     int populationFitness = 0;
-    for (int i = 0; i < population.size(); ++i)
+    for (unsigned int i = 0; i < population.size(); ++i)
     {
         populationFitness += population.at(i)->getFitness();
     }
@@ -139,7 +139,7 @@ int Genetic::calculatePopulationFitness(vector<Schedule *> population){
 int Genetic::getBestSchedule(std::vector<Schedule *> schedules)
 {
     int mybest = 0;
-    for(int j = 0; j < schedules.size() ; ++j)
+    for(unsigned int j = 0; j < schedules.size() ; ++j)
     {
         if((schedules.at(j)->getFitness() > schedules.at(mybest)->getFitness()))
             mybest = j;
@@ -191,7 +191,7 @@ vector<Schedule *> Genetic::selectElitistPopulation()
     if(debug)
     {
         cout << endl << "Elitist selection : " << endl;
-        for (int i = 0; i < nextPopulation.size(); ++i)
+        for (unsigned int i = 0; i < nextPopulation.size(); ++i)
             cout << "id " << nextPopulation.at(i)->getID()<< " fitness " << nextPopulation.at(i)->getFitness() << endl;
     }
 
@@ -203,7 +203,7 @@ void Genetic::fitnessProbabilities(int populationFitness)
     if(debug)   cout << "Roulette : "<< populationFitness<< endl;
 
     double minRouletteProb = 0, currRouletteProb = 0;
-    for(int k = 0; k < population.size(); k++)
+    for(unsigned int k = 0; k < population.size(); k++)
     {
         currRouletteProb = population.at(k)->calculateMaxRouletteProb(minRouletteProb,populationFitness);
 
@@ -227,10 +227,10 @@ void Genetic::createRandomProbs(double * randomProbs, int size) {
 
 void Genetic::selectRemainingPopulation(double *randomProbs, vector<Schedule *> nextPopulation) {
     int randomSize = population.size() - NUM_ELITISTS;
-    for(int l = 0; l < randomSize; ++l)     //iterate randomProbs
+    for( int l = 0; l < randomSize; ++l)     //iterate randomProbs
     {
         double lastProb = 0;
-        for(int m = 0; m < population.size(); ++m) //iterate population
+        for(unsigned int m = 0; m < population.size(); ++m) //iterate population
         {
             if (randomProbs[l] >= lastProb && randomProbs[l] <= population.at(m)->getmaxRouletteProb())
             {
@@ -246,7 +246,7 @@ void Genetic::selectRemainingPopulation(double *randomProbs, vector<Schedule *> 
     if(debug)
     {
         cout << endl << "My new Population : " << endl;
-        for(int i = 0; i < population.size(); i++)
+        for(unsigned int i = 0; i < population.size(); i++)
             cout << population.at(i)->getID() << " , ";
     }
 }
@@ -282,8 +282,8 @@ vector<Schedule *> Genetic::selectCrossoverPopulation()
         }
 
     //delete selected population from "population" arrray
-    for (int j = 0; j < selectedPopulation.size(); ++j)
-        for (int i = 0; i < population.size(); ++i)
+    for (unsigned int j = 0; j < selectedPopulation.size(); ++j)
+        for (unsigned int i = 0; i < population.size(); ++i)
             if(selectedPopulation.at(j)->getID() == population.at(i)->getID()){
                 population.erase(population.begin()+i);
                 break;
@@ -340,7 +340,7 @@ vector<pair<Exam *, int>> Genetic::createMap(std::vector<pair<Exam *, int>> map1
         newMap.push_back((pair<Exam *, int> &&) map1.at(i));
     }
 
-    for (int k = pos; k < map2.size(); ++k) {
+    for (unsigned int k = pos; k < map2.size(); ++k) {
         newMap.push_back((pair<Exam *, int> &&) map2.at(k));
     }
 
