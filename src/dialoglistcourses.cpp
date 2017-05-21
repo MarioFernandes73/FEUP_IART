@@ -16,7 +16,7 @@ void DialogListCourses::fillList()
 {
     vector<Exam *> exams = this->university->getExams();
 
-    for (int i = 0; i < exams.size(); ++i)
+    for (unsigned int i = 0; i < exams.size(); ++i)
     {
         ui->listWidget->insertItem(i,QString::fromStdString(exams.at(i)->displayInfo()));
     }

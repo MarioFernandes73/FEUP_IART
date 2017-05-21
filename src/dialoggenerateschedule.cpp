@@ -16,7 +16,7 @@ DialogGenerateSchedule::~DialogGenerateSchedule()
 void DialogGenerateSchedule::setUniversity(University * university){
     this->university = university;
     vector<Epoch *> epochs = this->university->getEpochs();
-    for (int i = 0; i < epochs.size(); ++i) {
+    for (unsigned int i = 0; i < epochs.size(); ++i) {
         ui->comboBox->addItem(QString::fromStdString(epochs.at(i)->getName()));
     }
 }
@@ -49,7 +49,7 @@ void DialogGenerateSchedule::on_pushButton_2_clicked()
 
 void DialogGenerateSchedule::showSchedule(string epoch, string stats)
 {
-    DialogCurrentSchedule dialog(epoch,stats,"");
+    DialogCurrentSchedule dialog(stats,"");
     dialog.setUniversity(this->university);
     dialog.setModal(true);
     dialog.createSchedule(epoch);

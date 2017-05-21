@@ -46,7 +46,7 @@ vector<Exam *> Algorithm::randomExams(std::vector<Exam *> vector)
     std::vector<Exam *> exams1 = vector;
     std::vector<Exam *> exams2;
 
-    int i = 0;
+    unsigned int i = 0;
     while(i < exams1.size())
     {
         int random = rand() % exams1.size();

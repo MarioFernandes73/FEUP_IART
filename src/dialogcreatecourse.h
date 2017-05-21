@@ -22,6 +22,8 @@ public:
     explicit DialogCreateCourse(QWidget *parent = 0);
     void setUniversity(University * university){this->university = university;}
     ~DialogCreateCourse();
+private slots:
+    void on_pushButton_clicked();
 };
 
 #endif // DIALOGCREATECOURSE_H

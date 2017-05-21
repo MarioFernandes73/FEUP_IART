@@ -17,6 +17,13 @@ Exam::Exam(string name) {
     currentId++;
 }
 
+Exam::Exam(Class classe, int duration) {
+    this->id = currentId;
+    this->myClass = classe;
+    this->duration = duration;
+    currentId++;
+}
+
 Exam::Exam(int id, Class myClass, int duration) {
     this->id=id;
     currentId++;

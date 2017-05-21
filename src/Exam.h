@@ -20,6 +20,7 @@ private:
     int fitness;
 public:
     Exam(string name);
+    Exam(Class classe, int duration);
     Exam(int id, Class myClass, int duration);
     virtual ~Exam();
     std::string getInfo() const;

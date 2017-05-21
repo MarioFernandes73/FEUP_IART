@@ -71,7 +71,7 @@ void MainMenu::on_pushButton_10_clicked()
 {
     stringstream ss;
     ss << "No statistics to be shown." << endl << "Please generate a schedule.";
-    DialogCurrentSchedule dialog("",ss.str(),"");
+    DialogCurrentSchedule dialog(ss.str(),"");
     dialog.setUniversity(this->university);
     dialog.setModal(true);
     dialog.exec();

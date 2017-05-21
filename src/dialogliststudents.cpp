@@ -16,7 +16,7 @@ void DialogListStudents::currentSchedule(QListWidgetItem* item)
 {
     stringstream ss;
     ss << "No statistics to be shown." << endl << "Please generate a schedule.";
-    DialogCurrentSchedule dialog("",ss.str(),item->text().toLocal8Bit().constData());
+    DialogCurrentSchedule dialog(ss.str(),item->text().toLocal8Bit().constData());
     dialog.setUniversity(this->university);
     dialog.setModal(true);
     dialog.exec();
@@ -31,7 +31,7 @@ void DialogListStudents::fillList()
 {
     vector<Student *> students = this->university->getStudents();
 
-    for (int i = 0; i < students.size(); ++i)
+    for (unsigned int i = 0; i < students.size(); ++i)
     {
         ui->listWidget->insertItem(i,QString::fromStdString(students.at(i)->getName()));
     }

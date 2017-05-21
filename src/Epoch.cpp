@@ -59,7 +59,7 @@ std::vector<string> Epoch::getStudentExams(string student)
 {
     vector<string> exams;
 
-    for (int i = 0; i < subs.size(); ++i)
+    for (unsigned int i = 0; i < subs.size(); ++i)
     {
         string name = subs.at(i)->getStudent()->getName();
 
@@ -73,7 +73,7 @@ std::vector<string> Epoch::getStudentExams(string student)
 vector<Student *> Epoch::getStudents(Exam *e) const {
     vector<Student *> students;
 
-    for (int i = 0; i < subs.size(); ++i)
+    for (unsigned int i = 0; i < subs.size(); ++i)
     {
         Student *s = subs.at(i)->getStudent();
         if(subs.at(i)->getExam() == e)
@@ -86,7 +86,7 @@ vector<Student *> Epoch::getStudents(Exam *e) const {
 std::vector<Exam *> Epoch::getExams() const {
     vector<Exam *> exams;
 
-    for (int i = 0; i < subs.size(); ++i)
+    for (unsigned int i = 0; i < subs.size(); ++i)
     {
         Exam *e = subs.at(i)->getExam();
         if(notFound(exams, e))
@@ -110,7 +110,7 @@ Schedule * Epoch::getSchedule(){
 
 template<typename T>
 bool Epoch::notFound(vector<T *> vector, T *temp) const {
-    for (int i = 0; i < vector.size(); ++i)
+    for (unsigned int i = 0; i < vector.size(); ++i)
         if(vector.at(i) == temp)
             return false;
     return true;
